@@ -1,0 +1,93 @@
+do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/UART/test_UART.do
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:26:16 on Jun 07,2020
+# vcom -reportprogress 300 -work work Serieller_Sender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Serieller_Sender
+# -- Compiling architecture rtl of Serieller_Sender
+# End time: 15:26:16 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:26:16 on Jun 07,2020
+# vcom -reportprogress 300 -work work Serieller_Empfaenger.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Serieller_Empfaenger
+# -- Compiling architecture rtl of Serieller_Empfaenger
+# End time: 15:26:16 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:26:16 on Jun 07,2020
+# vcom -reportprogress 300 -work work UART.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity UART
+# -- Loading package NUMERIC_STD
+# -- Compiling architecture behavioral of UART
+# -- Loading entity Serieller_Empfaenger
+# -- Loading entity Serieller_Sender
+# End time: 15:26:16 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:26:16 on Jun 07,2020
+# vcom -reportprogress 300 -work work wishbone_test_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package wishbone_test_pack
+# -- Compiling package body wishbone_test_pack
+# -- Loading package wishbone_test_pack
+# End time: 15:26:16 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:26:16 on Jun 07,2020
+# vcom -reportprogress 300 -work work txt_util_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package txt_util_pack
+# -- Compiling package body txt_util_pack
+# -- Loading package txt_util_pack
+# End time: 15:26:17 on Jun 07,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:26:17 on Jun 07,2020
+# vcom -reportprogress 300 -work work UART_tb.vhd 
+# -- Loading package STANDARD
+# -- Compiling entity UART_tb
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package MATH_REAL
+# -- Loading package wishbone_test_pack
+# -- Loading package txt_util_pack
+# -- Compiling architecture test of UART_tb
+# -- Loading entity UART
+# End time: 15:26:17 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -voptargs="+acc" -t fs work.uart_tb 
+# Start time: 15:26:17 on Jun 07,2020
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading ieee.math_real(body)
+# Loading work.wishbone_test_pack(body)
+# Loading work.txt_util_pack(body)
+# Loading work.uart_tb(test)
+# Loading work.uart(behavioral)
+# Loading work.serieller_empfaenger(rtl)
+# Loading work.serieller_sender(rtl)
+# WARNING: No extended dataflow license exists
+# ** Note: Test fertig
+#    Time: 156005858736 fs  Iteration: 1  Instance: /uart_tb
+# 0 fs
+# 189 us
+# End time: 15:26:36 on Jun 07,2020, Elapsed time: 0:00:19
+# Errors: 0, Warnings: 1

@@ -1,0 +1,148 @@
+pwd
+# /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/Timer
+do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/Timer/test_Timer.do
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 16:59:06 on Jun 07,2020
+# vcom -reportprogress 300 -work work Timer.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Timer
+# -- Compiling architecture rtl of Timer
+# End time: 16:59:07 on Jun 07,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 16:59:07 on Jun 07,2020
+# vcom -reportprogress 300 -work work wishbone_test_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package wishbone_test_pack
+# -- Compiling package body wishbone_test_pack
+# -- Loading package wishbone_test_pack
+# End time: 16:59:07 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 16:59:07 on Jun 07,2020
+# vcom -reportprogress 300 -work work txt_util_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package txt_util_pack
+# -- Compiling package body txt_util_pack
+# -- Loading package txt_util_pack
+# End time: 16:59:07 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 16:59:07 on Jun 07,2020
+# vcom -reportprogress 300 -work work Timer_tb.vhd 
+# -- Loading package STANDARD
+# -- Compiling entity Timer_tb
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package wishbone_test_pack
+# -- Loading package txt_util_pack
+# -- Compiling architecture bench of Timer_tb
+# -- Loading entity Timer
+# End time: 16:59:07 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -voptargs="+acc" Timer_tb 
+# Start time: 16:59:07 on Jun 07,2020
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.wishbone_test_pack(body)
+# Loading work.txt_util_pack(body)
+# ** Warning: (vsim-3479) Time unit 'fs' is less than the simulator resolution (1ps).
+#    Time: 0 ps  Iteration: 0  Root: /
+# Loading work.timer_tb(bench)
+# Loading work.timer(rtl)
+# WARNING: No extended dataflow license exists
+# ** Note: Gemessene Periode: 14 Takte
+#    Time: 340 ns  Iteration: 1  Instance: /timer_tb
+# ** Note: Gemessene Periode: 15 Takte
+#    Time: 660 ns  Iteration: 1  Instance: /timer_tb
+# ** Note: Gemessene Periode: 15 Takte
+#    Time: 980 ns  Iteration: 1  Instance: /timer_tb
+# ** Note: Gemessene Periode: 15 Takte
+#    Time: 1300 ns  Iteration: 1  Instance: /timer_tb
+# 0 ps
+# 1575 ns
+do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/Timer/test_Timer.do
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 17:00:29 on Jun 07,2020
+# vcom -reportprogress 300 -work work Timer.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Timer
+# -- Compiling architecture rtl of Timer
+# End time: 17:00:29 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 17:00:29 on Jun 07,2020
+# vcom -reportprogress 300 -work work wishbone_test_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package wishbone_test_pack
+# -- Compiling package body wishbone_test_pack
+# -- Loading package wishbone_test_pack
+# End time: 17:00:29 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 17:00:29 on Jun 07,2020
+# vcom -reportprogress 300 -work work txt_util_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package txt_util_pack
+# -- Compiling package body txt_util_pack
+# -- Loading package txt_util_pack
+# End time: 17:00:29 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 17:00:29 on Jun 07,2020
+# vcom -reportprogress 300 -work work Timer_tb.vhd 
+# -- Loading package STANDARD
+# -- Compiling entity Timer_tb
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package wishbone_test_pack
+# -- Loading package txt_util_pack
+# -- Compiling architecture bench of Timer_tb
+# -- Loading entity Timer
+# End time: 17:00:29 on Jun 07,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 17:00:32 on Jun 07,2020, Elapsed time: 0:01:25
+# Errors: 0, Warnings: 2
+# vsim -voptargs="+acc" Timer_tb 
+# Start time: 17:00:32 on Jun 07,2020
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.wishbone_test_pack(body)
+# Loading work.txt_util_pack(body)
+# ** Warning: (vsim-3479) Time unit 'fs' is less than the simulator resolution (1ps).
+#    Time: 0 ps  Iteration: 0  Root: /
+# Loading work.timer_tb(bench)
+# Loading work.timer(rtl)
+# WARNING: No extended dataflow license exists
+# ** Note: Gemessene Periode: 14 Takte
+#    Time: 340 ns  Iteration: 1  Instance: /timer_tb
+# ** Note: Gemessene Periode: 15 Takte
+#    Time: 660 ns  Iteration: 1  Instance: /timer_tb
+# ** Note: Gemessene Periode: 15 Takte
+#    Time: 980 ns  Iteration: 1  Instance: /timer_tb
+# ** Note: Gemessene Periode: 15 Takte
+#    Time: 1300 ns  Iteration: 1  Instance: /timer_tb
+# 0 ps
+# 1575 ns
+# End time: 17:00:49 on Jun 07,2020, Elapsed time: 0:00:17
+# Errors: 0, Warnings: 2
