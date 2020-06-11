@@ -10,7 +10,7 @@ z2
 cModel Technology
 Z0 d/home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/Timer
 Etimer
-Z1 w1591542021
+Z1 w1591542067
 Z2 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
@@ -23,9 +23,9 @@ VGMm:EJIi0KNX3@>7^N@4_0
 !s100 UeA=zkO`RO:OVh:_?7LR11
 Z7 OV;C;2019.2;69
 32
-Z8 !s110 1591542029
+Z8 !s110 1591862329
 !i10b 1
-Z9 !s108 1591542029.000000
+Z9 !s108 1591862328.000000
 Z10 !s90 -reportprogress|300|-work|work|Timer.vhd|
 Z11 !s107 Timer.vhd|
 !i113 1
@@ -63,41 +63,41 @@ R7
 32
 R8
 !i10b 1
-R9
-Z18 !s90 -reportprogress|300|-work|work|Timer_tb.vhd|
-Z19 !s107 Timer_tb.vhd|
+Z18 !s108 1591862329.000000
+Z19 !s90 -reportprogress|300|-work|work|Timer_tb.vhd|
+Z20 !s107 Timer_tb.vhd|
 !i113 1
 R12
 R13
 Abench
 R14
-Z20 DEx4 work 8 timer_tb 0 22 BgRMJ3]F@UC2F4V>@3?@K1
-Z21 DPx4 work 13 txt_util_pack 0 22 ^CcBZicHNGWICQ5g`[ek>0
-Z22 DPx4 work 18 wishbone_test_pack 0 22 F?SgL_B3@ndVo9[E3YU8V3
+Z21 DEx4 work 8 timer_tb 0 22 BgRMJ3]F@UC2F4V>@3?@K1
+Z22 DPx4 work 13 txt_util_pack 0 22 ^CcBZicHNGWICQ5g`[ek>0
+Z23 DPx4 work 18 wishbone_test_pack 0 22 F?SgL_B3@ndVo9[E3YU8V3
 R2
 R3
 R4
 l29
 L11
-Z23 VHK>VLUl<e8Y4z_:Y3E5P91
-Z24 !s100 Tf[2EaJaj_NENN98ROV:82
+Z24 VHK>VLUl<e8Y4z_:Y3E5P91
+Z25 !s100 Tf[2EaJaj_NENN98ROV:82
 R7
 32
 R8
 !i10b 1
-R9
 R18
 R19
+R20
 !i113 1
 R12
 R13
 Ptxt_util_pack
 R3
 R4
-Z25 w1591536477
+Z26 w1591536477
 R0
-Z26 8txt_util_pack.vhd
-Z27 Ftxt_util_pack.vhd
+Z27 8txt_util_pack.vhd
+Z28 Ftxt_util_pack.vhd
 l0
 L39
 V^CcBZicHNGWICQ5g`[ek>0
@@ -107,14 +107,14 @@ R7
 b1
 R8
 !i10b 1
-R9
-Z28 !s90 -reportprogress|300|-work|work|txt_util_pack.vhd|
-Z29 !s107 txt_util_pack.vhd|
+R18
+Z29 !s90 -reportprogress|300|-work|work|txt_util_pack.vhd|
+Z30 !s107 txt_util_pack.vhd|
 !i113 1
 R12
 R13
 Bbody
-R21
+R22
 R3
 R4
 l0
@@ -125,19 +125,19 @@ R7
 32
 R8
 !i10b 1
-R9
-R28
+R18
 R29
+R30
 !i113 1
 R12
 R13
 Pwishbone_test_pack
 R3
 R4
-R25
+R26
 R0
-Z30 8wishbone_test_pack.vhd
-Z31 Fwishbone_test_pack.vhd
+Z31 8wishbone_test_pack.vhd
+Z32 Fwishbone_test_pack.vhd
 l0
 L4
 VF?SgL_B3@ndVo9[E3YU8V3
@@ -147,14 +147,14 @@ R7
 b1
 R8
 !i10b 1
-R9
-Z32 !s90 -reportprogress|300|-work|work|wishbone_test_pack.vhd|
-Z33 !s107 wishbone_test_pack.vhd|
+R18
+Z33 !s90 -reportprogress|300|-work|work|wishbone_test_pack.vhd|
+Z34 !s107 wishbone_test_pack.vhd|
 !i113 1
 R12
 R13
 Bbody
-R22
+R23
 R3
 R4
 l0
@@ -165,9 +165,9 @@ R7
 32
 R8
 !i10b 1
-R9
-R32
+R18
 R33
+R34
 !i113 1
 R12
 R13

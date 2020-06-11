@@ -17,7 +17,8 @@ port (
 	RXD            : in    std_logic;
 	TXD            : out   std_logic;
 	
-	-- TODO: Ports fuer weitere Komponenten anlegen (Uebung 4)
+	-- VGA Ausgabe
+
 
 	-- Serial Debug Interface
 	SDI_TXD        : out  std_logic;
@@ -64,7 +65,9 @@ architecture arch of Beispielrechner_System is
 	signal UART_ACK           : std_logic;
 	signal UART_DAT_O         : std_logic_vector(31 downto 0);
 
-	-- TODO: Signale fuer weitere Komponenten anlegen (Uebung 4)
+	signal TIMER_STB		  : std_logic;
+	signal TIMER_ACK		  : std_logic;
+	signal TIMER_DAT_O		  : std_logic_vector(31 downto 0);
 	
 begin
 	------------------------------------------------------------
@@ -81,7 +84,8 @@ begin
                                     unsigned(SYS_ADR) <= 16#000081FF# else '0';
 		UART_STB    <= sys_STB when unsigned(SYS_ADR) >= 16#00008200# and
                                     unsigned(SYS_ADR) <= 16#0000820F# else '0';
-		-- TODO: Dekodierung fuer weitere Komponenten ergaenzen (Uebung 4)
+		TIMER_STB   <= sys_STB when unsigned(SYS_ADR) >= 16#00008300# and
+                            		unsigned(SYS_ADR) <= 16#0000830F# else '0';										
 
 		-- Lesedaten-Multiplexer
 		SYS_DAT_I   <= ROM_DAT_O     when ROM_STB     = '1' else
@@ -216,5 +220,19 @@ begin
 		TxD       => TXD
 	);
 	
-	-- TODO: Weitere Komponenten instanziieren (Uebung 4)
+	--TIMER
+	
+	TIMER_Inst: entity work.Timer
+		port map(
+		  CLK_I      => CLK,
+		  RST_I      => RST,
+		  STB_I      => TIMER_STB,
+		  WE_I       => SYS_WE,
+		  ADR_I      => SYS_ADR(3 downto 0),
+		  DAT_I      => SYS_DAT_O,
+		  ACK_O      => TIMER_ACK,
+		  DAT_O      => TIMER_DAT_O,
+		  Timer_IRQ  => IP3
+		);
+	
 end architecture;
