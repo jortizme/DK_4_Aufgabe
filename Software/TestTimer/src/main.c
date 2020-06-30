@@ -20,10 +20,13 @@ int main()
 	out32(GPIO_BASE + GPIO_DIR_SET, (0xf << 4));
 
 	// Timer konfigurieren (1 Interrupt je 10 us)
-	out32(TIMER_BASE + TIMER_START, SYSTEM_FREQUENCY / 100000 - 1);
+	out32(TIMER_BASE + TIMER_START, SYSTEM_FREQUENCY * 5 - 1);
 	cpu_enable_interrupt(TIMER_INTR);
 
-	while(1);
-
+	while(1){
+		int a =5;
+		a++;
+	}
 	return 0;
 }
+

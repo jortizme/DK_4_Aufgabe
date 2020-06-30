@@ -6,6 +6,7 @@ generic (
 	SYS_FREQUENCY  : integer := 50_000_000;
 	SDI_BAUDRATE   : integer := 256_000;
 	DELAY_SLOT     : boolean := false
+	
 );
 port (
 	CLK            : in    std_logic;
@@ -18,6 +19,12 @@ port (
 	TXD            : out   std_logic;
 	
 	-- VGA Ausgabe
+	
+	VSYNC : out std_logic;
+	HSYNC : out std_logic;
+	RED : out std_logic;
+	GREEN : out std_logic; 
+	BLUE  : out std_logic;
 
 
 	-- Serial Debug Interface
@@ -69,6 +76,12 @@ architecture arch of Beispielrechner_System is
 	signal TIMER_ACK		  : std_logic;
 	signal TIMER_DAT_O		  : std_logic_vector(31 downto 0);
 	
+	signal VGA_STB		  : std_logic;
+	signal VGA_ACK		  : std_logic;
+	signal VGA_DAT_O		: std_logic_vector(31 downto 0);
+	
+	
+	
 begin
 	------------------------------------------------------------
 	-- Wishbone Interconnect
@@ -85,13 +98,17 @@ begin
 		UART_STB    <= sys_STB when unsigned(SYS_ADR) >= 16#00008200# and
                                     unsigned(SYS_ADR) <= 16#0000820F# else '0';
 		TIMER_STB   <= sys_STB when unsigned(SYS_ADR) >= 16#00008300# and
-                            		unsigned(SYS_ADR) <= 16#0000830F# else '0';										
+                            		unsigned(SYS_ADR) <= 16#0000830F# else '0';	
+		VGA_STB		<= sys_STB when unsigned(SYS_ADR) >= 16#00010000# and
+                            		unsigned(SYS_ADR) <= 16#0001FFFF# else '0';	
 
 		-- Lesedaten-Multiplexer
 		SYS_DAT_I   <= ROM_DAT_O     when ROM_STB     = '1' else
 		               RAM_DAT_O     when RAM_STB     = '1' else
 					   GPIO_DAT_O    when GPIO_STB    = '1' else
 					   UART_DAT_O    when UART_STB    = '1' else
+					   TIMER_DAT_O	 when TIMER_STB   = '1' else
+					   VGA_DAT_O	 when VGA_STB   = '1' else
 					   -- TODO: Dekodierung fuer weitere Komponenten ergaenzen (Uebung 4)
 					   (others=>'1');
 
@@ -100,6 +117,8 @@ begin
 		               RAM_ACK       when RAM_STB     = '1' else
 					   GPIO_ACK      when GPIO_STB    = '1' else
 					   UART_ACK      when UART_STB    = '1' else
+					   TIMER_ACK	 when TIMER_STB   = '1' else
+					   VGA_ACK	 when VGA_STB   = '1' else
 					   -- TODO: Signale weiterer Komponenten ergaenzen (Uebung 4)
 					   '1';
 	end block;
@@ -235,4 +254,36 @@ begin
 		  Timer_IRQ  => IP3
 		);
 	
+
+-- Display
+Display: entity work.Display
+generic map (
+		CLKDIV  =>      1,
+		HS_POL  => '0',
+		VS_POL  => '0',
+		HACT_PX => 640,
+		HFP_PX =>  16,
+		HS_PX   => 96,
+		HBP_PX  =>  48,
+		VACT_PX => 480,
+		VFP_PX  =>  11,
+		VS_PX   =>   2,
+		VBP_PX  =>  31
+	)
+	port map (
+		 CLK_I      => CLK,
+		  RST_I      => RST,
+		  STB_I      => VGA_STB,
+		  WE_I       => SYS_WE,
+		  ADR_I      => SYS_ADR(15 downto 0),
+		  DAT_I      => SYS_DAT_O,
+		  ACK_O      => VGA_ACK,
+		  DAT_O      => VGA_DAT_O,
+		
+		VSYNC =>VSYNC,
+		HSYNC =>HSYNC,
+		RED   =>RED,
+		GREEN =>GREEN,
+		BLUE  =>BLUE
+);
 end architecture;

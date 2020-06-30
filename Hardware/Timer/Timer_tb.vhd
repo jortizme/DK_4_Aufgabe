@@ -5,7 +5,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.wishbone_test_pack.all;
-use work.txt_util_pack.all;
+use work.txt_util_pack.all; --nicht nötig
 
 
 architecture bench of Timer_tb is

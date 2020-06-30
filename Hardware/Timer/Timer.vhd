@@ -72,28 +72,32 @@ begin
 		Schreibe_Start <= '0';
 		Schreibe_Value <= '0';
 		RD_Sel         <= RD_SEL_Nichts;
-  
-		case ADR_I is
+		
+		if STB_I = '1' then
+			case ADR_I is
 
-			when x"0" => 
-				RD_Sel <= RD_SEL_Value;
-				ACK_O          <= '1';
+				when x"0" => 
+					RD_Sel <= RD_SEL_Value;
+					ACK_O          <= '1';
 			
-			when x"4" =>
-			    Schreibe_Value <= '1';
-				Schreibe_Start <= '1';
-				RD_Sel <= RD_SEL_Start;
-				ACK_O          <= '1';
+				when x"4" =>
+					Schreibe_Value <= '1';
+					Schreibe_Start <= '1';
+					RD_Sel <= RD_SEL_Start;
+					ACK_O          <= '1';
 			
-			when x"8" =>
-				Lese_Status    <= '1';
-				RD_Sel <= RD_SEL_Status;
-				ACK_O          <= '1';
+				when x"8" =>
+					if WE_I = '0' then
+						Lese_Status    <= '1';
+					end if;
+					RD_Sel <= RD_SEL_Status;
+					ACK_O          <= '1';
 
-			when others =>
+				when others =>
 				null;
 
 		end case;
+		end if;
 	end process;
 	
 	-- Kombinatorischer Prozess fuer den Lesedatenmultiplexer
@@ -135,14 +139,6 @@ begin
 			
 			-- Default-Zuweisung
 			TC <= '0';
-			
-			--if TC = '1' and Schreibe_Value = '1' then
-		--		Timer_Value_var := unsigned(DAT_I);
-			--end if;
-			
-			--if TC = '1' and Schreibe_Value = '0' then
-			--	Timer_Value_var := Timer_Start;
-			--end if;
 
 			if Schreibe_Value = '1' then
 				Timer_Value_var := unsigned(DAT_I);
