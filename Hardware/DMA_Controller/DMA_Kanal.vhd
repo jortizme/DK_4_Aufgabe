@@ -32,10 +32,11 @@ entity DMA_Kanal is
         BetriebsMod     : in std_ulogic_vector(1 downto 0);
         Tra_Modus       : in std_ulogic;
         Ex_EreigEn      : in std_ulogic;
-        KanalEn         : in std_ulogic;
         Tra_Fertig      : out std_ulogic;
 
         S_Ready         : in std_ulogic;
+        M_Valid         : in std_ulogic;
+        Kanal_Aktiv     : out std_ulogic;
 
         M_STB           : out std_ulogic;
         M_WE            : out std_ulogic;
@@ -69,25 +70,29 @@ begin
     Rechenwerk: block
 
         --Interne Signale des Rechenwerks
-        signal M_DAT_Out_i  :   std_ulogic_vector(31 downto 0) := (others => '0');
-        signal M_ADR_i      :   std_ulogic_vector(31 downto 0) := (others => '0');
-        signal M_SEL_i      :   std_ulogic_vector(3 downto 0) := (others => '0');
-        signal Sel_Vek_i    :   std_ulogic_vector(3 downto 0);
-        signal Sour_A_Out   :   std_ulogic_vector(31 downto 0) := (others => '0');
-        signal Dest_A_Out   :   std_ulogic_vector(31 downto 0) := (others => '0');
-        signal Sel_Sou_Byte :   std_ulogic_vector(1 downto 0) := (others => '0');
-        signal Sel_Dest_Byte :  std_ulogic_vector(1 downto 0) := (others => '0');
-        signal Addr_Mult_Out :  std_ulogic_vector(31 downto 0);
-        signal Sel_SelVektor :  std_ulogic_vector(1 downto 0) := (others => '0');
-        signal ByteMod_Addr  :  std_ulogic_vector(31 downto 0);
+        signal M_DAT_Out_i   :   std_ulogic_vector(31 downto 0) := (others => '0');
+        signal M_ADR_i :  std_ulogic_vector(31 downto 0) := (others => '-');
+        signal M_SEL_i       :   std_ulogic_vector(3 downto 0);
+        signal Sour_A_Out    :   std_ulogic_vector(31 downto 0) := (others => '0');
+        signal Dest_A_Out    :   std_ulogic_vector(31 downto 0) := (others => '0');
+        signal Sel_Sou_Byte  :   std_ulogic_vector(1 downto 0);
+        signal Sel_Dest_Byte :  std_ulogic_vector(1 downto 0);
+        signal Sel_SelVektor :  std_ulogic_vector(1 downto 0);
+        signal ByteMod_Addr_i  :  std_ulogic_vector(31 downto 0);
         signal ByteMod_Dat_i :  std_ulogic_vector(31 downto 0); 
         signal Vergleicher_o :  std_ulogic_vector(31 downto 0) := (others => '0');  
 
     begin
 
-        Sel_SelVektor <= Addr_Mult_Out(1 downto 0);
+        Sel_SelVektor <= M_ADR_i(1 downto 0);
         Sel_Sou_Byte  <= Sour_A_Out(1 downto 0);
         Sel_Dest_Byte <= Dest_A_Out(1 downto 0);
+
+        --Wer des internen Signals an Port zuweisen
+        process(M_DAT_Out_i)
+        begin
+            M_DAT_O  <= M_DAT_Out_i;
+        end process;
 
         --Beschreibung:
         SourceAdrRegister: process(Takt)
@@ -135,19 +140,10 @@ begin
             Dest_A_Out <= std_ulogic_vector(Adresse);
         end process;
 
-
-        --Wer des internen Signals an Port zuweisen
-        process(M_DAT_Out_i,M_ADR_i,M_SEL_i)
-        begin
-            M_DAT_O  <= M_DAT_Out_i;
-            M_ADR <= M_ADR_i;
-            M_SEL <= M_SEL_i;
-        end process;
-
         --Beschreibung: 
         Addresvergleicher: process(Takt)
             variable Q : std_ulogic_vector(31 downto 0) := (others => '0');
-            variable Wert : usigned(1 downto 0) := (others => '0');
+            variable Wert : unsigned(1 downto 0) := (others => '0');
         begin
 
             case(BetriebsMod) is
@@ -166,13 +162,13 @@ begin
         end process;
 
         --Beschreibung:
-        Block_A: process(BetriebsMod,AdrSel,Vergleicher_o,Addr_Mult_Out)
+        Block_A: process(BetriebsMod, AdrSel, Vergleicher_o, M_ADR_i)
         begin 
 
-        ByteMod_Addr <= Vergleicher_o when (BetriebsMod = "10" and AdrSel = S)
+        ByteMod_Addr_i <= Vergleicher_o when (BetriebsMod = "10" and AdrSel = S)
                         or (BetriebsMod = "01" and AdrSel = D )  else
 
-                    <= Addr_Mult_Out when (BetriebsMod = "10" and AdrSel = D)
+                    <= M_ADR_i when (BetriebsMod = "10" and AdrSel = D)
                         or (BetriebsMod = "01" and AdrSel = S) else
 
                     (others => '0');
@@ -201,69 +197,68 @@ begin
         end process;
 
         --Beschreibung:
-        ErsteMUlTStufe:process(AdrSel,Sel_SelVektor)
+        AddresMult:process(AdrSel)
         begin
-
             case (AdrSel) is
-                when S => Addr_Mult_Out <= Sour_A_Out;
-                when D => Addr_Mult_Out <= Dest_A_Out;
+                when S => M_ADR_i <= Sour_A_Out;
+                when D => M_ADR_i <= Dest_A_Out;
                 when others => null;
             end case;
+        end process;
 
+        --Beschreibung:
+        SelMult:process(Sel_SelVektor)
+        begin
             case(Sel_SelVektor) is
-                when "00" =>   Sel_Vek_i <= "0001";  
-                when "01" =>   Sel_Vek_i <= "0010"; 
-                when "10" =>   Sel_Vek_i <= "0100"; 
-                when "11" =>   Sel_Vek_i <= "1000"; 
+                when "00" =>   M_SEL_i <= "0001";  
+                when "01" =>   M_SEL_i <= "0010"; 
+                when "10" =>   M_SEL_i <= "0100"; 
+                when "11" =>   M_SEL_i <= "1000"; 
             end case;
         end process;
 
         --Beschreibung
-        ZweiteMultStufe:process(Sel_Sou_Byte,Sel_Dest_Byte)
+        ByteMult:process(Sel_Sou_Byte, Sel_Dest_Byte, M_DAT_I)
         variable Byte       :   std_ulogic_vector(7 downto 0) := (others => '0');
-        variable Dat_Out    :   std_ulogic_vector (31 downto 0) := (others => '0'); 
 
         begin
 
-            Dat_Out := (others => '0');
+            ByteMod_Dat_i <= (others => '0');
 
             case(Sel_Sou_Byte) is
-                when "00" =>   Byte <= M_ADR_i(7 downto 0);
-                when "01" =>   Byte <= M_ADR_i(15 downto 8);
-                when "10" =>   Byte <= M_ADR_i(23 downto 16);
-                when "11" =>   Byte <= M_ADR_i(31 downto 24);
+                when "00" =>   Byte <= M_DAT_I(7 downto 0);
+                when "01" =>   Byte <= M_DAT_I(15 downto 8);
+                when "10" =>   Byte <= M_DAT_I(23 downto 16);
+                when "11" =>   Byte <= M_DAT_I(31 downto 24);
             end case;
 
             case(Sel_Dest_Byte) is
-                when "00" =>   Dat_Out(7 downto 0) <= Byte;
-                when "01" =>   Dat_Out(15 downto 8) <= Byte;
-                when "10" =>   Dat_Out(23 downto 16) <= Byte;
-                when "11" =>   Dat_Out(31 downto 24) <= Byte;
+                when "00" =>    ByteMod_Dat_i(7 downto 0) <= Byte;
+                when "01" =>    ByteMod_Dat_i(15 downto 8) <= Byte;
+                when "10" =>    ByteMod_Dat_i(23 downto 16) <= Byte;
+                when "11" =>    ByteMod_Dat_i(31 downto 24) <= Byte;
             end case;
-            
-            ByteMod_Dat_i <= Dat_Out;
 
         end process;
 
         --Beschreibung
-        OutputSignale: process(Takt,Tra_Modus)
-
+        OutputSignale: process(Takt)
+        variable OutputData : std_ulogic_vector(31 downto 0) := (others => '0');
         begin
             case(Tra_Modus) is
-                when '0'    =>  M_SEL_i <= "1111";
-                                M_ADR_i  <= Addr_Mult_Out;
+                when '0'    =>  M_SEL <= "1111";
+                                M_ADR  <= Addr_Mult_Out;
+                                OutputData := M_DAT_I;
 
-                when '1'    =>  M_SEL_i <= Sel_Vek_i;
-                                M_ADR_i <= ByteMod_Addr              
+                when '1'    =>  M_SEL <= M_SEL_i;
+                                M_ADR <= ByteMod_Addr_i;
+                                OutputData := ByteMod_Dat_i;              
             end case;
 
             if rising_edge(Takt) then
 
                 if DataEn = '1' then
-                    case(Tra_Modus) is
-                        when '0'    =>  M_DAT_Out_i <= M_DAT_I;
-                        when '1'    =>  M_DAT_Out_i <= ByteMod_Dat_i;          
-                    end case;
+                    M_DAT_Out_i <= OutputData;
                 end if;
             end if;
 
@@ -284,25 +279,22 @@ begin
     signal STB_i            : std_ulogic := '0';
     signal WE_i             : std_ulogic := '0';
     signal Tra_Fertig_i     : std_ulogic := '0';
-    signal Kanal_En_i       : std_ulogic := '0';
+    signal Kanal_Aktiv_i    : std_ulogic := '0';
 
     begin
 
         --Wer des internen Signals an Port zuweisen
-        process(STB_i, WE_i, Tra_Fertig_i)
+        process(STB_i, WE_i, Tra_Fertig_i, Kanal_Aktiv_i)
         begin
             M_STB <= STB_i;
             M_WE <= WE_i;
             Tra_Fertig <= Tra_Fertig_i;
+            Kanal_Aktiv <= Kanal_Aktiv_i;
         end process;
 
-        process(KanalEn)
-        begin
-            Kanal_En_i <= KanalEn;
-        end process;
 
     -- Prozess zur Berechnung des Folgezustands und der Mealy-Ausgaenge
-    Transition: process(Zustand, Kanal_En_i, Ex_EreigEn, S_Ready, M_ACK, CntTC, BetriebsMod)
+    Transition: process(Zustand, M_Valid, Ex_EreigEn, S_Ready, M_ACK, CntTC, BetriebsMod)
     begin
 
         -- Default-Werte fuer den Folgezustand und die Mealy-Ausgaenge
@@ -318,10 +310,10 @@ begin
         case( Zustand ) is
 
             when Z_IDLE =>  
-                            if Kanal_En_i = '0' then
+                            if M_Valid = '0' then
                                 Folgezustand <= Z_IDLE;
 
-                            elsif Kanal_En_i = '1' then
+                            elsif M_Valid = '1' then
                                 SourceLd <= '1';
                                 DestLd <= '1';
                                 CntLd  <= '1';
@@ -360,7 +352,7 @@ begin
                                 Folgezustand <= Z_WAIT;
                             end if;          
             when Z_FERTIG =>
-                            Kanal_En_i <= '0';
+                            Kanal_Aus <= '1';
                             Folgezustand <= Z_IDLE;
             when Z_ERROR => null;
 
@@ -381,31 +373,37 @@ begin
                                     WE_i         <='0';
                                     AdrSel       <= X;
                                     Tra_Fertig_i <='0';
+                                    Kanal_Aktiv_i <= 0;
                     when Z_WAIT =>
                                     STB_i        <='0';
                                     WE_i         <='0';
                                     AdrSel       <= X;
                                     Tra_Fertig_i <='0';
+                                    Kanal_Aktiv_i <= '1';
                     when Z_LESE =>
                                     STB_i        <='1';
                                     WE_i         <='0';
                                     AdrSel       <= S;
                                     Tra_Fertig_i <='0';
+                                    Kanal_Aktiv_i <= '1';
                     when Z_WRITE =>
                                     STB_i        <='1';
                                     WE_i         <='1';
                                     AdrSel       <= D;
                                     Tra_Fertig_i <='0';
+                                    Kanal_Aktiv_i <= '1';
                     when Z_FERTIG =>
                                     STB_i        <='0';
                                     WE_i         <='0';
                                     AdrSel       <= X;
                                     Tra_Fertig_i <='1';
+                                    Kanal_Aktiv_i <= '1';
                     when Z_ERROR =>
                                     STB_i        <='X';
                                     WE_i         <='X';
                                     AdrSel       <= X;
                                     Tra_Fertig_i <='X';
+                                    Kanal_Aktiv_i <= 'X';
                 end case;
         
         end process;
