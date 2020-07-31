@@ -32,6 +32,7 @@ entity DMA_Kanal is
         BetriebsMod     : in std_ulogic_vector(1 downto 0);
         Tra_Modus       : in std_ulogic;
         Ex_EreigEn      : in std_ulogic;
+        Reset           : in std_ulogic;
         Tra_Fertig      : out std_ulogic;
 
         S_Ready         : in std_ulogic;
@@ -71,7 +72,7 @@ begin
 
         --Interne Signale des Rechenwerks
         signal M_DAT_Out_i   :   std_ulogic_vector(31 downto 0) := (others => '0');
-        signal M_ADR_i :  std_ulogic_vector(31 downto 0) := (others => '-');
+        signal M_ADR_i       :  std_ulogic_vector(31 downto 0) := (others => '-');
         signal M_SEL_i       :   std_ulogic_vector(3 downto 0);
         signal Sour_A_Out    :   std_ulogic_vector(31 downto 0) := (others => '0');
         signal Dest_A_Out    :   std_ulogic_vector(31 downto 0) := (others => '0');
@@ -80,7 +81,7 @@ begin
         signal Sel_SelVektor :  std_ulogic_vector(1 downto 0);
         signal ByteMod_Addr_i  :  std_ulogic_vector(31 downto 0);
         signal ByteMod_Dat_i :  std_ulogic_vector(31 downto 0); 
-        signal Vergleicher_o :  std_ulogic_vector(31 downto 0) := (others => '0');  
+        signal Vergleicher_o :  std_ulogic_vector(31 downto 0) := (others => '0');
 
     begin
 
@@ -101,20 +102,25 @@ begin
 
             if rising_edge(Takt) then 
 
-                if SourceLd = '1' then
-                    Adresse := to_unsigned(Sou_ADR);
-                end if;
+                if Reset = '1' then
+                    Adresse := (others => '0');
 
-                if SourceEn = '1' then
+                elsif SourceLd = '1' then
+                    Adresse := to_unsigned(Sou_ADR);
+
+                elsif SourceEn = '1' then
+
                     if Tra_Modus = '0' then
                         Adresse := Adresse  - 4;
                     else
-                    Adresse := Adresse  - 1;
+                        Adresse := Adresse  - 1;
                     end if;
+
                 end if;
+            
+                Sour_A_Out <= std_ulogic_vector(Adresse);
             end if;
 
-            Sour_A_Out <= std_ulogic_vector(Adresse);
         end process;
 
         --Beschreibung:
@@ -124,20 +130,25 @@ begin
 
             if rising_edge(Takt) then 
 
-                if DestLd = '1' then
-                    Adresse := to_unsigned(Des_ADR);
-                end if;
+                if Reset = '1' then
+                    Adresse := (others => '0');
 
-                if DestEn = '1' then
+                elsif DestLd = '1' then
+                    Adresse := to_unsigned(Des_ADR);
+
+                elsif DestEn = '1' then
+
                     if Tra_Modus = '0' then
                         Adresse := Adresse  - 4;
                     else
-                    Adresse := Adresse  - 1;
+                        Adresse := Adresse  - 1;
                     end if;
+
                 end if;
+            
+                Dest_A_Out <= std_ulogic_vector(Adresse);
             end if;
 
-            Dest_A_Out <= std_ulogic_vector(Adresse);
         end process;
 
         --Beschreibung: 
@@ -154,8 +165,11 @@ begin
                 Wert := to_unsiged(Q(1 downto 0));
                 
                 if rising_edge(Takt) then
+
+                    if Reset = '1' then
+                        Vergleicher_o <= (others => '0');
                     
-                    if Wert = 0 then
+                    elsif Wert = 0 then
                         Vergleicher_o <= Q;
                     end if;
                 end if;
@@ -180,24 +194,27 @@ begin
         begin
             if rising_edge(Takt) then
             
-                if CntLd = '1' then
-                    Wert := to_unsigned(Tra_Anzahl) - 1;
-                end if;
+                CntTC <= '0';
 
-                if CntEn = '1' then 
+                if Reset = '1' then
+                    Wert := (others => '0');
+
+                elsif CntLd = '1' then
+                    Wert := to_unsigned(Tra_Anzahl) - 1;
+                
+                elsif CntEn = '1' then 
                     Wert := Wert - 1;
                 end if; 
 
                 if Wert = 0 then
 					CntTC <= '1';
-				else
-					CntTC <= '0';
-				end if;
+                end if;
+                
             end if;
         end process;
 
         --Beschreibung:
-        AddresMult:process(AdrSel)
+        AddresMult:process(AdrSel, Sour_A_Out, Dest_A_Out)
         begin
             case (AdrSel) is
                 when S => M_ADR_i <= Sour_A_Out;
@@ -220,24 +237,27 @@ begin
         --Beschreibung
         ByteMult:process(Sel_Sou_Byte, Sel_Dest_Byte, M_DAT_I)
         variable Byte       :   std_ulogic_vector(7 downto 0) := (others => '0');
+        variable Wort       :   std_ulogic_vector(31 downto 0) := (others => '0');
 
         begin
 
-            ByteMod_Dat_i <= (others => '0');
+            Wort := (others => '0');
 
             case(Sel_Sou_Byte) is
-                when "00" =>   Byte <= M_DAT_I(7 downto 0);
-                when "01" =>   Byte <= M_DAT_I(15 downto 8);
-                when "10" =>   Byte <= M_DAT_I(23 downto 16);
-                when "11" =>   Byte <= M_DAT_I(31 downto 24);
+                when "00" =>   Byte := M_DAT_I(7 downto 0);
+                when "01" =>   Byte := M_DAT_I(15 downto 8);
+                when "10" =>   Byte := M_DAT_I(23 downto 16);
+                when "11" =>   Byte := M_DAT_I(31 downto 24);
             end case;
 
             case(Sel_Dest_Byte) is
-                when "00" =>    ByteMod_Dat_i(7 downto 0) <= Byte;
-                when "01" =>    ByteMod_Dat_i(15 downto 8) <= Byte;
-                when "10" =>    ByteMod_Dat_i(23 downto 16) <= Byte;
-                when "11" =>    ByteMod_Dat_i(31 downto 24) <= Byte;
+                when "00" =>    Wort(7 downto 0)   := Byte;
+                when "01" =>    Wort(15 downto 8)  := Byte;
+                when "10" =>    Wort(23 downto 16) := Byte;
+                when "11" =>    Wort(31 downto 24) := Byte;
             end case;
+
+            ByteMod_Dat_i <= Wort;
 
         end process;
 
@@ -256,8 +276,11 @@ begin
             end case;
 
             if rising_edge(Takt) then
-
-                if DataEn = '1' then
+                
+                if Reset = '1' then
+                    M_DAT_Out_i <= (others => '0');
+                    
+                elsif DataEn = '1' then
                     M_DAT_Out_i <= OutputData;
                 end if;
             end if;
@@ -352,7 +375,6 @@ begin
                                 Folgezustand <= Z_WAIT;
                             end if;          
             when Z_FERTIG =>
-                            Kanal_Aus <= '1';
                             Folgezustand <= Z_IDLE;
             when Z_ERROR => null;
 
