@@ -10,31 +10,38 @@ use work.txt_util_pack.all;
 architecture testbench of DMA_Kanal_tb is
 
     constant CLOCK_PERIOD : time     := 20 ns;
+    constant DATA_WORT    : std_ulogic_vector(31 downto 0) := x"AABBCCDD";
     
-    signal Source_Addres : std_ulogic_vector(31 downto 0);
-    signal Destination_Addres : std_ulogic_vector(31 downto 0);
+    -----------------Inputs--------------------
+        signal Takt             : std_ulogic;
+        signal Source_Addres    : std_ulogic_vector(31 downto 0);
+    signal Destination_Addres   : std_ulogic_vector(31 downto 0);
     signal Betriebsmodus        : std_ulogic_vector(1 downto 0);
     signal Transfer_Anzahl      : std_ulogic_vector(31 downto 0);
     signal TransferModus        : std_ulogic;
     signal ExEreignisEn         : std_ulogic;
-    signal Reset                : std_ulogic;
+    signal Reset                : std_ulogic := '0';
+    signal S_Ready              : std_ulogic := '0';
+    signal M_Valid              : std_ulogic := '0';
+    signal M_DAT_I              : std_ulogic_vector(31 downto 0);
+    signal M_ACK                : std_ulogic;
+
+
+    ------------OutPuts---------------------
     signal Transfer_Fertig      : std_ulogic;
-    signal S_Ready              : std_ulogic;
-    signal M_Valid              : std_ulogic;
     signal Kanal_Aktiv          : std_ulogic;
-    signal M_STB                : std_ulogic;
+    signal M_STB                : std_ulogic := '0';
     signal M_WE                 : std_ulogic;
     signal M_ADR                : std_ulogic_vector(31 downto 0);
     signal M_SEL                : std_ulogic_vector(3 downto 0);
     signal M_DAT_O              : std_ulogic_vector(31 downto 0);
-    signal M_DAT_I              : std_ulogic_vector(31 downto 0);
-    signal M_ACK                : std_ulogic;
+
 
     type textcase_record is record
         Source_Addres       : std_ulogic_vector(31 downto 0);
         Destination_Addres  : std_ulogic_vector(31 downto 0);
         Betriebsmodus        : std_ulogic_vector(1 downto 0);
-        Transfer_Anzahl      : positive;
+        Transfer_Anzahl      : unsigned(31 downto 0);
         TransferModus        : boolean;
         ExEreignisEn         : boolean;
         Final_Sou_Add        : std_ulogic_vector(31 downto 0);
@@ -42,18 +49,189 @@ architecture testbench of DMA_Kanal_tb is
     end record;
 
     type testcase_vector is array(natural range <>) of textcase_record;
+    type memory_ram is array(natural range <>) of 
 
     constant tests : testcase_vector (0 to 8) := (
 
-        0=> (x"FF004500", x"FF342300", "10", 10, false, true, , x"FF342300"),
-        1=> (x"FF005600", x"00392300", "10", 15, false, false, , x"00392300" ),
-        2=> (x"FF344500", x"FF340000", "10", 20, true, true, , x"FF340000"),
-        3=> (x"FFAC4500", x"FF542300", "10", 10, true, false, ,  x"FF542300"),
-        4=> (x"FFFD4500", x"FF34FF00", "01", 15, false, true, x"FFFD4500" , ),
-        5=> (x"FF00FC00", x"0434AF00", "01", 20, false, false, x"FF00FC00", ),
-        6=> (x"FF000000", x"45343400", "01", 10, true, true, x"FF000000", ),
-        7=> (x"FF001000", x"59342100", "01", 15, true, false, x"FF001000", ),
-        8=> (x"AD004500", x"FD34FA00", "11", 10, false, false, , )         --Muessen wir die falschen Fälle bei Speicher-Speicher auch beruesichtigen?
+        0=> (x"FF00453C", x"FF3423B0", "10", 10, false, true,  x"FF004564", x"FF3423B0"),
+        1=> (x"FF0056A4", x"00392338", "10", 15, false, false, x"FF0056E0", x"00392338"),
+        2=> (x"FF3445E8", x"FF34000C", "10", 20, true, true,   x"FF3445fC", x"FF34000C"),
+        3=> (x"FFAC45D0", x"FF542378", "10", 18, true, false,  x"FFAC45E0", x"FF542378"),
+        4=> (x"FFFD454C", x"FF34FFA4", "01", 30, false, true,  x"FFFD454C", x"FF35001C"),
+        5=> (x"FF00FC20", x"0434AFF0", "01", 24, false, false, x"FF00FC20", x"0434B050"),
+        6=> (x"FF000038", x"4534345C", "01", 13, true, true,   x"FF000038", x"45343468"),
+        7=> (x"FF0010D4", x"593421E8", "01", 35, true, false,  x"FF0010D4", x"59342208"),
+        8=> (x"AD00459C", x"FD34FAF4", "11", 27, false, false, x"AD004608", x"FD34FB60")         --Muessen wir die falschen Fälle bei Speicher-Speicher auch beruesichtigen?
+    );
+
+begin
+
+
+    Stimulate:process
+
+        function to_std_ulogic(x: boolean) return std_ulogic is
+            begin
+                if x then 
+                    return '1';
+                else 
+                    return '0';
+                end if;
+            end function;
+
+
+        procedure execute_test(i: integer; ok: out boolean) is
+            variable ByteCnt : integer := 0;
+        
+        begin
+
+            ok := true;
+
+            wait until falling_edge(Takt)
+            M_Valid     <= '1';
+            Source_Addres       <= tests(i).Source_Addres; 
+            Destination_Addres  <= tests(i).Destination_Addres; 
+            Betriebsmodus       <= tests(i).Betriebsmodus;        
+            Transfer_Anzahl     <= std_ulogic_vector(tests(i).Transfer_Anzahl);      
+            TransferModus       <= to_std_ulogic(tests(i).TransferModus);       
+            ExEreignisEn        <= to_std_ulogic(tests(i).ExEreignisEn);
+            M_DAT_I             <= DATA_WORT;
+
+            loop
+				wait until rising_edge(Takt);
+				if Kanal_Aktiv = '1' then exit;	end if;
+            end loop;
+            
+            for j in 1 to to_integer(tests(i).Transfer_Anzahl)  loop
+
+                if tests(i).ExEreignisEn = '1' then
+                    wait for CLOCK_PERIOD * 2;
+                    S_Ready <= '1';
+                end if;
+
+                wait until falling_edge(Takt);
+                assert M_STB = '1'      report "Bus beim Lesezugriff nicht angesprochen" severity error;
+                assert M_WE = '0'       report "Signal WE beim Lesezugriff auf 1 gesetzt" severity error;
+                assert Kanal_Aktiv = '1' report "Kanal sollte Aktiv sein"   severity error;
+                assert Transfer_Fertig = '0' report "Interrupt sollte noch nicht ausgelöst werden" severity failure;
+
+                case tests(i).TransferModus is
+                    
+                    when false => assert M_SEL = "1111" report "Beim Wortzugriff sollte der SEL Vector 1111 sein" severity error;
+                    when true  =>
+                        case ByteCnt is
+                            when 0 => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
+                            when 1 => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
+                            when 2 => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
+                            when 3 => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
+                            when others => null;
+                        end case;   
+                end case;
+
+
+                --KA ob Adresse am Ende verizifieren oder bei jedem Transfer
+
+                ByteCnt := ByteCnt + 1;
+                if ByteCnt > 3 then ByteCnt = 0; end if;
+
+                S_Ready <= '0';
+
+                wait for CLOCK_PERIOD * (i+1);
+                M_ACK <= '1';
+                
+                wait until falling_edge(Takt);
+
+                assert M_STB = '1'      report "Bus beim Schreibzugriff nicht angesprochen" severity error;
+                assert M_WE = '1'       report "Signal WE beim Schreibugriff auf 0 gesetzt" severity error;
+                assert Kanal_Aktiv = '1' report "Kanal sollte Aktiv sein"   severity error;
+                assert Transfer_Fertig = '0' report "Interrupt sollte noch nicht ausgelöst werden" severity failure;
+
+                case tests(i).TransferModus is
+                    
+                    when false => assert M_SEL = "1111" report "Beim Wortzugriff sollte der SEL Vector 1111 sein" severity error;
+                    when true  =>
+                        case ByteCnt is
+                            when 0 => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
+                            when 1 => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
+                            when 2 => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
+                            when 3 => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
+                            when others => null;
+                        end case;   
+                end case;
+                
+
+
+
+
+
+
+
+
+            
+            end loop;
+
+        
+        
+        
+        end procedure;
+
+    begin 
+
+
+
+
+
+    end process;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    clocking: process
+    begin
+        Takt <= '0';
+        wait for CLOCK_PERIOD / 2;
+        Takt <= '1';
+        wait for CLOCK_PERIOD / 2;
+    end process;
+
+    DUT: entity work.DMA_Kanal
+    port map(
+        Takt            =>  Takt,
+
+        Sou_ADR         =>  Source_Addres,
+        Des_ADR         =>  Destination_Addres,
+        Tra_Anzahl      =>  Transfer_Anzahl,
+        BetriebsMod     =>  Betriebsmodus,
+        Tra_Modus       =>  TransferModus,
+        Ex_EreigEn      =>  ExEreignisEn,
+        Reset           =>  Reset,
+        Tra_Fertig      =>  Transfer_Fertig,  
+
+        S_Ready         =>  S_Ready,
+        M_Valid         =>  M_Valid,
+        Kanal_Aktiv     =>  Kanal_Aktiv,
+
+        M_STB           =>  M_STB,
+        M_WE            =>  M_WE,
+        M_ADR           =>  M_ADR,
+        M_SEL           =>  M_SEL,
+        M_DAT_O         =>  M_DAT_O,
+        M_DAT_I         =>  M_DAT_I,
+        M_ACK           =>  M_ACK
     );
 
 
