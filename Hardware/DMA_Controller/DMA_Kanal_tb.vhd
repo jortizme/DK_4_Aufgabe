@@ -13,8 +13,8 @@ architecture testbench of DMA_Kanal_tb is
     constant DATA_WORT    : std_ulogic_vector(31 downto 0) := x"AABBCCDD";
     
     -----------------Inputs--------------------
-    signal Takt             : std_ulogic;
-    signal Source_Addres    : std_ulogic_vector(31 downto 0);
+    signal Takt                 : std_ulogic;
+    signal Source_Addres        : std_ulogic_vector(31 downto 0);
     signal Destination_Addres   : std_ulogic_vector(31 downto 0);
     signal Betriebsmodus        : std_ulogic_vector(1 downto 0);
     signal Transfer_Anzahl      : std_ulogic_vector(31 downto 0);
@@ -24,7 +24,7 @@ architecture testbench of DMA_Kanal_tb is
     signal S_Ready              : std_ulogic := '0';
     signal M_Valid              : std_ulogic := '0';
     signal M_DAT_I              : std_ulogic_vector(31 downto 0);
-    signal M_ACK                : std_ulogic;
+    signal M_ACK                : std_ulogic := '0';
 
 
     ------------OutPuts---------------------
@@ -106,7 +106,7 @@ begin
 
                 wait for 40 ns;
 
-------------------- Lesevorgang -----------------------------------
+--------------------- Lesevorgang -----------------------------------
                 wait until falling_edge(Takt);
 
                 assert M_STB = '1'      report "Bus beim Lesezugriff nicht angesprochen" severity error;
@@ -126,16 +126,11 @@ begin
                                 when 1 => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
                                 when 2 => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
                                 when 3 => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
-                                when others => null;
+                                when others => report "Falsch gezaehlt intern" severity error;
                             end case;   
 
                         elsif tests(i).Betriebsmodus = "01" then
-                            case tests(i).Source_Addres(1 downto 0) is                   
-                                when "00" => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
-                                when "01" => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
-                                when "10" => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
-                                when "11" => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
-                            end case;
+                                assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
                         end if;
 
                 end case;
@@ -143,9 +138,6 @@ begin
                 if j = to_integer(tests(i).Transfer_Anzahl) then
                     assert M_ADR = tests(i).Final_Sou_Add report "Die letzte SourceAdresse ist falsch" severity failure;
                 end if;
-
-
-                --KA ob Adresse am Ende verizifieren oder bei jedem Transfer
 
                 wait until falling_edge(Takt);
                 S_Ready <= '0';
@@ -156,10 +148,10 @@ begin
 
                 wait for 40 ns;
 
+                M_ACK <= '0';
+
 --------------Schreibvorgang---------------------
                 wait until falling_edge(Takt);
-
-                M_ACK <= '0';
 
                 assert M_STB = '1'      report "Bus beim Schreibzugriff nicht angesprochen" severity error;
                 assert M_WE = '1'       report "Signal WE beim Schreibugriff auf 0 gesetzt" severity error;
@@ -206,7 +198,7 @@ begin
                 end case;
 
                 if j = to_integer(tests(i).Transfer_Anzahl) then
-                    assert M_ADR = tests(i).Final_Dest_Add report "Die letzte SourceAdresse ist falsch" severity failure;
+                    assert M_ADR = tests(i).Final_Dest_Add report "Die letzte Destination-Adresse ist falsch" severity failure;
                 end if;
 
                 wait for CLOCK_PERIOD * (i+1);
@@ -228,7 +220,7 @@ begin
             end loop;
 
             wait until falling_edge(Takt);
-            report Kanal_Aktiv = '0' report "In Idle soll der Kanal ausgeschaltet sein" severity error;
+            report Kanal_Aktiv = '0' report "Am Ende des Transfers soll der Kanal ausgeschaltet sein" severity error;
 
         end procedure;
 
@@ -279,8 +271,5 @@ begin
         M_DAT_I         =>  M_DAT_I,
         M_ACK           =>  M_ACK
     );
-
-
-
 
 end architecture;
