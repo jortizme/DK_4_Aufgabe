@@ -184,15 +184,20 @@ begin
 
         --Beschreibung:
         Block_A: process(BetriebsMod, AdrSel, Vergleicher_o, M_ADR_i)
+        variable Q : std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
         begin 
 
             if ((BetriebsMod = "10" and AdrSel = S) or (BetriebsMod = "01" and AdrSel = D )) then
                 ByteMod_Addr_i <= Vergleicher_o;
+                
             elsif ((BetriebsMod = "10" and AdrSel = D) or (BetriebsMod = "01" and AdrSel = S)) then
-                ByteMod_Addr_i <= M_ADR_i;
+                Q := M_ADR_i;
+                if Q (1 downto 0) /= "00" then
+                    Q(1 downto 0) := "00";
+                end if;
+                ByteMod_Addr_i <= Q;
             else 
                 ByteMod_Addr_i <= (others => '0');
-
             end if;
 
         end process;
