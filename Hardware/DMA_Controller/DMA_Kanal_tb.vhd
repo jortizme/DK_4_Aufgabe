@@ -91,6 +91,7 @@ begin
 
         procedure execute_test(i: integer) is
             variable ByteCnt : integer := 0;
+            variable M_Sel_i : std_ulogic_vector(3 downto 0) := (others => '0');
         begin
 
             wait until falling_edge(Takt);
@@ -140,11 +141,20 @@ begin
                                 when 1 => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
                                 when 2 => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
                                 when 3 => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
-                                when others => report "Falsch gezaehlt intern" severity error;
+                                when others => report "Falsch gezaehlt intern" severity failure;
                             end case;   
 
-                        --elsif tests(i).Betriebsmodus = "01" then
-                         --       assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
+                        elsif tests(i).Betriebsmodus = "01" then
+
+                            case tests(i).Source_Addres(1 downto 0) is
+                                when "00" => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
+                                when "01" => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
+                                when "10" => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
+                                when "11" => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
+                                when others => report "Komische Werte bei den letzten Bits der Sourceadresse" severity failure;
+                            end case;
+
+                            M_Sel_i := M_SEL;
                         end if;
 
                 end case;
@@ -172,44 +182,104 @@ begin
                 assert Kanal_Aktiv = '1' report "Kanal sollte Aktiv sein"   severity error;
                 assert Transfer_Fertig = '0' report "Interrupt sollte noch nicht ausgelöst werden" severity failure;
 
-                --case tests(i).TransferModus is
+                case tests(i).TransferModus is
                     
-                  --  when false => 
-                   --     assert M_SEL = "1111" report "Beim Wortzugriff sollte der SEL Vector 1111 sein" severity error;
-                   --     assert M_DAT_O =  x"AABBCCDD" report "Falsches Wort gesendet" severity failure;
+                    when false => 
+                        assert M_SEL = "1111" report "Beim Wortzugriff sollte der SEL Vector 1111 sein" severity error;
+                        assert M_DAT_O =  x"AABBCCDD" report "Falsches Wort gesendet" severity failure;
 
-                   -- when true  =>
-                  --  if tests(i).Betriebsmodus = "01" then
-                      --  case ByteCnt is
-                      --      when 0 => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
-                      --                  assert M_DAT_O =  x"000000DD" report "Falsches Byte gesendet" severity failure;
-                       --     when 1 => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
-                        --                assert M_DAT_O =  x"0000DD00" report "Falsches Byte gesendet" severity failure;
-                         --   when 2 => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
-                         --               assert M_DAT_O =  x"00DD0000" report "Falsches Byte gesendet" severity failure;
-                        --    when 3 => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
-                        --                assert M_DAT_O =  x"DD000000" report "Falsches Byte gesendet" severity failure;
-                      --  --    when others => report "Falsch gezaehlt intern" severity error;
-                       -- end case;   
+                    when true  =>
+                    if tests(i).Betriebsmodus = "01" then
+                        case ByteCnt is
+                            when 0 => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
+                                case M_Sel_i is
 
-                    --elsif tests(i).Betriebsmodus = "10" then
+                                    when "0001" => assert M_DAT_O =  x"000000DD" report "Falsches Byte gesendet" severity failure;
+                                    when "0010" => assert M_DAT_O =  x"000000CC" report "Falsches Byte gesendet" severity failure;
+                                    when "0100" => assert M_DAT_O =  x"000000BB" report "Falsches Byte gesendet" severity failure;
+                                    when "1000" => assert M_DAT_O =  x"000000AA" report "Falsches Byte gesendet" severity failure;
+                                    when others => null;
+                                end case;
+
+                            when 1 => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
+                                case M_Sel_i is
+
+                                    when "0001" => assert M_DAT_O =  x"0000DD00" report "Falsches Byte gesendet" severity failure;
+                                    when "0010" => assert M_DAT_O =  x"0000CC00" report "Falsches Byte gesendet" severity failure;
+                                    when "0100" => assert M_DAT_O =  x"0000BB00" report "Falsches Byte gesendet" severity failure;
+                                    when "1000" => assert M_DAT_O =  x"0000AA00" report "Falsches Byte gesendet" severity failure;
+                                    when others => null;
+                                end case;
+
+                            when 2 => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
+                                case M_Sel_i is
+
+                                    when "0001" => assert M_DAT_O =  x"00DD0000" report "Falsches Byte gesendet" severity failure;
+                                    when "0010" => assert M_DAT_O =  x"00CC0000" report "Falsches Byte gesendet" severity failure;
+                                    when "0100" => assert M_DAT_O =  x"00BB0000" report "Falsches Byte gesendet" severity failure;
+                                    when "1000" => assert M_DAT_O =  x"00AA0000" report "Falsches Byte gesendet" severity failure;
+                                    when others => null;
+                                end case;
+                            when 3 => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
+                                case M_Sel_i is
+
+                                    when "0001" => assert M_DAT_O =  x"DD000000" report "Falsches Byte gesendet" severity failure;
+                                    when "0010" => assert M_DAT_O =  x"CC000000" report "Falsches Byte gesendet" severity failure;
+                                    when "0100" => assert M_DAT_O =  x"BB000000" report "Falsches Byte gesendet" severity failure;
+                                    when "1000" => assert M_DAT_O =  x"AA000000" report "Falsches Byte gesendet" severity failure;
+                                    when others => null;
+                                end case;
+                            when others => report "Falsch gezaehlt intern" severity error;
+                        end case;   
+
+                    elsif tests(i).Betriebsmodus = "10" then
                         
-                          --  if tests(i).Destination_Addres(1 downto 0) = "00" then
+                            if tests(i).Destination_Addres(1 downto 0) = "00" then
 
-                            --assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
+                            case ByteCnt is
+                            
+                                when 0 => 
+                                    case M_SEL is
 
-                           -- case ByteCnt is
+                                        when "0001" => assert M_DAT_O =  x"000000DD" report "Falsches Byte gesendet" severity failure;
+                                        when "0010" => assert M_DAT_O =  x"0000DD00" report "Falsches Byte gesendet" severity failure;
+                                        when "0100" => assert M_DAT_O =  x"00DD0000" report "Falsches Byte gesendet" severity failure;
+                                        when "1000" => assert M_DAT_O =  x"DD000000" report "Falsches Byte gesendet" severity failure;
+                                        when others => null;
+                                    end case;
+                                when 1 => 
+                                    case M_SEL is
+
+                                        when "0001" => assert M_DAT_O =  x"000000CC" report "Falsches Byte gesendet" severity failure;
+                                        when "0010" => assert M_DAT_O =  x"0000CC00" report "Falsches Byte gesendet" severity failure;
+                                        when "0100" => assert M_DAT_O =  x"00CC0000" report "Falsches Byte gesendet" severity failure;
+                                        when "1000" => assert M_DAT_O =  x"CC000000" report "Falsches Byte gesendet" severity failure;
+                                        when others => null;
+                                    end case;
+                                when 2 => 
+                                    case M_SEL is
+
+                                        when "0001" => assert M_DAT_O =  x"000000BB" report "Falsches Byte gesendet" severity failure;
+                                        when "0010" => assert M_DAT_O =  x"0000BB00" report "Falsches Byte gesendet" severity failure;
+                                        when "0100" => assert M_DAT_O =  x"00BB0000" report "Falsches Byte gesendet" severity failure;
+                                        when "1000" => assert M_DAT_O =  x"BB000000" report "Falsches Byte gesendet" severity failure;
+                                        when others => null;
+                                    end case;
+                                when 3 => 
+                                    case M_SEL is
+
+                                        when "0001" => assert M_DAT_O =  x"000000AA" report "Falsches Byte gesendet" severity failure;
+                                        when "0010" => assert M_DAT_O =  x"0000AA00" report "Falsches Byte gesendet" severity failure;
+                                        when "0100" => assert M_DAT_O =  x"00AA0000" report "Falsches Byte gesendet" severity failure;
+                                        when "1000" => assert M_DAT_O =  x"AA000000" report "Falsches Byte gesendet" severity failure;
+                                        when others => null;
+                                    end case;
+                                when others => report "Falsch gezaehlt intern" severity error;
+                            end case;
                             
-                            --    when 0 => assert M_DAT_O =  x"000000DD" report "Falsches Byte gesendet" severity failure;
-                            --    when 1 => assert M_DAT_O =  x"000000CC" report "Falsches Byte gesendet" severity failure;
-                            --    when 2 => assert M_DAT_O =  x"000000BB" report "Falsches Byte gesendet" severity failure;
-                            --    when 3 => assert M_DAT_O =  x"000000AA" report "Falsches Byte gesendet" severity failure;
-                            --    when others => report "Falsch gezaehlt intern" severity error;
-                           -- end case;
-                            
-                          --  end if;
-                   -- end if;
-                --end case;
+                            end if;
+                    end if;
+                end case;
 
                 if j = tests(i).Transfer_Anzahl then
                     assert M_ADR = tests(i).Final_Dest_Add report "Die letzte Destination-Adresse ist falsch" severity failure;

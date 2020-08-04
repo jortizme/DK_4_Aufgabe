@@ -56,5 +56,5 @@ add wave 			  /dma_kanal_tb/DUT/CntLd
 add wave 			  /dma_kanal_tb/DUT/DataEn
 add wave 			  /dma_kanal_tb/DUT/CntTC
 
-run 150 us
+run 300 us
 wave zoom full
