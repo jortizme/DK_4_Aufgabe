@@ -9,11 +9,16 @@
 --
 -- Bits = AnzahlBits - 1
 --
--- Kodierung Stoppbits:
---   00 - 1   Stoppbits
---   01 - 1,5 Stobbits
---   10 - 2   Stoppbits
---   11 - 2,5 Stoppbits
+-- Betriebsmodus:
+--   00 - *Nicht definiet*
+--   01 - Peripherie-Speicher
+--   10 - Speicher-Peripherie
+--   11 - Speicher-Speicher
+
+-- Byte_Trans
+-- 0 - False, es werden wortweise übertragen
+-- 1 - True, es werden byteweise übertragen
+
 -------------------------------------------------------------------------------
 
 library ieee;
@@ -32,7 +37,7 @@ entity DMA_Kanal is
         Des_ADR         : in std_ulogic_vector(BUSWIDTH - 1 downto 0);
         Tra_Anzahl      : in std_ulogic_vector(WORDWIDTH - 1 downto 0);
         BetriebsMod     : in std_ulogic_vector(1 downto 0);
-        Tra_Modus       : in std_ulogic;
+        Byte_Trans      : in std_ulogic;
         Ex_EreigEn      : in std_ulogic;
         Reset           : in std_ulogic;
         Tra_Fertig      : out std_ulogic;
@@ -80,7 +85,7 @@ begin
         signal Dest_A_Out    :   std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
         signal Sel_Sou_Byte  :   std_ulogic_vector(1 downto 0);
         signal Sel_Dest_Byte :  std_ulogic_vector(1 downto 0);
-        signal Sel_SelVektor :  std_ulogic_vector(1 downto 0);
+        signal Zwei_Bits_Adr :  std_ulogic_vector(1 downto 0);
         signal ByteMod_Addr_i  :  std_ulogic_vector(BUSWIDTH - 1 downto 0);
         signal ByteMod_Dat_i :  std_ulogic_vector(WORDWIDTH - 1 downto 0); 
         signal Vergleicher_o :  std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
@@ -88,17 +93,17 @@ begin
 
     begin
 
-        Sel_SelVektor <= M_ADR_i(1 downto 0);
+        Zwei_Bits_Adr <= M_ADR_i(1 downto 0);
         Sel_Sou_Byte  <= Sour_A_Out(1 downto 0);
         Sel_Dest_Byte <= Dest_A_Out(1 downto 0);
 
-        --Wer des internen Signals an Port zuweisen
+        --Wert des internen Signals an Port zuweisen
         process(M_DAT_Out_i)
         begin
             M_DAT_O  <= M_DAT_Out_i;
         end process;
 
-        --Beschreibung:
+        --Beschreibung: Speichert die Source-Adresse und erhöht sie 
         SourceAdrRegister: process(Takt)
             variable Adresse :  unsigned(31 downto 0) := (others => '0');
         begin
@@ -113,7 +118,7 @@ begin
 
                 elsif SourceEn = '1' then
 
-                    if Tra_Modus = '0' then
+                    if Byte_Trans = '0' then
                         Adresse := Adresse  + 4;
                     else
                         Adresse := Adresse  + 1;
@@ -126,7 +131,7 @@ begin
 
         end process;
 
-        --Beschreibung:
+        --Beschreibung: Speichert die Destination-Adresse und erhöht sie 
         DestAdrRegister: process(Takt)
             variable Adresse :  unsigned(31 downto 0) := (others => '0');
         begin
@@ -141,7 +146,7 @@ begin
 
                 elsif DestEn = '1' then
 
-                    if Tra_Modus = '0' then
+                    if Byte_Trans = '0' then
                         Adresse := Adresse  + 4;
                     else
                         Adresse := Adresse  + 1;
@@ -154,7 +159,8 @@ begin
 
         end process;
 
-        --Beschreibung: 
+        --Beschreibung: Speichert den Wert der Adresse, deren letzten beiden Bits 
+        --mit "00" enden. Erforderlich im byteweisen Transfer. 
         Addresvergleicher: process(Takt)
             variable Q : std_ulogic_vector(31 downto 0);
             variable Wert : unsigned(1 downto 0) := (others => '-');
@@ -176,13 +182,11 @@ begin
                     elsif Wert = 0 then
                         Vergleicher_o <= Q;
                     end if;
-
                 end if;
-            
-
         end process;
 
-        --Beschreibung:
+        --Beschreibung: Kombinatorischer Block zur Bestimmung der M_Adr im
+        --byteweisen Transfer.
         Block_A: process(BetriebsMod, AdrSel, Vergleicher_o, M_ADR_i)
         variable Q : std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
         begin 
@@ -227,7 +231,7 @@ begin
             end if;
         end process;
 
-        --Beschreibung:
+        --Beschreibung: Bestimmt die interne M_ADR
         AddresMult:process(AdrSel, Sour_A_Out, Dest_A_Out)
         begin
             case (AdrSel) is
@@ -237,10 +241,10 @@ begin
             end case;
         end process;
 
-        --Beschreibung:
-        SelMult:process(Sel_SelVektor)
+        --Beschreibung: Bestimmt den internen Sel_Vektor
+        SelMult:process(Zwei_Bits_Adr)
         begin
-            case(Sel_SelVektor) is
+            case(Zwei_Bits_Adr) is
                 when "00" =>   M_SEL_i <= "0001";  
                 when "01" =>   M_SEL_i <= "0010"; 
                 when "10" =>   M_SEL_i <= "0100"; 
@@ -249,7 +253,8 @@ begin
             end case;
         end process;
 
-        --Beschreibung
+        --Beschreibung: Bestimmt welches Byte wird im Lesevorgang gelesen, und
+        --in welche Position soll es im Schreibvorgang verchoben werden
         ByteMult:process(Sel_Sou_Byte, Sel_Dest_Byte, M_DAT_I)
         variable Byte       :   std_ulogic_vector(7 downto 0) := (others => '0');
         variable Wort       :   std_ulogic_vector(31 downto 0) := (others => '0');
@@ -278,11 +283,11 @@ begin
 
         end process;
 
-        --Beschreibung
-        OutputMult: process(M_ADR_i,ByteMod_Addr_i,M_SEL_i,ByteMod_Dat_i,Tra_Modus)
+        --Beschreibung: Schaltet die Signale zum Bus
+        OutputMult: process(M_ADR_i,ByteMod_Addr_i,M_SEL_i,ByteMod_Dat_i, Byte_Trans)
         
         begin
-            case(Tra_Modus) is
+            case(Byte_Trans) is
                 when '0'    =>  M_SEL <= "1111";
                                 M_ADR  <= M_ADR_i;
                                 OutputData_i <= M_DAT_I;
@@ -295,6 +300,8 @@ begin
 
         end process;
         
+        --Beschreibung: Speichert den gelesenen Wert um ihn im Schreibvorgang
+        --zu senden
         Output_Data_Reg: process(Takt)
         begin
 
@@ -356,7 +363,7 @@ begin
         case( Zustand ) is
 
             when Z_IDLE =>  
-                            if M_Valid = '0' then
+                            if M_Valid = '0' or BetriebsMod = "00" or (BetriebsMod = "11" and Byte_Trans = '1') then
                                 Folgezustand <= Z_IDLE;
 
                             elsif M_Valid = '1' then
