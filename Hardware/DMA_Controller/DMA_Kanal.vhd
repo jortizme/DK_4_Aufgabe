@@ -5,12 +5,9 @@
 -- Hochschule Osnabrueck
 -- Joaquin Ortiz, Filip Mijac
 -------------------------------------------------------------------------------
--- BitBreiteM1 = (Taktfrequenz / Baudrate) - 1
---
--- Bits = AnzahlBits - 1
 --
 -- Betriebsmodus:
---   00 - *Nicht definiet*
+--   00 - *Nicht definiert*
 --   01 - Peripherie-Speicher
 --   10 - Speicher-Peripherie
 --   11 - Speicher-Speicher
@@ -41,6 +38,7 @@ entity DMA_Kanal is
         Ex_EreigEn      : in std_ulogic;
         Reset           : in std_ulogic;
         Tra_Fertig      : out std_ulogic;
+        Tra_Anzahl_Stand: out std_ulogic_vector(WORDWIDTH - 1 downto 0);
 
         S_Ready         : in std_ulogic;
         M_Valid         : in std_ulogic;
@@ -208,7 +206,7 @@ begin
 
         --Zähler
         Zaehler:process(Takt)
-            variable Wert : unsigned(31 downto 0) := (others => '0');
+            variable Wert : unsigned(WORDWIDTH - 1 downto 0) := (others => '0');
         begin
             if rising_edge(Takt) then
             
@@ -227,6 +225,8 @@ begin
                 if Wert = 0 then
 					CntTC <= '1';
                 end if;
+
+                Tra_Anzahl_Stand <= std_ulogic_vector(Wert);
                 
             end if;
         end process;
