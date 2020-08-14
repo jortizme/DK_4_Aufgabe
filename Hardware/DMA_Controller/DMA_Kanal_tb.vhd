@@ -162,10 +162,10 @@ architecture testbench of DMA_Kanal_tb is
     
     -----------------Eingaenge--------------------
     signal Takt                 : std_ulogic;
-    signal Source_Addres        : std_ulogic_vector(BUSWIDTH - 1 downto 0);
-    signal Destination_Addres   : std_ulogic_vector(BUSWIDTH - 1 downto 0);
+    signal Sou_W                : std_ulogic := '0';
+    signal Dest_W               : std_ulogic := '0';
+    signal Tra_Anz_W            : std_ulogic := '0';
     signal Betriebsmodus        : std_ulogic_vector(1 downto 0);
-    signal Transfer_Anzahl      : std_ulogic_vector(WORDWIDTH - 1 downto 0);
     signal Byte_Transfer        : std_ulogic;
     signal ExEreignisEn         : std_ulogic;
     signal Reset                : std_ulogic := '0';
@@ -176,6 +176,7 @@ architecture testbench of DMA_Kanal_tb is
 
 
     ------------Ausgaenge---------------------
+    signal Tra_Anzahl_Stand     : std_ulogic_vector(WORDWIDTH - 1 downto 0); 
     signal Transfer_Fertig      : std_ulogic;
     signal Kanal_Aktiv          : std_ulogic;
     signal M_STB                : std_ulogic;
@@ -245,11 +246,32 @@ begin
             variable Wort_i  : std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
         begin
 
+           -- M_DAT_I       <= tests(i).Source_Addres; 
+            --Sou_W         <= '1';
+
+            M_DAT_I  <= tests(i).Destination_Addres;
+            Dest_W         <= '1';
+
             wait until falling_edge(Takt);
-            Source_Addres       <= tests(i).Source_Addres; 
-            Destination_Addres  <= tests(i).Destination_Addres; 
+            
+            --Sou_W         <= '0';
+            --M_DAT_I  <= tests(i).Destination_Addres;
+            --Dest_W         <= '1';
+            Dest_W         <= '0';
+            M_DAT_I       <= tests(i).Source_Addres; 
+            Sou_W         <= '1';
+
+            wait until falling_edge(Takt);
+            
+            Sou_W         <= '0';
+            --Dest_W      <= '0';
+            M_DAT_I     <= std_ulogic_vector(to_unsigned(tests(i).Transfer_Anzahl,WORDWIDTH));     
+            Tra_Anz_W   <= '1';
+
+            wait until falling_edge(Takt);
+
+            Tra_Anz_W   <= '0';
             Betriebsmodus       <= tests(i).Betriebsmodus;        
-            Transfer_Anzahl     <= std_ulogic_vector(to_unsigned(tests(i).Transfer_Anzahl,WORDWIDTH));      
             Byte_Transfer       <= to_std_ulogic(tests(i).Byte_Transfer);       
             ExEreignisEn        <= to_std_ulogic(tests(i).ExEreignisEn);
             M_DAT_I             <= DATA_WORT;
@@ -389,11 +411,25 @@ begin
         procedure execute_error_test(i : integer) is
         begin
 
+            M_DAT_I       <= tests(i).Source_Addres; 
+            Sou_W         <= '1';
+
             wait until falling_edge(Takt);
-            Source_Addres       <= error_tests(i).Source_Addres; 
-            Destination_Addres  <= error_tests(i).Destination_Addres; 
-            Betriebsmodus       <= error_tests(i).Betriebsmodus;        
-            Transfer_Anzahl     <= std_ulogic_vector(to_unsigned(error_tests(i).Transfer_Anzahl,WORDWIDTH));      
+
+            M_DAT_I  <= tests(i).Destination_Addres;
+            Sou_W         <= '0';
+            Dest_W         <= '1';
+
+            wait until falling_edge(Takt);
+
+            M_DAT_I     <= std_ulogic_vector(to_unsigned(tests(i).Transfer_Anzahl,WORDWIDTH));     
+            Dest_W      <= '0';
+            Tra_Anz_W   <= '1';
+
+            wait until falling_edge(Takt);
+
+            Tra_Anz_W   <= '0'; 
+            Betriebsmodus       <= error_tests(i).Betriebsmodus;           
             Byte_Transfer       <= to_std_ulogic(error_tests(i).Byte_Transfer);       
             ExEreignisEn        <= to_std_ulogic(error_tests(i).ExEreignisEn);
             M_DAT_I             <= DATA_WORT;
@@ -441,17 +477,18 @@ begin
     )
     port map(
         Takt            =>  Takt,
-
-        Sou_ADR         =>  Source_Addres,
-        Des_ADR         =>  Destination_Addres,
-        Tra_Anzahl      =>  Transfer_Anzahl,
+    
         BetriebsMod     =>  Betriebsmodus,
         Byte_Trans      =>  Byte_Transfer,
         Ex_EreigEn      =>  ExEreignisEn,
         Reset           =>  Reset,
-        Tra_Fertig      =>  Transfer_Fertig,  
+        Tra_Fertig      =>  Transfer_Fertig,
+        Tra_Anzahl_Stand => Tra_Anzahl_Stand,  
 
         S_Ready         =>  S_Ready,
+        Sou_W           => Sou_W,
+        Dest_W          => Dest_W,
+        Tra_Anz_W       => Tra_Anz_W,
         M_Valid         =>  M_Valid,
         Kanal_Aktiv     =>  Kanal_Aktiv,
 

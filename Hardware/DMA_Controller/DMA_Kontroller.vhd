@@ -56,8 +56,9 @@ architecture rtl of DMA_Kontroller is
     signal M0_ACK           : std_ulogic;
 
     signal TRA0_ANZ_STD      : std_ulogic_vector(WORDWIDTH - 1 downto 0);
-    signal M0_Valid          : std_ulogic := '0';
+  --  signal M0_Valid          : std_ulogic := '0';
     signal TRA0_Fertig       : std_ulogic := '0';
+    signal RS0               : std_ulogic := '0';
 
     signal M1_STB           : std_ulogic;
     signal M1_WE            : std_ulogic;
@@ -68,18 +69,14 @@ architecture rtl of DMA_Kontroller is
     signal M1_ACK           : std_ulogic;
 
     signal TRA1_ANZ_STD      : std_ulogic_vector(WORDWIDTH - 1 downto 0);
-    signal M1_Valid          : std_ulogic := '0';
+ --   signal M1_Valid          : std_ulogic := '0';
     signal TRA1_Fertig       : std_ulogic := '0';
+    signal RS1               : std_ulogic := '0';
 
-    signal Status    : std_logic_vector(31 downto 0) := (others=>'0');
-    signal SAR0      : std_logic_vector(31 downto 0) := (others=>'0');
-    signal DESTR0    : std_logic_vector(31 downto 0) := (others=>'0');
-    signal TRAA0        : std_logic_vector(31 downto 0) := (others=>'0');
-    signal CR0      : std_logic_vector(31 downto 0) := (others=>'0');
-    signal SAR1      : std_logic_vector(31 downto 0) := (others=>'0');
-    signal DESTR1    : std_logic_vector(31 downto 0) := (others=>'0');
-    signal TRAA1  : std_logic_vector(31 downto 0) := (others=>'0');
-    signal CR1    : std_logic_vector(31 downto 0) := (others=>'0');
+    signal Status    : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
+    signal CR0      : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
+    signal CR1    : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
+
     signal EnSAR0   : std_ulogic;
     signal EnDEST0   : std_ulogic;
     signal EnTRAA0   : std_ulogic;
@@ -96,22 +93,11 @@ begin
 
     S_ACK <= S_STB;
 
-    Kanal1_Interrupt <= CR0(4) and TRA0_Fertig;
-    Kanal2_Interrupt <= CR1(4) and TRA1_Fertig;
+    Kanal1_Interrupt <= CR0(4) and RS0;
+    Kanal2_Interrupt <= CR1(4) and RS1;
 
     Status(2) <= Kanal1_Interrupt;
     Status(3) <= Kanal2_Interrupt;
-
-    process (CR0, CR1)
-    begin
-        if CR0(0) = '1' then
-            M0_Valid <= '1';
-            CR0(0) <= '0';
-        elsif CR1(0) = '1' then
-            M1_Valid <= '1';
-            CR1(0) <= '0';
-        end if;
-    end process;
 
     Decoder: process(S_STB, S_ADR, S_WE)
 	begin
@@ -138,6 +124,7 @@ begin
                     when x"18" => EnTRAA1 <= '1';
                     when x"1C" => EnCR1 <= '1';
                     when others => null;
+                end case;
 
   ----ZUnaechst NOCH NICHTS BEI WE = 0              
 			elsif S_WE = '0' then
@@ -160,89 +147,81 @@ begin
 		end if;		
 	end process;
 
-    
-    SAR0: process(Takt)
-    begin
-        if rising_edge(Takt) then
-            if Reset = '1' then
-				SAR0 <= x"00000000";
-			elsif EnSAR0 = '1' then
-				SAR0 <= S_DAT_I;
-        end if;
-    end process;
-
-    DESTR0: process(Takt)
-    begin
-        if rising_edge(Takt) then
-            if Reset = '1' then
-				DESTR0 <= x"00000000";
-			elsif EnDEST0 = '1' then
-				DESTR0 <= S_DAT_I;
-        end if;
-    end process;
-
-    TRAA0: process(Takt)
-    begin
-        if rising_edge(Takt) then
-            if Reset = '1' then
-				TRAA0 <= x"00000000";
-			elsif EnTRAA0 = '1' then
-				TRAA0 <= S_DAT_I;
-        end if;
-    end process;
-
     CR0: process(Takt)
     begin
         if rising_edge(Takt) then
 
             M0_Valid <= '0';
+            CR0(0) <= '0';
+            CR0(6) <= '0';
+
             if Reset = '1' then
 				CR0 <= x"00000000";
-			elsif EnCR0 = '1' then
+            elsif EnCR0 = '1' then
+                if S_DAT_I(0) = '1' and RS0 = '1' then -- um zu versichern, dass der Interrupt quittiert wurde
+                CR0(0) <= '0';
+            end if;
+            
                 CR0 <= S_DAT_I;
+            end if;
         end if;
     end process;
 
-    SAR1: process(Takt)
+-- ACHTUNG: Diese RS-Flip-FLop reagiert auf die beiden Flanken
+    RS0: process(Takt)
+    variable tmp : std_ulogic := '0';
     begin
-        if rising_edge(Takt) then
-            if Reset = '1' then
-				SAR1 <= x"00000000";
-			elsif EnSAR1 = '1' then
-				SAR1 <= S_DAT_I;
-        end if;
-    end process;
 
-    DESTR1: process(Takt)
-    begin
-        if rising_edge(Takt) then
-            if Reset = '1' then
-				DESTR1 <= x"00000000";
-			elsif EnDEST1 = '1' then
-				DESTR1 <= S_DAT_I;
+        if(CR0(6) = '0' and TRA0_Fertig = '0') then
+            tmp := tmp;
+        elsif (CR0(6) = '1' and TRA0_Fertig = '1') then
+            tmp := 'X';
+        elsif (CR0(6) = '0' and TRA0_Fertig = '1') then
+            tmp := '1';
+        else
+            tmp := '0';
         end if;
-    end process;
 
-    TRAA1: process(Takt)
-    begin
-        if rising_edge(Takt) then
-            if Reset = '1' then
-				TRAA1 <= x"00000000";
-			elsif EnTRAA1 = '1' then
-				TRAA1 <= S_DAT_I;
-        end if;
+            RS0 <= tmp;
     end process;
 
     CR1: process(Takt)
     begin
         if rising_edge(Takt) then
+
             M1_Valid <= '0';
+            CR1(0) <= '0';
+            CR1(6) <= '0';
 
             if Reset = '1' then
 				CR1 <= x"00000000";
-			elsif EnCR1 = '1' then
+            elsif EnCR1 = '1' then
+
+                if S_DAT_I(0) = '1' and RS0 = '1' then -- um zu versichern, dass der Interrupt quittiert wurde
+                    CR1(0) <= '0';
+                end if;
+
                 CR1 <= S_DAT_I;
+            end if;
         end if;
+    end process;
+
+-- ACHTUNG: Diese RS-Flip-FLop reagiert auf die beiden Flanken
+    RS1: process(Takt)
+    variable tmp : std_ulogic := '0';
+    begin
+
+        if(CR1(6) = '0' and TRA1_Fertig = '0') then
+            tmp := tmp;
+        elsif (CR1(6) = '1' and TRA1_Fertig = '1') then
+            tmp := 'X';
+        elsif (CR1(6) = '0' and TRA1_Fertig = '1') then
+            tmp := '1';
+        else
+            tmp := '0';
+        end if;
+
+            RS1 <= tmp;
     end process;
 
     Kanal1: entity work.DMA_Kanal
@@ -252,9 +231,6 @@ begin
     )port map(
         Takt           => Takt
 
-        Sou_ADR         => SAR0,
-        Des_ADR         => DESTR0,
-        Tra_Anzahl      => TRAA0,
         BetriebsMod     => CR0(2 downto 1),
         Byte_Trans      => CR0(3),
         Ex_EreigEn      => CR0(5),
@@ -263,7 +239,10 @@ begin
         Tra_Anzahl_Stand => TRA0_ANZ_STD,
 
         S_Ready         => S0_Ready,
-        M_Valid         => M0_Valid,
+        Sou_W           => EnSAR0,
+        Dest_W          => EnDEST0,
+        Tra_Anz_W       => EnTRAA0,
+        M_Valid         => CR0(0),
         Kanal_Aktiv     => not Status(0),
 
         M_STB           => M0_STB,
@@ -282,9 +261,6 @@ begin
     )port map(
         Takt           => Takt
 
-        Sou_ADR         => SAR1,
-        Des_ADR         => DESTR1,
-        Tra_Anzahl      => TRAA1,
         BetriebsMod     => CR1(2 downto 1),
         Byte_Trans      => CR1(3),
         Ex_EreigEn      => CR1(5),
@@ -293,7 +269,10 @@ begin
         Tra_Anzahl_Stand => TRA1_ANZ_STD,
 
         S_Ready         => S1_Ready,
-        M_Valid         => M1_Valid,
+        Sou_W           => EnSAR1,
+        Dest_W          => EnDEST1,
+        Tra_Anz_W       => EnTRAA1,
+        M_Valid         => CR1(0),
         Kanal_Aktiv     => not Status(1),
 
         M_STB           => M1_STB,

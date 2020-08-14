@@ -30,9 +30,6 @@ entity DMA_Kanal is
     port(
         Takt            : in std_ulogic;
 
-        Sou_ADR         : in std_ulogic_vector(BUSWIDTH - 1 downto 0);
-        Des_ADR         : in std_ulogic_vector(BUSWIDTH - 1 downto 0);
-        Tra_Anzahl      : in std_ulogic_vector(WORDWIDTH - 1 downto 0);
         BetriebsMod     : in std_ulogic_vector(1 downto 0);
         Byte_Trans      : in std_ulogic;
         Ex_EreigEn      : in std_ulogic;
@@ -41,6 +38,9 @@ entity DMA_Kanal is
         Tra_Anzahl_Stand: out std_ulogic_vector(WORDWIDTH - 1 downto 0);
 
         S_Ready         : in std_ulogic;
+        Sou_W           : in std_ulogic;
+        Dest_W          : in std_ulogic;
+        Tra_Anz_W       : in std_ulogic;
         M_Valid         : in std_ulogic;
         Kanal_Aktiv     : out std_ulogic;
 
@@ -112,7 +112,7 @@ begin
                     Adresse := (others => '0');
 
                 elsif SourceLd = '1' then
-                    Adresse := unsigned(Sou_ADR);
+                    Adresse := unsigned(M_DAT_I);
 
                 elsif SourceEn = '1' then
 
@@ -140,7 +140,7 @@ begin
                     Adresse := (others => '0');
 
                 elsif DestLd = '1' then
-                    Adresse := unsigned(Des_ADR);
+                    Adresse := unsigned(M_DAT_I);
 
                 elsif DestEn = '1' then
 
@@ -216,7 +216,7 @@ begin
                     Wert := (others => '0');
 
                 elsif CntLd = '1' then
-                    Wert := unsigned(Tra_Anzahl) - 1;
+                    Wert := unsigned(M_DAT_I) - 1;
                 
                 elsif CntEn = '1' then 
                     Wert := Wert - 1;
@@ -226,7 +226,7 @@ begin
 					CntTC <= '1';
                 end if;
 
-                Tra_Anzahl_Stand <= std_ulogic_vector(Wert);
+                Tra_Anzahl_Stand <= std_ulogic_vector(Wert + 1) ;
                 
             end if;
         end process;
@@ -347,7 +347,7 @@ begin
 
 
     -- Prozess zur Berechnung des Folgezustands und der Mealy-Ausgaenge
-    Transition: process(Zustand, M_Valid, Ex_EreigEn, S_Ready, M_ACK, CntTC, BetriebsMod)
+    Transition: process(Zustand, M_Valid, Ex_EreigEn, S_Ready, M_ACK, CntTC, BetriebsMod, Sou_W, Dest_W, Tra_Anz_W)
     begin
 
         -- Default-Werte fuer den Folgezustand und die Mealy-Ausgaenge
@@ -363,13 +363,25 @@ begin
         case( Zustand ) is
 
             when Z_IDLE =>  
-                            if M_Valid = '0' or BetriebsMod = "00" or (BetriebsMod = "11" and Byte_Trans = '1') then
+                            if BetriebsMod = "00" or (BetriebsMod = "11" and Byte_Trans = '1') then
+                                Folgezustand <= Z_IDLE;
+
+                            elsif Sou_W = '1' then 
+                                SourceLd <= '1';
+                                Folgezustand <= Z_IDLE;
+
+                            elsif Dest_W = '1' then 
+                                DestLd <= '1';
+                                Folgezustand <= Z_IDLE;
+
+                            elsif Tra_Anz_W = '1' then 
+                                CntLd  <= '1';
+                                Folgezustand <= Z_IDLE;
+
+                            elsif M_Valid = '0' then
                                 Folgezustand <= Z_IDLE;
 
                             elsif M_Valid = '1' then
-                                SourceLd <= '1';
-                                DestLd <= '1';
-                                CntLd  <= '1';
                                 Folgezustand <= Z_WAIT;
                             end if; 
             when Z_WAIT =>
