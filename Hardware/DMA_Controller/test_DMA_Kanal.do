@@ -23,16 +23,18 @@ configure wave -timeline 0
 configure wave -timelineunits ms
 
 add wave /dma_kanal_tb/Takt
-add wave -hexadecimal /dma_kanal_tb/DUT/Sou_ADR
-add wave -hexadecimal /dma_kanal_tb/DUT/Des_ADR
-add wave -unsigned /dma_kanal_tb/DUT/Tra_Anzahl
 add wave -unsigned /dma_kanal_tb/DUT/BetriebsMod
-add wave /dma_kanal_tb/DUT/Tra_Modus
+add wave /dma_kanal_tb/DUT/Byte_Trans
 add wave /dma_kanal_tb/DUT/Ex_EreigEn 
 add wave /dma_kanal_tb/DUT/Tra_Fertig
 add wave /dma_kanal_tb/DUT/S_Ready
 add wave /dma_kanal_tb/DUT/M_Valid
 add wave /dma_kanal_tb/DUT/Kanal_Aktiv
+add wave /dma_kanal_tb/DUT/Sou_W
+add wave /dma_kanal_tb/DUT/Dest_W
+add wave /dma_kanal_tb/DUT/Tra_Anz_W
+add wave -unsigned /dma_kanal_tb/DUT/Tra_Anzahl_Stand
+
 
 
 add wave -divider "Wishbone Bus"
