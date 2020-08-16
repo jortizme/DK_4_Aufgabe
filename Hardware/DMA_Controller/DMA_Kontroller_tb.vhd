@@ -34,8 +34,8 @@ architecture test of DMA_Kontroller_tb is
     signal   Takt          : std_logic;
     signal   Interrupt0    : std_logic;
     signal   Interrupt1    : std_logic;
-    signal   S0_Ready       : std_ulogic;
-    signal   S1_Ready       : std_ulogic;
+    signal   S0_Ready       : std_logic;
+    signal   S1_Ready       : std_logic;
 
 	signal   M_STB         : std_logic;
 	signal   M_WE          : std_logic;
@@ -64,7 +64,6 @@ architecture test of DMA_Kontroller_tb is
     constant SR     :   std_logic_vector(7 downto 0) := x"20";
 
     function cr_value(
-        Kanal_Enable : in boolean;
         BetrModus    : in unsigned;
         Byte_Trans   : in boolean;
         Freigabe_Int : in boolean;
@@ -76,21 +75,18 @@ architecture test of DMA_Kontroller_tb is
 
         r := (others => '0');
 
-        if Kanal_Enable then 
-            r(0) := '1';
-        end if;
-        r(2 downto 1) := std_logic_vector(BetrModus);
+        r(1 downto 0) := std_logic_vector(BetrModus);
         if Byte_Trans then
-            r(3) := '1';
+            r(2) := '1';
         end if;
         if Freigabe_Int then
-            r(4) := '1';
+            r(3) := '1';
         end if;
         if ExEreig_En then
-            r(5) := '1';
+            r(4) := '1';
         end if;
         if QuitiertInt then 
-            r(6) := '1';
+            r(5) := '1';
         end if;
 
         return r;
@@ -137,12 +133,13 @@ architecture test of DMA_Kontroller_tb is
                 wishbone_read(TRAAR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = write_data report "Falsche Anzahl von Transfers Kanal1 eingestellt" severity failure;
     
-                --Einstellung von CR0 von Kanal1
-                write_data := cr_value(false, unsigned(BetrModus0), false, true, true, false);
+                --Einstellung von CR0 von Kanal1 und laufen lassen des Kanals 1
+                write_data := cr_value(unsigned(BetrModus0), false, true, false, false);
                 wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 wishbone_read(CR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
-    
+
+
             wait;
         end process;
 
@@ -163,19 +160,19 @@ architecture test of DMA_Kontroller_tb is
             WORDWIDTH => WORDWIDTH
         )
         port map(
-            Takt            =>  std_ulogic(Takt),
-            Reset           =>  std_ulogic(RST),
+            Takt            =>  Takt,
+            Reset           =>  RST,
     
-            S_STB           =>  std_ulogic(S_STB),
-            S_WE            =>  std_ulogic(S_WE),
-            S_ADR           =>  std_ulogic_vector(S_ADR),
-            S_SEL           =>  std_ulogic_vector(S_SEL), 
+            S_STB           =>  S_STB,
+            S_WE            =>  S_WE,
+            S_ADR           =>  S_ADR,
+            S_SEL           =>  S_SEL, 
             S_DAT_O         =>  S_DAT_O,
-            S_DAT_I         =>  std_ulogic_vector(S_DAT_I),
+            S_DAT_I         =>  S_DAT_I,
             S_ACK           =>  S_ACK,
             
-            S0_Ready        =>  std_ulogic(S0_Ready),
-            S1_Ready        =>  std_ulogic(S1_Ready),
+            S0_Ready        =>  S0_Ready,
+            S1_Ready        =>  S1_Ready,
     
             Kanal1_Interrupt => Interrupt0,
             Kanal2_Interrupt => Interrupt1,
@@ -185,8 +182,8 @@ architecture test of DMA_Kontroller_tb is
             M_ADR           =>  M_ADR,
             M_SEL           =>  M_SEL,
             M_DAT_O         =>  M_DAT_O,
-            M_DAT_I         =>  std_ulogic_vector(M_DAT_I),
-            M_ACK           =>  std_ulogic(M_ACK)
+            M_DAT_I         =>  M_DAT_I,
+            M_ACK           =>  M_ACK
         );
 
 end architecture;

@@ -94,16 +94,16 @@ use work.txt_util_pack.all;
 architecture testbench of DMA_Kanal_tb is
 
     constant CLOCK_PERIOD : time     := 20 ns;
-    constant DATA_WORT    : std_ulogic_vector(31 downto 0) := x"AABBCCDD";
+    constant DATA_WORT    : std_logic_vector(31 downto 0) := x"AABBCCDD";
     constant BUSWIDTH   : positive := 32;
     constant WORDWIDTH   : positive := 32;
 
     --Im Schreibvorgang beim Peripherie-Speicher-Modus die gesendeten Bytes testen
     function testBytePeri_Spei(ByteCnt : integer; 
-                                M_Sel_Lese : std_ulogic_vector(3 downto 0); 
-                                M_Sel_Schreib : std_ulogic_vector(3 downto 0)) return std_ulogic_vector is
-        variable Wort_I : std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
-        variable Byte : std_ulogic_vector(7 downto 0) := (others => '0');
+                                M_Sel_Lese : std_logic_vector(3 downto 0); 
+                                M_Sel_Schreib : std_logic_vector(3 downto 0)) return std_logic_vector is
+        variable Wort_I : std_logic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
+        variable Byte : std_logic_vector(7 downto 0) := (others => '0');
     begin
         case M_Sel_Lese is
             when "0001" => Byte := x"DD";
@@ -128,9 +128,9 @@ architecture testbench of DMA_Kanal_tb is
 
     --Im Schreibvorgang beim Speicher-Peripherie-Modus die gesendeten Bytes testen
     function testByteSpei_Peri(ByteCnt : integer; 
-                                M_Sel_Schreib : std_ulogic_vector(3 downto 0)) return std_ulogic_vector is
-        variable Wort_I : std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
-        variable Byte : std_ulogic_vector(7 downto 0) := (others => '0');
+                                M_Sel_Schreib : std_logic_vector(3 downto 0)) return std_logic_vector is
+        variable Wort_I : std_logic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
+        variable Byte : std_logic_vector(7 downto 0) := (others => '0');
     begin
 
         case ByteCnt is
@@ -161,41 +161,41 @@ architecture testbench of DMA_Kanal_tb is
     end function;
     
     -----------------Eingaenge--------------------
-    signal Takt                 : std_ulogic;
-    signal Sou_W                : std_ulogic := '0';
-    signal Dest_W               : std_ulogic := '0';
-    signal Tra_Anz_W            : std_ulogic := '0';
-    signal Betriebsmodus        : std_ulogic_vector(1 downto 0);
-    signal Byte_Transfer        : std_ulogic;
-    signal ExEreignisEn         : std_ulogic;
-    signal Reset                : std_ulogic := '0';
-    signal S_Ready              : std_ulogic := '0';
-    signal M_Valid              : std_ulogic := '0';
-    signal M_DAT_I              : std_ulogic_vector(WORDWIDTH - 1 downto 0);
-    signal M_ACK                : std_ulogic := '0';
-    signal Slave_Interface      : std_ulogic_vector(WORDWIDTH - 1 downto 0);
+    signal Takt                 : std_logic;
+    signal Sou_W                : std_logic := '0';
+    signal Dest_W               : std_logic := '0';
+    signal Tra_Anz_W            : std_logic := '0';
+    signal Betriebsmodus        : std_logic_vector(1 downto 0);
+    signal Byte_Transfer        : std_logic;
+    signal ExEreignisEn         : std_logic;
+    signal Reset                : std_logic := '0';
+    signal S_Ready              : std_logic := '0';
+    signal M_Valid              : std_logic := '0';
+    signal M_DAT_I              : std_logic_vector(WORDWIDTH - 1 downto 0);
+    signal M_ACK                : std_logic := '0';
+    signal Slave_Interface      : std_logic_vector(WORDWIDTH - 1 downto 0);
 
 
     ------------Ausgaenge---------------------
-    signal Tra_Anzahl_Stand     : std_ulogic_vector(WORDWIDTH - 1 downto 0); 
-    signal Transfer_Fertig      : std_ulogic;
-    signal Kanal_Aktiv          : std_ulogic;
-    signal M_STB                : std_ulogic;
-    signal M_WE                 : std_ulogic;
-    signal M_ADR                : std_ulogic_vector(BUSWIDTH - 1 downto 0);
-    signal M_SEL                : std_ulogic_vector(3 downto 0);
-    signal M_DAT_O              : std_ulogic_vector(WORDWIDTH - 1 downto 0);
+    signal Tra_Anzahl_Stand     : std_logic_vector(WORDWIDTH - 1 downto 0); 
+    signal Transfer_Fertig      : std_logic;
+    signal Kanal_Aktiv          : std_logic;
+    signal M_STB                : std_logic;
+    signal M_WE                 : std_logic;
+    signal M_ADR                : std_logic_vector(BUSWIDTH - 1 downto 0);
+    signal M_SEL                : std_logic_vector(3 downto 0);
+    signal M_DAT_O              : std_logic_vector(WORDWIDTH - 1 downto 0);
 
 
     type textcase_record is record
-        Source_Addres       : std_ulogic_vector(BUSWIDTH - 1  downto 0);
-        Destination_Addres  : std_ulogic_vector(BUSWIDTH - 1  downto 0);
-        Betriebsmodus        : std_ulogic_vector(1 downto 0); 
+        Source_Addres       : std_logic_vector(BUSWIDTH - 1  downto 0);
+        Destination_Addres  : std_logic_vector(BUSWIDTH - 1  downto 0);
+        Betriebsmodus        : std_logic_vector(1 downto 0); 
         Transfer_Anzahl      : positive;
         Byte_Transfer        : boolean;
         ExEreignisEn         : boolean;
-        Final_Sou_Add        : std_ulogic_vector(BUSWIDTH - 1  downto 0);
-        Final_Dest_Add    : std_ulogic_vector(BUSWIDTH - 1  downto 0);
+        Final_Sou_Add        : std_logic_vector(BUSWIDTH - 1  downto 0);
+        Final_Dest_Add    : std_logic_vector(BUSWIDTH - 1  downto 0);
     end record;
 
     type testcase_vector is array(natural range <>) of textcase_record;
@@ -234,7 +234,7 @@ begin
 
     Stimulate:process
 
-        function to_std_ulogic(x: boolean) return std_ulogic is
+        function to_std_logic(x: boolean) return std_logic is
             begin
                 if x then 
                     return '1';
@@ -246,8 +246,8 @@ begin
         --Simuliert das Verhalten eines gesamten Transfers
         procedure execute_test(i: integer) is
             variable ByteCnt : integer := 0;
-            variable M_Sel_LeseVorgang : std_ulogic_vector(3 downto 0) := (others => '0');
-            variable Wort_i  : std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
+            variable M_Sel_LeseVorgang : std_logic_vector(3 downto 0) := (others => '0');
+            variable Wort_i  : std_logic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
         begin
 
            -- Slave_Interface       <= tests(i).Source_Addres; 
@@ -269,15 +269,15 @@ begin
             
             Sou_W         <= '0';
             --Dest_W      <= '0';
-            Slave_Interface     <= std_ulogic_vector(to_unsigned(tests(i).Transfer_Anzahl,WORDWIDTH));     
+            Slave_Interface     <= std_logic_vector(to_unsigned(tests(i).Transfer_Anzahl,WORDWIDTH));     
             Tra_Anz_W   <= '1';
 
             wait until falling_edge(Takt);
 
             Tra_Anz_W   <= '0';
             Betriebsmodus       <= tests(i).Betriebsmodus;        
-            Byte_Transfer       <= to_std_ulogic(tests(i).Byte_Transfer);       
-            ExEreignisEn        <= to_std_ulogic(tests(i).ExEreignisEn);
+            Byte_Transfer       <= to_std_logic(tests(i).Byte_Transfer);       
+            ExEreignisEn        <= to_std_logic(tests(i).ExEreignisEn);
             M_DAT_I             <= DATA_WORT;
             M_Valid     <= '1'; 
 
@@ -429,15 +429,15 @@ begin
             wait until falling_edge(Takt);
 
             Dest_W      <= '0';
-            Slave_Interface     <= std_ulogic_vector(to_unsigned(error_tests(i).Transfer_Anzahl,WORDWIDTH));     
+            Slave_Interface     <= std_logic_vector(to_unsigned(error_tests(i).Transfer_Anzahl,WORDWIDTH));     
             Tra_Anz_W   <= '1';
 
             wait until falling_edge(Takt);
 
             Tra_Anz_W   <= '0'; 
             Betriebsmodus       <= error_tests(i).Betriebsmodus;           
-            Byte_Transfer       <= to_std_ulogic(error_tests(i).Byte_Transfer);       
-            ExEreignisEn        <= to_std_ulogic(error_tests(i).ExEreignisEn);
+            Byte_Transfer       <= to_std_logic(error_tests(i).Byte_Transfer);       
+            ExEreignisEn        <= to_std_logic(error_tests(i).ExEreignisEn);
             M_DAT_I             <= DATA_WORT;
             M_Valid     <= '1';
 

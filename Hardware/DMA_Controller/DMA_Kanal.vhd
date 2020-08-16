@@ -28,30 +28,30 @@ entity DMA_Kanal is
         WORDWIDTH : positive
     );
     port(
-        Takt            : in std_ulogic;
+        Takt            : in std_logic;
 
-        BetriebsMod     : in std_ulogic_vector(1 downto 0);
-        Byte_Trans      : in std_ulogic;
-        Ex_EreigEn      : in std_ulogic;
-        Reset           : in std_ulogic;
-        Tra_Fertig      : out std_ulogic;
-        Tra_Anzahl_Stand: out std_ulogic_vector(WORDWIDTH - 1 downto 0);
-        Slave_Interface : in  std_ulogic_vector(WORDWIDTH - 1 downto 0);
+        BetriebsMod     : in std_logic_vector(1 downto 0);
+        Byte_Trans      : in std_logic;
+        Ex_EreigEn      : in std_logic;
+        Reset           : in std_logic;
+        Tra_Fertig      : out std_logic;
+        Tra_Anzahl_Stand: out std_logic_vector(WORDWIDTH - 1 downto 0);
+        Slave_Interface : in  std_logic_vector(WORDWIDTH - 1 downto 0);
 
-        S_Ready         : in std_ulogic;
-        Sou_W           : in std_ulogic;
-        Dest_W          : in std_ulogic;
-        Tra_Anz_W       : in std_ulogic;
-        M_Valid         : in std_ulogic;
-        Kanal_Aktiv     : out std_ulogic;
+        S_Ready         : in std_logic;
+        Sou_W           : in std_logic;
+        Dest_W          : in std_logic;
+        Tra_Anz_W       : in std_logic;
+        M_Valid         : in std_logic;
+        Kanal_Aktiv     : out std_logic;
 
-        M_STB           : out std_ulogic;
-        M_WE            : out std_ulogic;
-        M_ADR           : out std_ulogic_vector(BUSWIDTH - 1 downto 0);
-        M_SEL           : out std_ulogic_vector(3 downto 0);
-        M_DAT_O         : out std_ulogic_vector(WORDWIDTH - 1 downto 0);
-        M_DAT_I         : in std_ulogic_vector(WORDWIDTH - 1 downto 0);
-        M_ACK           : in std_ulogic
+        M_STB           : out std_logic;
+        M_WE            : out std_logic;
+        M_ADR           : out std_logic_vector(BUSWIDTH - 1 downto 0);
+        M_SEL           : out std_logic_vector(3 downto 0);
+        M_DAT_O         : out std_logic_vector(WORDWIDTH - 1 downto 0);
+        M_DAT_I         : in std_logic_vector(WORDWIDTH - 1 downto 0);
+        M_ACK           : in std_logic
     );
 
 end entity;
@@ -63,32 +63,32 @@ architecture rtl of DMA_Kanal is
     
     -- Signale zwischen Steuerwerk und Rechenwerk
     signal AdrSel       : AdrDemul_type := X;
-    signal SourceEn     : std_ulogic;
-    signal SourceLd     : std_ulogic;
-    signal DestEn       : std_ulogic;     
-    signal DestLd       : std_ulogic;
-    signal CntEn        : std_ulogic;
-    signal CntLd        : std_ulogic;
-    signal DataEn       : std_ulogic;
-    signal CntTC        : std_ulogic := '0';
+    signal SourceEn     : std_logic;
+    signal SourceLd     : std_logic;
+    signal DestEn       : std_logic;     
+    signal DestLd       : std_logic;
+    signal CntEn        : std_logic;
+    signal CntLd        : std_logic;
+    signal DataEn       : std_logic;
+    signal CntTC        : std_logic := '0';
 
 begin
 
     Rechenwerk: block
 
         --Interne Signale des Rechenwerks
-        signal M_DAT_Out_i   :   std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
-        signal M_ADR_i       :  std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
-        signal M_SEL_i       :   std_ulogic_vector(3 downto 0);
-        signal Sour_A_Out    :   std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
-        signal Dest_A_Out    :   std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
-        signal Sel_Sou_Byte  :   std_ulogic_vector(1 downto 0);
-        signal Sel_Dest_Byte :  std_ulogic_vector(1 downto 0);
-        signal Zwei_Bits_Adr :  std_ulogic_vector(1 downto 0);
-        signal ByteMod_Addr_i  :  std_ulogic_vector(BUSWIDTH - 1 downto 0);
-        signal ByteMod_Dat_i :  std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
-        signal Vergleicher_o :  std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
-        signal OutputData_i  : std_ulogic_vector(WORDWIDTH - 1 downto 0);
+        signal M_DAT_Out_i   :   std_logic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
+        signal M_ADR_i       :  std_logic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
+        signal M_SEL_i       :   std_logic_vector(3 downto 0);
+        signal Sour_A_Out    :   std_logic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
+        signal Dest_A_Out    :   std_logic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
+        signal Sel_Sou_Byte  :   std_logic_vector(1 downto 0);
+        signal Sel_Dest_Byte :  std_logic_vector(1 downto 0);
+        signal Zwei_Bits_Adr :  std_logic_vector(1 downto 0);
+        signal ByteMod_Addr_i  :  std_logic_vector(BUSWIDTH - 1 downto 0);
+        signal ByteMod_Dat_i :  std_logic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
+        signal Vergleicher_o :  std_logic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
+        signal OutputData_i  : std_logic_vector(WORDWIDTH - 1 downto 0);
 
     begin
 
@@ -125,7 +125,7 @@ begin
 
                 end if;
             
-                Sour_A_Out <= std_ulogic_vector(Adresse);
+                Sour_A_Out <= std_logic_vector(Adresse);
             end if;
 
         end process;
@@ -153,7 +153,7 @@ begin
 
                 end if;
             
-                Dest_A_Out <= std_ulogic_vector(Adresse);
+                Dest_A_Out <= std_logic_vector(Adresse);
             end if;
 
         end process;
@@ -161,7 +161,7 @@ begin
         --Beschreibung: Speichert den Wert der Adresse, deren letzten beiden Bits 
         --mit "00" enden. Erforderlich im byteweisen Transfer. 
         Addresvergleicher: process(Takt)
-            variable Q : std_ulogic_vector(31 downto 0) := (others => '0');
+            variable Q : std_logic_vector(31 downto 0) := (others => '0');
             variable Wert : unsigned(1 downto 0) := (others => '0');
         begin
 
@@ -187,7 +187,7 @@ begin
         --Beschreibung: Kombinatorischer Block zur Bestimmung der M_Adr im
         --byteweisen Transfer.
         Block_A: process(BetriebsMod, AdrSel, Vergleicher_o, M_ADR_i)
-        variable Q : std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
+        variable Q : std_logic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
         begin 
 
             if ((BetriebsMod = "10" and AdrSel = S) or (BetriebsMod = "01" and AdrSel = D )) then
@@ -227,7 +227,7 @@ begin
 					CntTC <= '1';
                 end if;
 
-                Tra_Anzahl_Stand <= std_ulogic_vector(Wert + 1) ;
+                Tra_Anzahl_Stand <= std_logic_vector(Wert + 1) ;
                 
             end if;
         end process;
@@ -257,8 +257,8 @@ begin
         --Beschreibung: Bestimmt welches Byte wird im Lesevorgang gelesen, und
         --in welche Position soll es im Schreibvorgang verchoben werden
         ByteMult:process(Sel_Sou_Byte, Sel_Dest_Byte, M_DAT_I)
-        variable Byte       :   std_ulogic_vector(7 downto 0) := (others => '0');
-        variable Wort       :   std_ulogic_vector(31 downto 0) := (others => '0');
+        variable Byte       :   std_logic_vector(7 downto 0) := (others => '0');
+        variable Wort       :   std_logic_vector(31 downto 0) := (others => '0');
 
         begin
 
@@ -330,10 +330,10 @@ begin
     signal Folgezustand : Zustand_type;	
 
     --Interne Signale für die Initialisierung
-    signal STB_i            : std_ulogic := '0';
-    signal WE_i             : std_ulogic := '0';
-    signal Tra_Fertig_i     : std_ulogic := '0';
-    signal Kanal_Aktiv_i    : std_ulogic := '0';
+    signal STB_i            : std_logic := '0';
+    signal WE_i             : std_logic := '0';
+    signal Tra_Fertig_i     : std_logic := '0';
+    signal Kanal_Aktiv_i    : std_logic := '0';
 
     begin
 

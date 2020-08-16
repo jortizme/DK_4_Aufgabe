@@ -23,11 +23,12 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ms
 
-# Signale hinzufuegen
+add wave -divider "DMA_Kontroller"
 add wave        /DMA_Kontroller_tb/Takt
 add wave        /DMA_Kontroller_tb/RST
 add wave        /DMA_Kontroller_tb/Interrupt0
 add wave        /DMA_Kontroller_tb/Interrupt1
+add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/CR0
 
 add wave -divider "Wishbone-Bus-Slave"
 add wave              /DMA_Kontroller_tb/S_STB
@@ -38,22 +39,54 @@ add wave -hexadecimal /DMA_Kontroller_tb/S_ADR
 add wave -hexadecimal /DMA_Kontroller_tb/S_DAT_I
 add wave -hexadecimal /DMA_Kontroller_tb/S_DAT_O
 
-#add wave -divider "Interne Signale"
-#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Status
-#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Kanal1/Rechenwerk/Sour_A_Out
-#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Kanal1/Rechenwerk/Dest_A_Out
-#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/TRA0_ANZ_STD
-#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/CR0
-
-#add wave -divider "Decoder Enables"
-#add wave  /DMA_Kontroller_tb/DUT/EnSAR0
-#add wave  /DMA_Kontroller_tb/DUT/EnDEST0
-#add wave  /DMA_Kontroller_tb/DUT/EnTRAA0
-#add wave  /DMA_Kontroller_tb/DUT/Kanal1/Tra_Anz_W
-#add wave  /DMA_Kontroller_tb/DUT/Kanal1/CntLd
-#add wave  /DMA_Kontroller_tb/DUT/EnCR0
 
 
+if {1} {
+add wave -divider "Kanal 1"
+add wave  /DMA_Kontroller_tb/DUT/Kanal1/Steuerwerk/Zustand
+add wave 			  /DMA_Kontroller_tb/DUT/Kanal1/M_Valid
+add wave 			  /DMA_Kontroller_tb/DUT/Kanal1/M_STB
+add wave 			  /DMA_Kontroller_tb/DUT/Kanal1/M_WE
+add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal1/M_ADR
+add wave -unsigned 	  /DMA_Kontroller_tb/DUT/Kanal1/M_SEL
+add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal1/M_DAT_O
+add wave 			  /DMA_Kontroller_tb/DUT/Kanal1/M_ACK
+add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal1/M_DAT_I
 
-run 100 us
+}
+
+
+if {0} {
+add wave -divider "Arbiter Output"
+add wave /DMA_Kontroller_tb/M_STB
+add wave /DMA_Kontroller_tb/M_WE
+add wave -hexadecimal  /DMA_Kontroller_tb/M_ADR
+add wave /DMA_Kontroller_tb/M_SEL
+add wave -hexadecimal  /DMA_Kontroller_tb/M_DAT_O
+add wave -hexadecimal  /DMA_Kontroller_tb/M_DAT_I
+add wave /DMA_Kontroller_tb/M_ACK
+add wave /DMA_Kontroller_tb/DUT/Arbiter/state
+}
+
+if {0} {
+add wave -divider "Interne Signale"
+add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Status
+add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Kanal1/Rechenwerk/Sour_A_Out
+add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Kanal1/Rechenwerk/Dest_A_Out
+add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/TRA0_ANZ_STD
+add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/CR0
+}
+
+if {0} {
+add wave -divider "Decoder Enables"
+add wave  /DMA_Kontroller_tb/DUT/EnSAR0
+add wave  /DMA_Kontroller_tb/DUT/EnDEST0
+add wave  /DMA_Kontroller_tb/DUT/EnTRAA0
+add wave  /DMA_Kontroller_tb/DUT/Kanal1/Tra_Anz_W
+add wave  /DMA_Kontroller_tb/DUT/Kanal1/CntLd
+add wave  /DMA_Kontroller_tb/DUT/EnCR0
+}
+
+
+run 50 us
 wave zoom full
