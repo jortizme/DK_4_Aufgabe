@@ -99,8 +99,8 @@ architecture test of DMA_Kontroller_tb is
     begin
 
         stim_and_verify:process
-            variable write_data : std_logic_vector(31 downto 0);
-            variable read_data  : std_logic_vector(31 downto 0);
+            variable write_data : std_logic_vector(31 downto 0) := (others => '0');
+            variable read_data  : std_logic_vector(31 downto 0) := (others => '0');
         begin
 
             RST <= '1';
@@ -118,34 +118,24 @@ architecture test of DMA_Kontroller_tb is
                 assert read_data(2) = '0' report "Bit 'Kanal1_Interrupt' sollte '0' sein"    severity failure;
                 assert read_data(3) = '0' report "Bit 'Kanal2_Interrupt' sollte '0' sein"    severity failure;
     
-                wait_cycle(2, Takt);
-    
-    
                 --Verifizieren des Wertes von CR0
                 wishbone_read(CR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = x"00000000" report "CR0 sollte auf 0 gesetzt sein" severity failure;
-    
-                wait_cycle(2, Takt);
-    
+
                 --Source-Adresse von Kanal1 einstellen
                 write_data := Sou_Adr0;
                 wishbone_write(x"f", SAR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
-    
-                wait_cycle(2, Takt);
     
                 --Destination-Adresse von Kanal1 einstellen
                 write_data := Dest_Adr0;
                 wishbone_write(x"f", DESTR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
     
-                wait_cycle(2, Takt);
-    
+
                 --Transferanzahl von Kanal1 einstellen
                 write_data := std_logic_vector(Trans_Anz0);
                 wishbone_write(x"f", TRAAR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 wishbone_read(TRAAR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = write_data report "Falsche Anzahl von Transfers Kanal1 eingestellt" severity failure;
-    
-                wait_cycle(2, Takt);
     
                 --Einstellung von CR0 von Kanal1
                 write_data := cr_value(false, unsigned(BetrModus0), false, true, true, false);
@@ -153,9 +143,6 @@ architecture test of DMA_Kontroller_tb is
                 wishbone_read(CR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
     
-                wait_cycle(2, Takt);
-    
-
             wait;
         end process;
 

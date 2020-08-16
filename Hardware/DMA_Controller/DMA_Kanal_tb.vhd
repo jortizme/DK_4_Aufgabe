@@ -110,15 +110,15 @@ architecture testbench of DMA_Kanal_tb is
             when "0010" => Byte := x"CC";
             when "0100" => Byte := x"BB";
             when "1000" => Byte := x"AA";
-            when others => report "Falscher Sel_Vector beim Lesen" severity error;
+            when others => report "Falscher Sel_Vector beim Lesen" severity failure;
         end case;
 
         case ByteCnt is
-            when 0 => assert M_Sel_Schreib = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
-            when 1 => assert M_Sel_Schreib = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
-            when 2 => assert M_Sel_Schreib = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
-            when 3 => assert M_Sel_Schreib = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
-            when others => report "Falsch intern gezaehlt" severity error;
+            when 0 => assert M_Sel_Schreib = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity failure;
+            when 1 => assert M_Sel_Schreib = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity failure;
+            when 2 => assert M_Sel_Schreib = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity failure;
+            when 3 => assert M_Sel_Schreib = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity failure;
+            when others => report "Falsch intern gezaehlt" severity failure;
         end case ;
 
         Wort_I(7+(ByteCnt*8) downto 0 +(ByteCnt*8)) := Byte;
@@ -138,23 +138,23 @@ architecture testbench of DMA_Kanal_tb is
             when 1 =>  Byte := x"CC";
             when 2 =>  Byte := x"BB";
             when 3 =>  Byte := x"AA";
-            when others => report "Falsche intern gezaehlt" severity error;
+            when others => report "Falsche intern gezaehlt" severity failure;
         end case ;
 
         case M_Sel_Schreib is
             when "0001" => 
                 Wort_I(7 downto 0) := Byte;
-                assert M_Sel_Schreib = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;             
+                assert M_Sel_Schreib = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity failure;             
             when "0010" => 
                 Wort_I(15 downto 8) := Byte;
-                assert M_Sel_Schreib = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
+                assert M_Sel_Schreib = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity failure;
             when "0100" => 
                 Wort_I(23 downto 16) := Byte;
-                assert M_Sel_Schreib = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
+                assert M_Sel_Schreib = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity failure;
             when "1000" => 
                 Wort_I(31 downto 24) := Byte;
-                assert M_Sel_Schreib = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
-            when others => report "Falscher Sel_Vector beim Lesen" severity error;
+                assert M_Sel_Schreib = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity failure;
+            when others => report "Falscher Sel_Vector beim Lesen" severity failure;
         end case;
 
         return Wort_I;
@@ -303,33 +303,33 @@ begin
                 wait until falling_edge(Takt);
                 
                 --Verifizieren
-                assert M_STB = '1'      report "Bus beim Lesezugriff nicht angesprochen" severity error;
-                assert M_WE = '0'       report "Signal WE beim Lesezugriff auf 1 gesetzt" severity error;
-                assert Kanal_Aktiv = '1' report "Kanal sollte Aktiv sein"   severity error;
+                assert M_STB = '1'      report "Bus beim Lesezugriff nicht angesprochen" severity failure;
+                assert M_WE = '0'       report "Signal WE beim Lesezugriff auf 1 gesetzt" severity failure;
+                assert Kanal_Aktiv = '1' report "Kanal sollte Aktiv sein"   severity failure;
                 assert Transfer_Fertig = '0' report "Interrupt sollte noch nicht ausgelöst werden" severity failure;
 
                 case tests(i).Byte_Transfer is
                     
-                    when false => assert M_SEL = "1111" report "Beim Wortzugriff sollte der SEL Vector 1111 sein" severity error;
+                    when false => assert M_SEL = "1111" report "Beim Wortzugriff sollte der SEL Vector 1111 sein" severity failure;
 
                     when true  =>
 
                         if tests(i).Betriebsmodus = "10" then
                             case ByteCnt is
-                                when 0 => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
-                                when 1 => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
-                                when 2 => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
-                                when 3 => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
+                                when 0 => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity failure;
+                                when 1 => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity failure;
+                                when 2 => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity failure;
+                                when 3 => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity failure;
                                 when others => report "Falsch gezaehlt intern" severity failure;
                             end case;   
 
                         elsif tests(i).Betriebsmodus = "01" then
 
                             case tests(i).Source_Addres(1 downto 0) is
-                                when "00" => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity error;
-                                when "01" => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity error;
-                                when "10" => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity error;
-                                when "11" => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity error;
+                                when "00" => assert M_SEL = "0001" report "Bytezugriff SEL Vector sollte 0001 sein" severity failure;
+                                when "01" => assert M_SEL = "0010" report "Bytezugriff SEL Vector sollte 0010 sein" severity failure;
+                                when "10" => assert M_SEL = "0100" report "Bytezugriff SEL Vector sollte 0100 sein" severity failure;
+                                when "11" => assert M_SEL = "1000" report "Bytezugriff SEL Vector sollte 1000 sein" severity failure;
                                 when others => report "Falsche Werte bei den letzten Bits der Sourceadresse" severity failure;
                             end case;
 
@@ -358,15 +358,15 @@ begin
                 wait until falling_edge(Takt);
                 
                 --Verifizieren
-                assert M_STB = '1'      report "Bus beim Schreibzugriff nicht angesprochen" severity error;
-                assert M_WE = '1'       report "Signal WE beim Schreibugriff auf 0 gesetzt" severity error;
-                assert Kanal_Aktiv = '1' report "Kanal sollte Aktiv sein"   severity error;
+                assert M_STB = '1'      report "Bus beim Schreibzugriff nicht angesprochen" severity failure;
+                assert M_WE = '1'       report "Signal WE beim Schreibugriff auf 0 gesetzt" severity failure;
+                assert Kanal_Aktiv = '1' report "Kanal sollte Aktiv sein"   severity failure;
                 assert Transfer_Fertig = '0' report "Interrupt sollte noch nicht ausgelöst werden" severity failure;
 
                 case tests(i).Byte_Transfer is
                     
                     when false => 
-                        assert M_SEL = "1111" report "Beim Wortzugriff sollte der SEL Vector 1111 sein" severity error;
+                        assert M_SEL = "1111" report "Beim Wortzugriff sollte der SEL Vector 1111 sein" severity failure;
                         assert M_DAT_O =  x"AABBCCDD" report "Falsches Wort gesendet" severity failure;
 
                     when true  =>
@@ -408,7 +408,7 @@ begin
             end loop;
 
             wait until falling_edge(Takt);
-            assert Kanal_Aktiv = '0' report "Am Ende des Transfers soll der Kanal ausgeschaltet sein" severity error;
+            assert Kanal_Aktiv = '0' report "Am Ende des Transfers soll der Kanal ausgeschaltet sein" severity failure;
 
         end procedure;
 
@@ -443,11 +443,11 @@ begin
 
             wait until falling_edge(Takt);
 
-            assert  Kanal_Aktiv = '0' report "Bei fehlerhafet Inputs soll der Kanal inaktiv bleiben" severity error;
+            assert  Kanal_Aktiv = '0' report "Bei fehlerhafet Inputs soll der Kanal inaktiv bleiben" severity failure;
 
             wait for 100 ns;
 
-            assert  Kanal_Aktiv = '0' report "Bei fehlerhafet Inputs soll der Kanal inaktiv bleiben" severity error;
+            assert  Kanal_Aktiv = '0' report "Bei fehlerhafet Inputs soll der Kanal inaktiv bleiben" severity failure;
 
             M_Valid     <= '0';
         end procedure;
