@@ -25,23 +25,35 @@ configure wave -timelineunits ms
 
 # Signale hinzufuegen
 add wave        /DMA_Kontroller_tb/Takt
+add wave        /DMA_Kontroller_tb/RST
 add wave        /DMA_Kontroller_tb/Interrupt0
 add wave        /DMA_Kontroller_tb/Interrupt1
 
 add wave -divider "Wishbone-Bus-Slave"
 add wave              /DMA_Kontroller_tb/S_STB
+add wave              /DMA_Kontroller_tb/S_ACK
 add wave              /DMA_Kontroller_tb/S_WE
+add wave              /DMA_Kontroller_tb/S_SEL
 add wave -hexadecimal /DMA_Kontroller_tb/S_ADR
 add wave -hexadecimal /DMA_Kontroller_tb/S_DAT_I
-add wave              /DMA_Kontroller_tb/S_ACK
 add wave -hexadecimal /DMA_Kontroller_tb/S_DAT_O
 
-add wave -divider "Interne Signale"
-add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Status
-add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Kanal1/Rechenwerk/Sour_A_Out
-add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Kanal1/Rechenwerk/Dest_A_Out
-add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/TRA0_ANZ_STD
-add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/CR0
+#add wave -divider "Interne Signale"
+#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Status
+#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Kanal1/Rechenwerk/Sour_A_Out
+#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/Kanal1/Rechenwerk/Dest_A_Out
+#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/TRA0_ANZ_STD
+#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/CR0
 
-run 50 us
+#add wave -divider "Decoder Enables"
+#add wave  /DMA_Kontroller_tb/DUT/EnSAR0
+#add wave  /DMA_Kontroller_tb/DUT/EnDEST0
+#add wave  /DMA_Kontroller_tb/DUT/EnTRAA0
+#add wave  /DMA_Kontroller_tb/DUT/Kanal1/Tra_Anz_W
+#add wave  /DMA_Kontroller_tb/DUT/Kanal1/CntLd
+#add wave  /DMA_Kontroller_tb/DUT/EnCR0
+
+
+
+run 100 us
 wave zoom full

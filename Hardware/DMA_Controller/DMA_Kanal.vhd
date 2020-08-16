@@ -7,10 +7,10 @@
 -------------------------------------------------------------------------------
 --
 -- Betriebsmodus:
---   00 - *Nicht definiert*
+--   00 - Speicher-Speicher
 --   01 - Peripherie-Speicher
 --   10 - Speicher-Peripherie
---   11 - Speicher-Speicher
+--   11 - *Nicht-Definiert*
 
 -- Byte_Trans
 -- 0 - False, es werden wortweise übertragen
@@ -36,6 +36,7 @@ entity DMA_Kanal is
         Reset           : in std_ulogic;
         Tra_Fertig      : out std_ulogic;
         Tra_Anzahl_Stand: out std_ulogic_vector(WORDWIDTH - 1 downto 0);
+        Slave_Interface : in  std_ulogic_vector(WORDWIDTH - 1 downto 0);
 
         S_Ready         : in std_ulogic;
         Sou_W           : in std_ulogic;
@@ -112,7 +113,7 @@ begin
                     Adresse := (others => '0');
 
                 elsif SourceLd = '1' then
-                    Adresse := unsigned(M_DAT_I);
+                    Adresse := unsigned(Slave_Interface);
 
                 elsif SourceEn = '1' then
 
@@ -140,7 +141,7 @@ begin
                     Adresse := (others => '0');
 
                 elsif DestLd = '1' then
-                    Adresse := unsigned(M_DAT_I);
+                    Adresse := unsigned(Slave_Interface);
 
                 elsif DestEn = '1' then
 
@@ -216,7 +217,7 @@ begin
                     Wert := (others => '0');
 
                 elsif CntLd = '1' then
-                    Wert := unsigned(M_DAT_I) - 1;
+                    Wert := unsigned(Slave_Interface) - 1;
                 
                 elsif CntEn = '1' then 
                     Wert := Wert - 1;
@@ -363,7 +364,8 @@ begin
         case( Zustand ) is
 
             when Z_IDLE =>  
-                            if BetriebsMod = "00" or (BetriebsMod = "11" and Byte_Trans = '1') then
+                            if BetriebsMod = "11" or (BetriebsMod = "00" and Byte_Trans = '1') 
+                            or (BetriebsMod = "00" and Ex_EreigEn = '1') then
                                 Folgezustand <= Z_IDLE;
 
                             elsif Sou_W = '1' then 
@@ -409,10 +411,9 @@ begin
                             elsif M_ACK = '1' and CntTC = '0'then
                                 CntEn <= '1';
                                 case(BetriebsMod) is
-                                    when "00" => null;
+                                    when "00" => DestEn <= '1'; SourceEn <= '1';
                                     when "01" => DestEn <= '1';
                                     when "10" => SourceEn <= '1';
-                                    when "11" => DestEn <= '1'; SourceEn <= '1';
                                     when others => null;
                                 end case;
                                 Folgezustand <= Z_WAIT;

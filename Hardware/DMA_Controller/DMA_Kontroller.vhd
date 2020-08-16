@@ -73,7 +73,7 @@ architecture rtl of DMA_Kontroller is
     signal TRA1_Fertig       : std_ulogic := '0';
     signal RS1               : std_ulogic := '0';
 
-    signal Status    : std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
+    signal Status    : std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others=>'0'); 
     signal CR0      : std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
     signal CR1    : std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
 
@@ -125,7 +125,7 @@ begin
                     when x"00" => EnSAR0 <= '1';
                     when x"04" => EnDEST0 <= '1';
                     when x"08" => EnTRAA0 <= '1';
-                    when x"0C" => EnCR1 <= '1';
+                    when x"0C" => EnCR0 <= '1';
                     when x"10" => EnSAR1 <= '1';
                     when x"14" => EnDEST1 <= '1';
                     when x"18" => EnTRAA1 <= '1';
@@ -236,6 +236,7 @@ begin
         Reset           => Reset,
         Tra_Fertig      => TRA0_Fertig,
         Tra_Anzahl_Stand => TRA0_ANZ_STD,
+        Slave_Interface  => S_DAT_I,
 
         S_Ready         => S0_Ready,
         Sou_W           => EnSAR0,
@@ -266,6 +267,7 @@ begin
         Reset           => Reset,
         Tra_Fertig      => TRA1_Fertig,
         Tra_Anzahl_Stand => TRA1_ANZ_STD,
+        Slave_Interface  => S_DAT_I,
 
         S_Ready         => S1_Ready,
         Sou_W           => EnSAR1,

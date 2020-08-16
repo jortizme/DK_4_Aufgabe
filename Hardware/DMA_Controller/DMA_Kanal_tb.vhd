@@ -173,6 +173,7 @@ architecture testbench of DMA_Kanal_tb is
     signal M_Valid              : std_ulogic := '0';
     signal M_DAT_I              : std_ulogic_vector(WORDWIDTH - 1 downto 0);
     signal M_ACK                : std_ulogic := '0';
+    signal Slave_Interface      : std_ulogic_vector(WORDWIDTH - 1 downto 0);
 
 
     ------------Ausgaenge---------------------
@@ -201,7 +202,7 @@ architecture testbench of DMA_Kanal_tb is
 
 --Ab dem Test 9 wird immer im Byte-Transfer-Modus eine Peripherie-Adresse verwendet,
 --die nicht durch 4 teilbar ist
-    constant tests : testcase_vector (0 to 15) := (
+    constant tests : testcase_vector (0 to 16) := (
         0=> (x"FF00453C", x"FF3423B0", "10", 10, false, true,  x"FF004560", x"FF3423B0"),
         1=> (x"FF0056A4", x"00392338", "10", 15, false, false, x"FF0056DC", x"00392338"),
         2=> (x"FF3445E8", x"FF34000C", "10", 20, true, true,   x"FF3445F8", x"FF34000C"),
@@ -210,20 +211,23 @@ architecture testbench of DMA_Kanal_tb is
         5=> (x"FF00FC20", x"0434AFF0", "01", 24, false, false, x"FF00FC20", x"0434B04C"),
         6=> (x"FF000038", x"4534345C", "01", 13, true, true,   x"FF000038", x"45343468"),
         7=> (x"FF0010D4", x"593421E8", "01", 35, true, false,  x"FF0010D4", x"59342208"),
-        8=> (x"AD00459C", x"FD34FAF4", "11", 27, false, false, x"AD004604", x"FD34FB5C"),
+        8=> (x"AD00459C", x"FD34FAF4", "00", 27, false, false, x"AD004604", x"FD34FB5C"),
         9=> (x"FFFD454E", x"593421E8",  "01", 10, true, false, x"FFFD454C", x"593421F0"),  
         10=> (x"FFFD4547", x"48A7F670", "01", 15, true, true, x"FFFD4544", x"48A7F67C"),    
         11=> (x"FFFD4541", x"94FFAB48", "01", 27, true, false, x"FFFD4540", x"94FFAB60"),     
         12=> (x"FFAC45DC", x"FF340001", "10", 12, true, true, x"FFAC45E4", x"FF340000"),    
         13=> (x"FF0056A4", x"FF542376", "10", 22, true, false, x"FF0056B8", x"FF542374"),    
         14=> (x"FFFD4544", x"593421EB", "10", 16, true, true, x"FFFD4550", x"593421E8"),    
-        15=> (x"FFFD4544", x"593421EB", "10", 7, true, true, x"FFFD4548", x"593421E8")    
+        15=> (x"FFFD4544", x"593421EB", "10", 7, true, true, x"FFFD4548", x"593421E8"),
+        16=> (x"FF00FC20", x"48A7F670", "00", 34, false, false, x"ff00fca4", x"48a7f6f4")    
     );
 
     --Fehlerhafte Einstellungen werden ebenfalls getestet
-    constant error_tests : testcase_vector (0 to 1) := (
-        0=> (x"FFFD454C", x"FF34FFA4", "00", 30, false, true,  x"FFFD454C", x"FF350018"),
-        1=> (x"AD00459C", x"FD34FAF4", "11", 27, true, false, x"AD004604", x"FD34FB5C")
+    constant error_tests : testcase_vector (0 to 3) := (
+        0=> (x"FFFD454C", x"FF34FFA4", "11", 30, false, true,  x"FFFD454C", x"FF350018"),
+        1=> (x"AD00459C", x"FD34FAF4", "00", 27, true, false, x"AD004604", x"FD34FB5C"),
+        2=> (x"FF00FC20", x"4534345C", "00", 27, false, true, x"FF00FC20", x"45343468"),
+        3=> (x"FFFD454C", x"48A7F670", "00", 27, true, true, x"FFFD4550", x"593421E8")
     );
 
 begin
@@ -246,26 +250,26 @@ begin
             variable Wort_i  : std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
         begin
 
-           -- M_DAT_I       <= tests(i).Source_Addres; 
+           -- Slave_Interface       <= tests(i).Source_Addres; 
             --Sou_W         <= '1';
 
-            M_DAT_I  <= tests(i).Destination_Addres;
+            Slave_Interface  <= tests(i).Destination_Addres;
             Dest_W         <= '1';
 
             wait until falling_edge(Takt);
             
             --Sou_W         <= '0';
-            --M_DAT_I  <= tests(i).Destination_Addres;
+            --Slave_Interface  <= tests(i).Destination_Addres;
             --Dest_W         <= '1';
             Dest_W         <= '0';
-            M_DAT_I       <= tests(i).Source_Addres; 
+            Slave_Interface       <= tests(i).Source_Addres; 
             Sou_W         <= '1';
 
             wait until falling_edge(Takt);
             
             Sou_W         <= '0';
             --Dest_W      <= '0';
-            M_DAT_I     <= std_ulogic_vector(to_unsigned(tests(i).Transfer_Anzahl,WORDWIDTH));     
+            Slave_Interface     <= std_ulogic_vector(to_unsigned(tests(i).Transfer_Anzahl,WORDWIDTH));     
             Tra_Anz_W   <= '1';
 
             wait until falling_edge(Takt);
@@ -411,19 +415,21 @@ begin
         procedure execute_error_test(i : integer) is
         begin
 
-            M_DAT_I       <= tests(i).Source_Addres; 
+            wait until falling_edge(Takt);
+
+            Slave_Interface       <= error_tests(i).Source_Addres; 
             Sou_W         <= '1';
 
             wait until falling_edge(Takt);
 
-            M_DAT_I  <= tests(i).Destination_Addres;
             Sou_W         <= '0';
+            Slave_Interface  <= error_tests(i).Destination_Addres;
             Dest_W         <= '1';
 
             wait until falling_edge(Takt);
 
-            M_DAT_I     <= std_ulogic_vector(to_unsigned(tests(i).Transfer_Anzahl,WORDWIDTH));     
             Dest_W      <= '0';
+            Slave_Interface     <= std_ulogic_vector(to_unsigned(error_tests(i).Transfer_Anzahl,WORDWIDTH));     
             Tra_Anz_W   <= '1';
 
             wait until falling_edge(Takt);
@@ -483,7 +489,8 @@ begin
         Ex_EreigEn      =>  ExEreignisEn,
         Reset           =>  Reset,
         Tra_Fertig      =>  Transfer_Fertig,
-        Tra_Anzahl_Stand => Tra_Anzahl_Stand,  
+        Tra_Anzahl_Stand => Tra_Anzahl_Stand,
+        Slave_Interface  => Slave_Interface,
 
         S_Ready         =>  S_Ready,
         Sou_W           => Sou_W,
