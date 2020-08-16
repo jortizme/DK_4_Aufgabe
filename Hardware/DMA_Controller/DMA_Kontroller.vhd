@@ -130,7 +130,7 @@ begin
                     when x"04" => EnDEST0 <= '1';
                     when x"08" => EnTRAA0 <= '1';
                     when x"0C" => EnCR0 <= '1';
-                                    if RS0 = '0' and Status(0) = '0' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    if RS0 = '0' and Status(0) = '0' and S_DAT_I(0) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         M0_Valid <= '1';
                                     end if;
                     when x"10" => EnSAR1 <= '1';
@@ -236,9 +236,9 @@ begin
     )port map(
         Takt           => Takt,
 
-        BetriebsMod     => CR0(1 downto 0),
-        Byte_Trans      => CR0(2),
-        Ex_EreigEn      => CR0(4),
+        BetriebsMod     => CR0(2 downto 1),
+        Byte_Trans      => CR0(3),
+        Ex_EreigEn      => CR0(5),
         Reset           => Reset,
         Tra_Fertig      => TRA0_Fertig,
         Tra_Anzahl_Stand => TRA0_ANZ_STD,

@@ -64,6 +64,7 @@ architecture test of DMA_Kontroller_tb is
     constant SR     :   std_logic_vector(7 downto 0) := x"20";
 
     function cr_value(
+        KanalEnable  : in boolean;
         BetrModus    : in unsigned;
         Byte_Trans   : in boolean;
         Freigabe_Int : in boolean;
@@ -75,18 +76,21 @@ architecture test of DMA_Kontroller_tb is
 
         r := (others => '0');
 
-        r(1 downto 0) := std_logic_vector(BetrModus);
-        if Byte_Trans then
-            r(2) := '1';
+        if KanalEnable then
+            r(0) := '1';
         end if;
-        if Freigabe_Int then
+        r(2 downto 1) := std_logic_vector(BetrModus);
+        if Byte_Trans then
             r(3) := '1';
         end if;
-        if ExEreig_En then
+        if Freigabe_Int then
             r(4) := '1';
         end if;
-        if QuitiertInt then 
+        if ExEreig_En then
             r(5) := '1';
+        end if;
+        if QuitiertInt then 
+            r(6) := '1';
         end if;
 
         return r;
@@ -133,11 +137,18 @@ architecture test of DMA_Kontroller_tb is
                 wishbone_read(TRAAR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = write_data report "Falsche Anzahl von Transfers Kanal1 eingestellt" severity failure;
     
-                --Einstellung von CR0 von Kanal1 und laufen lassen des Kanals 1
-                write_data := cr_value(unsigned(BetrModus0), false, true, false, false);
+                --Einstellung von CR0 von Kanal1 
+                write_data := cr_value(false, unsigned(BetrModus0), false, true, false, false);
                 wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 wishbone_read(CR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
+
+                --Aktivieren des Kanals 1
+                write_data := cr_value(true, unsigned(BetrModus0), false, true, false, false);
+                wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(CR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
+
 
 
             wait;
