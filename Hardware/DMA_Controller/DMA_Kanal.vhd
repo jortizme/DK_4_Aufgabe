@@ -78,7 +78,7 @@ begin
 
         --Interne Signale des Rechenwerks
         signal M_DAT_Out_i   :   std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
-        signal M_ADR_i       :  std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '-');
+        signal M_ADR_i       :  std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
         signal M_SEL_i       :   std_ulogic_vector(3 downto 0);
         signal Sour_A_Out    :   std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
         signal Dest_A_Out    :   std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
@@ -86,7 +86,7 @@ begin
         signal Sel_Dest_Byte :  std_ulogic_vector(1 downto 0);
         signal Zwei_Bits_Adr :  std_ulogic_vector(1 downto 0);
         signal ByteMod_Addr_i  :  std_ulogic_vector(BUSWIDTH - 1 downto 0);
-        signal ByteMod_Dat_i :  std_ulogic_vector(WORDWIDTH - 1 downto 0); 
+        signal ByteMod_Dat_i :  std_ulogic_vector(WORDWIDTH - 1 downto 0) := (others => '0');
         signal Vergleicher_o :  std_ulogic_vector(BUSWIDTH - 1 downto 0) := (others => '0');
         signal OutputData_i  : std_ulogic_vector(WORDWIDTH - 1 downto 0);
 
@@ -161,8 +161,8 @@ begin
         --Beschreibung: Speichert den Wert der Adresse, deren letzten beiden Bits 
         --mit "00" enden. Erforderlich im byteweisen Transfer. 
         Addresvergleicher: process(Takt)
-            variable Q : std_ulogic_vector(31 downto 0);
-            variable Wert : unsigned(1 downto 0) := (others => '-');
+            variable Q : std_ulogic_vector(31 downto 0) := (others => '0');
+            variable Wert : unsigned(1 downto 0) := (others => '0');
         begin
 
             case(BetriebsMod) is
