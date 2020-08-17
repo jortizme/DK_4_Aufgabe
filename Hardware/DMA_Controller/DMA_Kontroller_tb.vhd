@@ -19,6 +19,7 @@ architecture test of DMA_Kontroller_tb is
     constant BUSWIDTH   : positive := 32;
     constant WORDWIDTH  : positive := 32;
     constant CLOCK_PERIOD : time   := 20 ns;
+    constant DATA_WORT    : std_logic_vector(WORDWIDTH - 1 downto 0) := x"AABBCCDD";
 
     constant Sou_Adr0   : std_logic_vector(BUSWIDTH - 1 downto 0) := x"FF00453C";
     constant Dest_Adr0  :  std_logic_vector(BUSWIDTH - 1 downto 0) := x"FF3423B0";
@@ -150,6 +151,43 @@ architecture test of DMA_Kontroller_tb is
                 assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
 
 
+                --So klappt wenn ExEreigEn deaktiviert ist
+                loop
+                    assert M_STB = '1' report "Der Kanal greift nicht auf den Bus zu" severity failure;
+                    wait until falling_edge(Takt);
+                    M_DAT_I <= DATA_WORT;
+                    M_ACK <= '1';
+                    wait until falling_edge(Takt);
+                    M_DAT_I <= (others => '0');
+                    M_ACK <= '0';
+                    assert M_STB = '1' report "Der Kanal greift nicht auf den Bus zu" severity failure;
+                    wait until falling_edge(Takt);
+                    M_ACK <= '1';
+                    wait for 40 ns;
+                    if Interrupt0 = '1' then M_ACK <= '0'; exit; end if;
+                    M_ACK <= '0';
+
+                end loop;
+
+                --Pruefen ob der Interrupt_0 im Status register sichtbar ist
+                wishbone_read(SR, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data(0) = '0' report "Kanal_1 muss deaktiviert sein" severity failure;
+                assert read_data(1) = '0' report "Kanal_2 muss deaktiviert sein" severity failure;
+                assert read_data(2) = '1' report "Der Interrupt_0 ist im Status-Register nicht sichtbar" severity failure;
+                assert read_data(3) = '0' report "Der Interrupt_1 sollte deaktiviert sein" severity failure;
+
+                --Absichtlich den Kanal wieder aktivieren ohne den Interrupt zu quittieren
+                write_data := cr_value(true, unsigned(BetrModus0), false, true, false, false);
+                wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(SR, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data(0) = '0' report "Kanal_1 muss deaktiviert sein, da Interrupt nicht Quittiert" severity failure;
+
+                --Quittierung des Interrupts_0
+                write_data := cr_value(false, unsigned(BetrModus0), false, true, false, true);
+                wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert Interrupt0 = '0' report "Interrup0 bereits quittiert, er sollte nicht mehr aktiv sein" severity failure;
+                wishbone_read(SR, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data(2) = '0' report "Der Interrupt_0 sollte quittiert sein" severity failure;
 
             wait;
         end process;

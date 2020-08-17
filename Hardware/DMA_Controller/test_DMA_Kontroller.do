@@ -39,6 +39,15 @@ add wave -hexadecimal /DMA_Kontroller_tb/S_ADR
 add wave -hexadecimal /DMA_Kontroller_tb/S_DAT_I
 add wave -hexadecimal /DMA_Kontroller_tb/S_DAT_O
 
+add wave -divider "Wishbone-Bus-Master"
+add wave              /DMA_Kontroller_tb/M_STB
+add wave              /DMA_Kontroller_tb/M_ACK
+add wave              /DMA_Kontroller_tb/M_WE
+add wave              /DMA_Kontroller_tb/M_SEL
+add wave -hexadecimal /DMA_Kontroller_tb/M_ADR
+add wave -hexadecimal /DMA_Kontroller_tb/M_DAT_I
+add wave -hexadecimal /DMA_Kontroller_tb/M_DAT_O
+
 
 
 if {1} {

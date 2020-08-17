@@ -78,6 +78,8 @@ architecture rtl of DMA_Kontroller is
     signal CR1    : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
     signal M0_Valid : std_logic := '0';
     signal M1_Valid : std_logic := '0';
+    signal Quittung_0 : std_logic := '0';
+    signal Quittung_1 : std_logic := '0';
 
     signal Interrupt0_i  : std_logic := '0';
     signal Interrupt1_i  : std_logic := '0';
@@ -96,8 +98,8 @@ begin
     S_ACK <= S_STB;
  
 
-    Interrupt0_i <= CR0(3) and RS0;
-    Interrupt1_i <= CR1(3) and RS1;
+    Interrupt0_i <= CR0(4) and RS0;
+    Interrupt1_i <= CR1(4) and RS1;
 
     Status(2) <= Interrupt0_i;
     Status(3) <= Interrupt1_i;
@@ -120,7 +122,9 @@ begin
 		EnTRAA1      <= '0';
         EnCR1       <= '0';
         M0_Valid    <= '0';
-        M1_Valid    <= '0';   -- Die implementierung fehlt noch
+        M1_Valid    <= '0';   
+        Quittung_0 <= '0';
+        Quittung_1 <= '0';
 
 		if S_STB = '1' then
             if S_WE = '1' then
@@ -133,10 +137,20 @@ begin
                                     if RS0 = '0' and Status(0) = '0' and S_DAT_I(0) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         M0_Valid <= '1';
                                     end if;
+                                    if RS0 = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                        Quittung_0 <= '1';
+                                    end if;
+
                     when x"10" => EnSAR1 <= '1';
                     when x"14" => EnDEST1 <= '1';
                     when x"18" => EnTRAA1 <= '1';
                     when x"1C" => EnCR1 <= '1';
+                                    if RS1 = '0' and Status(1) = '0' and S_DAT_I(0) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                        M1_Valid <= '1';
+                                    end if;
+                                    if RS0 = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                        Quittung_1 <= '1';
+                                    end if;
                     when others => null;
                 end case;
             end if;
@@ -163,11 +177,7 @@ begin
                 CR0 <= x"00000000";
 
             elsif EnCR0 = '1' then
-                if S_DAT_I(0) = '1' and RS0 = '1' then -- Aktiviert den Kanal nicht solange der Interrupt nicht quittiert wurde
-                    CR0(0)  <= '0';
-                end if;
                 CR0  <= S_DAT_I;
-
             end if;
 
         end if;
@@ -178,11 +188,11 @@ begin
     variable tmp : std_logic := '0';
     begin
 
-        if(CR0(6) = '0' and TRA0_Fertig = '0') then
+        if(Quittung_0 = '0' and TRA0_Fertig = '0') then
             tmp := tmp;
-        elsif (CR0(6) = '1' and TRA0_Fertig = '1') then
+        elsif (Quittung_0 = '1' and TRA0_Fertig = '1') then
             tmp := 'X';
-        elsif (CR0(6) = '0' and TRA0_Fertig = '1') then
+        elsif (Quittung_0 = '0' and TRA0_Fertig = '1') then
             tmp := '1';
         else
             tmp := '0';
@@ -195,17 +205,9 @@ begin
     begin
         if rising_edge(Takt) then
 
-            CR1(0) <= '0';
-            CR1(6) <= '0';
-
             if Reset = '1' then
 				CR1 <= x"00000000";
             elsif EnCR1 = '1' then
-
-                if S_DAT_I(0) = '1' and RS0 = '1' then -- Aktiviert den Kanal nicht solange der Interrupt nicht quittiert wurde
-                    CR1(0) <= '0';
-                end if;
-
                 CR1 <= S_DAT_I;
             end if;
         end if;
@@ -216,11 +218,11 @@ begin
     variable tmp : std_logic := '0';
     begin
 
-        if(CR1(6) = '0' and TRA1_Fertig = '0') then
+        if(Quittung_1 = '0' and TRA1_Fertig = '0') then
             tmp := tmp;
-        elsif (CR1(6) = '1' and TRA1_Fertig = '1') then
+        elsif (Quittung_1 = '1' and TRA1_Fertig = '1') then
             tmp := 'X';
-        elsif (CR1(6) = '0' and TRA1_Fertig = '1') then
+        elsif (Quittung_1 = '0' and TRA1_Fertig = '1') then
             tmp := '1';
         else
             tmp := '0';
@@ -279,7 +281,7 @@ begin
         Sou_W           => EnSAR1,
         Dest_W          => EnDEST1,
         Tra_Anz_W       => EnTRAA1,
-        M_Valid         => CR1(0),
+        M_Valid         => M1_Valid,
         Kanal_Aktiv     => Status(1),
 
         M_STB           => M1_STB,
