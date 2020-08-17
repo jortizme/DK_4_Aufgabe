@@ -148,7 +148,7 @@ begin
                                     if RS1 = '0' and Status(1) = '0' and S_DAT_I(0) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         M1_Valid <= '1';
                                     end if;
-                                    if RS0 = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    if RS1 = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         Quittung_1 <= '1';
                                     end if;
                     when others => null;

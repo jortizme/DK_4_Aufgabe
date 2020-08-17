@@ -64,8 +64,28 @@ add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal1/M_DAT_I
 
 }
 
+if {1} {
+add wave -divider "Kanal 2"
+add wave  /DMA_Kontroller_tb/DUT/Kanal2/Steuerwerk/Zustand
+add wave 			  /DMA_Kontroller_tb/DUT/Kanal2/M_Valid
+add wave 			  /DMA_Kontroller_tb/DUT/Kanal2/M_STB
+add wave 			  /DMA_Kontroller_tb/DUT/Kanal2/M_WE
+add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal2/M_ADR
+add wave -unsigned 	  /DMA_Kontroller_tb/DUT/Kanal2/M_SEL
+add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal2/M_DAT_O
+add wave 			  /DMA_Kontroller_tb/DUT/Kanal2/M_ACK
+add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal2/M_DAT_I
 
-if {0} {
+add wave  /DMA_Kontroller_tb/DUT/Kanal2/S_Ready
+add wave  /DMA_Kontroller_tb/DUT/Kanal2/Ex_EreigEn
+add wave  /DMA_Kontroller_tb/DUT/Kanal2/BetriebsMod
+add wave  /DMA_Kontroller_tb/DUT/Kanal2/Byte_Trans
+
+}
+
+
+
+if {1} {
 add wave -divider "Arbiter Output"
 add wave /DMA_Kontroller_tb/M_STB
 add wave /DMA_Kontroller_tb/M_WE
