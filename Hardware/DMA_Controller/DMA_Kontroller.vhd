@@ -58,6 +58,11 @@ architecture rtl of DMA_Kontroller is
     signal TRA0_ANZ_STD      : std_logic_vector(WORDWIDTH - 1 downto 0);
     signal TRA0_Fertig       : std_logic := '0';
     signal RS0               : std_logic := '0';
+    signal BetriebMod_0      : std_logic_vector(1 downto 0);
+    signal ByteTrans_0       : std_logic;
+    signal ExEreigEn_0       : std_logic;
+    signal FreigabeIR_0      : std_logic;
+    signal Kanal_Aktiv_0     : std_logic;
 
     signal M1_STB           : std_logic;
     signal M1_WE            : std_logic;
@@ -70,6 +75,11 @@ architecture rtl of DMA_Kontroller is
     signal TRA1_ANZ_STD      : std_logic_vector(WORDWIDTH - 1 downto 0);
     signal TRA1_Fertig       : std_logic := '0';
     signal RS1               : std_logic := '0';
+    signal BetriebMod_1      : std_logic_vector(1 downto 0);
+    signal ByteTrans_1       : std_logic;
+    signal ExEreigEn_1       : std_logic;
+    signal FreigabeIR_1      : std_logic;
+    signal Kanal_Aktiv_1     : std_logic;
 
     signal Status    : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0'); 
     signal CR0      : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
@@ -95,9 +105,21 @@ begin
 
     S_ACK <= S_STB;
 
-    Interrupt0_i <= CR0(3) and RS0;
-    Interrupt1_i <= CR1(3) and RS1;
+    BetriebMod_0    <= CR0(1 downto 0);  
+    ByteTrans_0     <= CR0(2);
+    FreigabeIR_0    <= CR0(3);  
+    ExEreigEn_0     <= CR0(4);
 
+    BetriebMod_1    <= CR1(1 downto 0);  
+    ByteTrans_1     <= CR1(2);
+    FreigabeIR_1    <= CR1(3);  
+    ExEreigEn_1     <= CR1(4); 
+
+    Interrupt0_i <= FreigabeIR_0 and RS0;
+    Interrupt1_i <= FreigabeIR_1 and RS1;
+
+    Status(0) <= Kanal_Aktiv_0;
+    Status(1) <= Kanal_Aktiv_1;
     Status(2) <= Interrupt0_i;
     Status(3) <= Interrupt1_i;
 
@@ -110,18 +132,18 @@ begin
     Decoder: process(S_STB, S_ADR, S_WE)
 	begin
 		-- Default-Werte
-		EnSAR0 <= '0';
-		EnDEST0    <= '0';
-		EnTRAA0      <= '0';
+		EnSAR0      <= '0';
+		EnDEST0     <= '0';
+		EnTRAA0     <= '0';
         EnCR0       <= '0';
-        EnSAR1 <= '0';
-		EnDEST1    <= '0';
-		EnTRAA1      <= '0';
+        EnSAR1      <= '0';
+		EnDEST1     <= '0';
+		EnTRAA1     <= '0';
         EnCR1       <= '0';
         M0_Valid    <= '0';
         M1_Valid    <= '0';   
-        Quittung_0 <= '0';
-        Quittung_1 <= '0';
+        Quittung_0  <= '0';
+        Quittung_1  <= '0';
 
 		if S_STB = '1' then
             if S_WE = '1' then
@@ -235,9 +257,9 @@ begin
     )port map(
         Takt           => Takt,
 
-        BetriebsMod     => CR0(1 downto 0),
-        Byte_Trans      => CR0(2),
-        Ex_EreigEn      => CR0(4),
+        BetriebsMod     => BetriebMod_0,
+        Byte_Trans      => ByteTrans_0 ,
+        Ex_EreigEn      => ExEreigEn_0,
         Reset           => Reset,
         Tra_Fertig      => TRA0_Fertig,
         Tra_Anzahl_Stand => TRA0_ANZ_STD,
@@ -248,7 +270,7 @@ begin
         Dest_W          => EnDEST0,
         Tra_Anz_W       => EnTRAA0,
         M_Valid         => M0_Valid,
-        Kanal_Aktiv     => Status(0),
+        Kanal_Aktiv     => Kanal_Aktiv_0,
 
         M_STB           => M0_STB,
         M_WE            => M0_WE,
@@ -266,9 +288,9 @@ begin
     )port map(
         Takt           => Takt,
 
-        BetriebsMod     => CR1(1 downto 0),
-        Byte_Trans      => CR1(2),
-        Ex_EreigEn      => CR1(4),
+        BetriebsMod     => BetriebMod_1,
+        Byte_Trans      => ByteTrans_1,
+        Ex_EreigEn      => ExEreigEn_1,
         Reset           => Reset,
         Tra_Fertig      => TRA1_Fertig,
         Tra_Anzahl_Stand => TRA1_ANZ_STD,
@@ -279,7 +301,7 @@ begin
         Dest_W          => EnDEST1,
         Tra_Anz_W       => EnTRAA1,
         M_Valid         => M1_Valid,
-        Kanal_Aktiv     => Status(1),
+        Kanal_Aktiv     => Kanal_Aktiv_1,
 
         M_STB           => M1_STB,
         M_WE            => M1_WE,

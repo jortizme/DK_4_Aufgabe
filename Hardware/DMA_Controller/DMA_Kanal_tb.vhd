@@ -219,7 +219,7 @@ architecture testbench of DMA_Kanal_tb is
         13=> (x"FF0056A4", x"FF542376", "10", 22, true, false, x"FF0056B8", x"FF542374"),    
         14=> (x"FFFD4544", x"593421EB", "10", 16, true, true, x"FFFD4550", x"593421E8"),    
         15=> (x"FFFD4544", x"593421EB", "10", 7, true, true, x"FFFD4548", x"593421E8"),
-        16=> (x"FF00FC20", x"48A7F670", "00", 34, false, false, x"ff00fca4", x"48a7f6f4")    
+        16=> (x"FF00FC20", x"48A7F670", "00", 34, false, false, x"FF00FCA4", x"48A7F6F4")    
     );
 
     --Fehlerhafte Einstellungen werden ebenfalls getestet
