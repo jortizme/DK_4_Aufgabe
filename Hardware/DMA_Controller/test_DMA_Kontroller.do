@@ -117,5 +117,5 @@ add wave  /DMA_Kontroller_tb/DUT/EnCR0
 }
 
 
-run 50 us
+run 100 us
 wave zoom full

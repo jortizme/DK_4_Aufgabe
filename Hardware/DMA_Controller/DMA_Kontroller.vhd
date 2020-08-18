@@ -56,7 +56,6 @@ architecture rtl of DMA_Kontroller is
     signal M0_ACK           : std_logic;
 
     signal TRA0_ANZ_STD      : std_logic_vector(WORDWIDTH - 1 downto 0);
-  --  signal M0_Valid          : std_logic := '0';
     signal TRA0_Fertig       : std_logic := '0';
     signal RS0               : std_logic := '0';
 
@@ -69,7 +68,6 @@ architecture rtl of DMA_Kontroller is
     signal M1_ACK           : std_logic;
 
     signal TRA1_ANZ_STD      : std_logic_vector(WORDWIDTH - 1 downto 0);
- --   signal M1_Valid          : std_logic := '0';
     signal TRA1_Fertig       : std_logic := '0';
     signal RS1               : std_logic := '0';
 
@@ -97,8 +95,8 @@ begin
 
     S_ACK <= S_STB;
 
-    Interrupt0_i <= CR0(4) and RS0;
-    Interrupt1_i <= CR1(4) and RS1;
+    Interrupt0_i <= CR0(3) and RS0;
+    Interrupt1_i <= CR1(3) and RS1;
 
     Status(2) <= Interrupt0_i;
     Status(3) <= Interrupt1_i;
@@ -133,7 +131,7 @@ begin
                     when x"04" => EnDEST0 <= '1';
                     when x"08" => EnTRAA0 <= '1';
                     when x"0C" => EnCR0 <= '1';
-                                    if RS0 = '0' and Status(0) = '0' and S_DAT_I(0) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    if RS0 = '0' and Status(0) = '0' and S_DAT_I(5) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         M0_Valid <= '1';
                                     end if;
                                     if RS0 = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
@@ -144,7 +142,7 @@ begin
                     when x"14" => EnDEST1 <= '1';
                     when x"18" => EnTRAA1 <= '1';
                     when x"1C" => EnCR1 <= '1';
-                                    if RS1 = '0' and Status(1) = '0' and S_DAT_I(0) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    if RS1 = '0' and Status(1) = '0' and S_DAT_I(5) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         M1_Valid <= '1';
                                     end if;
                                     if RS1 = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
@@ -237,9 +235,9 @@ begin
     )port map(
         Takt           => Takt,
 
-        BetriebsMod     => CR0(2 downto 1),
-        Byte_Trans      => CR0(3),
-        Ex_EreigEn      => CR0(5),
+        BetriebsMod     => CR0(1 downto 0),
+        Byte_Trans      => CR0(2),
+        Ex_EreigEn      => CR0(4),
         Reset           => Reset,
         Tra_Fertig      => TRA0_Fertig,
         Tra_Anzahl_Stand => TRA0_ANZ_STD,
@@ -268,9 +266,9 @@ begin
     )port map(
         Takt           => Takt,
 
-        BetriebsMod     => CR1(2 downto 1),
-        Byte_Trans      => CR1(3),
-        Ex_EreigEn      => CR1(5),
+        BetriebsMod     => CR1(1 downto 0),
+        Byte_Trans      => CR1(2),
+        Ex_EreigEn      => CR1(4),
         Reset           => Reset,
         Tra_Fertig      => TRA1_Fertig,
         Tra_Anzahl_Stand => TRA1_ANZ_STD,
