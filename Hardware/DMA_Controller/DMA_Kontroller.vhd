@@ -96,7 +96,6 @@ architecture rtl of DMA_Kontroller is
 begin
 
     S_ACK <= S_STB;
- 
 
     Interrupt0_i <= CR0(4) and RS0;
     Interrupt1_i <= CR1(4) and RS1;
@@ -116,7 +115,7 @@ begin
 		EnSAR0 <= '0';
 		EnDEST0    <= '0';
 		EnTRAA0      <= '0';
-        EnCR1       <= '0';
+        EnCR0       <= '0';
         EnSAR1 <= '0';
 		EnDEST1    <= '0';
 		EnTRAA1      <= '0';

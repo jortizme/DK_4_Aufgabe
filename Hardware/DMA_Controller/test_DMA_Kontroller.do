@@ -28,7 +28,7 @@ add wave        /DMA_Kontroller_tb/Takt
 add wave        /DMA_Kontroller_tb/RST
 add wave        /DMA_Kontroller_tb/Interrupt0
 add wave        /DMA_Kontroller_tb/Interrupt1
-add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/CR0
+#add wave  -hexadecimal  /DMA_Kontroller_tb/DUT/CR0
 
 add wave -divider "Wishbone-Bus-Slave"
 add wave              /DMA_Kontroller_tb/S_STB
@@ -76,16 +76,16 @@ add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal2/M_DAT_O
 add wave 			  /DMA_Kontroller_tb/DUT/Kanal2/M_ACK
 add wave -hexadecimal /DMA_Kontroller_tb/DUT/Kanal2/M_DAT_I
 
-add wave  /DMA_Kontroller_tb/DUT/Kanal2/S_Ready
-add wave  /DMA_Kontroller_tb/DUT/Kanal2/Ex_EreigEn
-add wave  /DMA_Kontroller_tb/DUT/Kanal2/BetriebsMod
-add wave  /DMA_Kontroller_tb/DUT/Kanal2/Byte_Trans
+#add wave  /DMA_Kontroller_tb/DUT/Kanal2/S_Ready
+#add wave  /DMA_Kontroller_tb/DUT/Kanal2/Ex_EreigEn
+#add wave  /DMA_Kontroller_tb/DUT/Kanal2/BetriebsMod
+#add wave  /DMA_Kontroller_tb/DUT/Kanal2/Byte_Trans
 
 }
 
 
 
-if {1} {
+if {0} {
 add wave -divider "Arbiter Output"
 add wave /DMA_Kontroller_tb/M_STB
 add wave /DMA_Kontroller_tb/M_WE

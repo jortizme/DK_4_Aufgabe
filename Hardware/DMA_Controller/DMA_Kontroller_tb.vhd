@@ -215,11 +215,11 @@ architecture test of DMA_Kontroller_tb is
                 wishbone_read(CR1, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = x"00000000" report "CR0 sollte auf 0 gesetzt sein" severity failure;
 
-                --Source-Adresse von Kanal1 einstellen
+                --Source-Adresse von Kanal2 einstellen
                 write_data := Sou_Adr1;
                 wishbone_write(x"f", SAR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
     
-                --Destination-Adresse von Kanal1 einstellen
+                --Destination-Adresse von Kanal2 einstellen
                 write_data := Dest_Adr1;
                 wishbone_write(x"f", DESTR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
     
@@ -229,13 +229,13 @@ architecture test of DMA_Kontroller_tb is
                 wishbone_read(TRAAR1, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = write_data report "Falsche Anzahl von Transfers Kanal2 eingestellt" severity failure;
     
-                --Einstellung von CR1 von Kanal1 
+                --Einstellung von CR1 von Kanal2 
                 write_data := cr_value(false, unsigned(BetrModus1), true, true, true, false);
                 wishbone_write(x"f", CR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 wishbone_read(CR1, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
 
-                --Aktivieren des Kanals 1
+                --Aktivieren des Kanals 2
                 write_data := cr_value(true, unsigned(BetrModus1), true, true, true, false);
                 wishbone_write(x"f", CR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 wishbone_read(CR1, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
@@ -283,6 +283,106 @@ architecture test of DMA_Kontroller_tb is
                 wishbone_read(SR, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
                 assert read_data(3) = '0' report "Der Interrupt_0 sollte quittiert sein" severity failure;
 
+----------------------------------------------------------------------------------------------------
+
+--Jetzt beide Kanäle Aktiv
+
+----------------------------------------------------------------------------------------------------
+
+                RST <= '1';
+                wishbone_init(S_STB, S_WE, S_SEL, S_ADR, S_DAT_I);        
+                wait_cycle(2, Takt);
+                RST <= '0';
+                wait_cycle(2, Takt);
+
+                --Source-Adresse von Kanal1 einstellen
+                write_data := Sou_Adr0;
+                wishbone_write(x"f", SAR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+    
+                --Destination-Adresse von Kanal1 einstellen
+                write_data := Dest_Adr0;
+                wishbone_write(x"f", DESTR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+    
+
+                --Transferanzahl von Kanal1 einstellen
+                write_data := std_logic_vector(Trans_Anz0);
+                wishbone_write(x"f", TRAAR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(TRAAR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data = write_data report "Falsche Anzahl von Transfers Kanal1 eingestellt" severity failure;
+    
+                --Einstellung von CR0 von Kanal1 
+                write_data := cr_value(false, unsigned(BetrModus0), false, true, false, false);
+                wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(CR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
+
+                --Source-Adresse von Kanal2 einstellen
+                write_data := Sou_Adr1;
+                wishbone_write(x"f", SAR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+    
+                --Destination-Adresse von Kanal2 einstellen
+                write_data := Dest_Adr1;
+                wishbone_write(x"f", DESTR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+    
+                --Transferanzahl von Kanal2 einstellen
+                write_data := std_logic_vector(Trans_Anz1);
+                wishbone_write(x"f", TRAAR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(TRAAR1, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data = write_data report "Falsche Anzahl von Transfers Kanal2 eingestellt" severity failure;
+    
+                --Einstellung von CR1 von Kanal2 
+                write_data := cr_value(false, unsigned(BetrModus1), true, true, false, false);
+                wishbone_write(x"f", CR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(CR1, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
+
+
+
+                --Aktivieren des Kanals 2
+                write_data := cr_value(true, unsigned(BetrModus1), true, true, false, false);
+                wishbone_write(x"f", CR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(CR1, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
+
+                --Aktivieren des Kanals 1
+                write_data := cr_value(true, unsigned(BetrModus0), true, true, true, false);
+                wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(CR0, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data = write_data report "Falsche Wert in CR0 Kanal1 eingestellt" severity failure;
+
+                M_DAT_I <= DATA_WORT;
+                M_ACK <= '1';
+                S0_Ready <= '1';
+
+                wait until Interrupt1 = '1';
+                
+                --Absichtlich den Kanal_2 wieder aktivieren ohne den Interrupt zu quittieren
+                write_data := cr_value(true, unsigned(BetrModus1), true, true, true, false);
+                wishbone_write(x"f", CR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(SR, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data(1) = '0' report "Kanal_2 muss deaktiviert sein, da Interrupt nicht Quittiert" severity failure;
+
+
+                --Absichtlich den Kanal_1 wieder aktivieren ohne den Interrupt zu quittieren
+                write_data := cr_value(true, unsigned(BetrModus0), false, true, false, false);
+                wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                wishbone_read(SR, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data(0) = '0' report "Kanal_1 muss deaktiviert sein, da Interrupt nicht Quittiert" severity failure;
+
+                --Quittierung des Interrupts_0
+                write_data := cr_value(false, unsigned(BetrModus0), false, true, false, true);
+                wishbone_write(x"f", CR0, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert Interrupt0 = '0' report "Interrup0 bereits quittiert, er sollte nicht mehr aktiv sein" severity failure;
+                wishbone_read(SR, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data(2) = '0' report "Der Interrupt_0 sollte quittiert sein" severity failure;
+
+
+                --Quittierung des Interrupts_1
+                write_data := cr_value(false, unsigned(BetrModus1), true, true, true, true);
+                wishbone_write(x"f", CR1, write_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert Interrupt1 = '0' report "Interrup1 bereits quittiert, er sollte nicht mehr aktiv sein" severity failure;
+                wishbone_read(SR, read_data, Takt, S_STB, S_WE, S_SEL, S_ADR, S_DAT_I, S_ACK, S_DAT_O);
+                assert read_data(3) = '0' report "Der Interrupt_0 sollte quittiert sein" severity failure;
 
             wait;
         end process;
