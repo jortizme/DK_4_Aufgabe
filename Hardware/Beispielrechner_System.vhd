@@ -101,7 +101,9 @@ architecture arch of Beispielrechner_System is
 
 	signal DMA_STB			  : std_logic;
 	signal DMA_ACK			  : std_logic;
-	signal DMA_DAT_O 		  : std_logic_vector(31 downto 0);	
+	signal DMA_DAT_O 		  : std_logic_vector(31 downto 0);
+	signal IR_Kanal_1         : std_logic;
+	signal IR_Kanal_2         : std_logic;		
 	
 	
 	
@@ -220,8 +222,8 @@ begin
 		M_DAT_I         =>  M_SYS_DAT_I_DMA,
 		M_ACK           =>  M_SYS_ACK_DMA,
 
-		S0_Ready        =>  ,--ACHTUNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-		S1_Ready        =>  ,--achtunggggggggggggggggggggggggggggggggg modification in Uart erfordelich
+		S0_Ready        =>  IR_Kanal_1,
+		S1_Ready        =>  IR_Kanal_2,
 
 		Kanal1_Interrupt => IP2,
 		Kanal2_Interrupt => IP4
@@ -337,7 +339,8 @@ begin
 		DAT_I     => S_SYS_DAT_O,
 		DAT_O     => UART_DAT_O,
 		ACK_O     => UART_ACK,
-		Interrupt => open, --ACHTUNGGGGGGGGGGGGGGGGGGGG
+		TX_Interrupt => IR_Kanal_1,
+		RX_Interrupt => IR_Kanal_2,
 		RxD       => RXD,
 		TxD       => TXD
 	);
