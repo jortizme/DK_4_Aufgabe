@@ -55,7 +55,7 @@ architecture rtl of DMA_Kontroller is
 
     signal TRA0_ANZ_STD      : std_logic_vector(WORDWIDTH - 1 downto 0);
     signal TRA0_Fertig       : std_logic := '0';
-    signal RS0               : std_logic := '0';
+    signal Kanal_0_IR        : std_logic := '0';
     signal BetriebMod_0      : std_logic_vector(1 downto 0);
     signal ByteTrans_0       : std_logic;
     signal ExEreigEn_0       : std_logic;
@@ -72,7 +72,7 @@ architecture rtl of DMA_Kontroller is
 
     signal TRA1_ANZ_STD      : std_logic_vector(WORDWIDTH - 1 downto 0);
     signal TRA1_Fertig       : std_logic := '0';
-    signal RS1               : std_logic := '0';
+    signal Kanal_1_IR        : std_logic := '0';
     signal BetriebMod_1      : std_logic_vector(1 downto 0);
     signal ByteTrans_1       : std_logic;
     signal ExEreigEn_1       : std_logic;
@@ -113,13 +113,13 @@ begin
     FreigabeIR_1    <= CR1(3);  
     ExEreigEn_1     <= CR1(4); 
 
-    Interrupt0_i <= FreigabeIR_0 and RS0;
-    Interrupt1_i <= FreigabeIR_1 and RS1;
+    Interrupt0_i <= FreigabeIR_0 and Kanal_0_IR;
+    Interrupt1_i <= FreigabeIR_1 and Kanal_1_IR;
 
     Status(0) <= Kanal_Aktiv_0;
     Status(1) <= Kanal_Aktiv_1;
-    Status(2) <= Interrupt0_i;
-    Status(3) <= Interrupt1_i;
+    Status(2) <= Kanal_0_IR;
+    Status(3) <= Kanal_1_IR;
 
     process(Interrupt0_i, Interrupt1_i)
     begin
@@ -215,7 +215,7 @@ begin
             tmp := '0';
         end if;
 
-            RS0 <= tmp;
+        Kanal_0_IR <= tmp;
     end process;
 
     Kontrol_Register1: process(Takt)
@@ -245,7 +245,7 @@ begin
             tmp := '0';
         end if;
 
-            RS1 <= tmp;
+        Kanal_1_IR <= tmp;
     end process;
 
     Kanal1: entity work.DMA_Kanal

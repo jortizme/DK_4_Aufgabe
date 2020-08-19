@@ -45,7 +45,8 @@ entity UART is
 		DAT_O              : out std_logic_vector(31 downto 0);
 		ACK_O              : out std_logic;
 		-- Interupt
-		Interrupt          : out std_logic;
+		TX_Interrupt       : out std_logic;
+		RX_Interrupt       : out std_logic;		
 		-- Port Pins
 		RxD                : in  std_logic;
 		TxD                : out std_logic
@@ -75,8 +76,8 @@ architecture behavioral of UART is
 	signal Stoppbits  		   : std_logic_vector(1 downto 0);	
 	signal Rx_IrEn             : std_logic;
 	signal Tx_IrEn             : std_logic;
-	signal Rx_Interrupt        : std_logic;
-	signal Tx_Interrupt        : std_logic;
+	signal Rx_Interrupt_i      : std_logic;
+	signal Tx_Interrupt_i      : std_logic;
 
 	signal Sender_Ready	       : std_logic;
 
@@ -90,16 +91,17 @@ architecture behavioral of UART is
 
 begin
 	ACK_O              <= STB_I;
-	Interrupt          <= Tx_Interrupt or Rx_Interrupt;
-	Tx_Interrupt       <= Tx_IrEn and Sender_Ready;
-	Rx_Interrupt       <= Rx_IrEn and Puffer_Valid;
+	TX_Interrupt       <= Tx_Interrupt_i;
+	RX_Interrupt       <= Rx_Interrupt_i;
+	Tx_Interrupt_i     <= Tx_IrEn and Sender_Ready;
+	Rx_Interrupt_i     <= Rx_IrEn and Puffer_Valid;
 
 	-- Statusregister mit Statussignalen verbinden
     Status( 0) <= Puffer_Valid;
     Status( 1) <= Sender_Ready;
     Status( 2) <= Ueberlauf;
-	Status(24) <= Rx_Interrupt;
-	Status(25) <= Tx_Interrupt;
+	Status(24) <= Rx_Interrupt_i;
+	Status(25) <= Tx_Interrupt_i;
 	
     -- Kontrollregister mit Steuersignalen verbinden
 	BitBreiteM1     <= std_logic_vector(Kontroll(15 downto 0));
