@@ -22,25 +22,23 @@ entity DMA_Kontroller is
         S_STB           : in std_logic;
         S_WE            : in std_logic;
         S_ADR           : in std_logic_vector(7 downto 0);
-        S_SEL           : in std_logic_vector(3 downto 0);
         S_DAT_O         : out std_logic_vector(WORDWIDTH - 1 downto 0);
         S_DAT_I         : in std_logic_vector(WORDWIDTH - 1 downto 0);
         S_ACK           : out std_logic;
         
-
-        S0_Ready         : in std_logic;
-        S1_Ready         : in std_logic;
-
-        Kanal1_Interrupt : out std_logic;
-        Kanal2_Interrupt : out std_logic;
-
         M_STB           : out std_logic;
         M_WE            : out std_logic;
         M_ADR           : out std_logic_vector(WORDWIDTH - 1 downto 0);
         M_SEL           : out std_logic_vector(3 downto 0);
         M_DAT_O         : out std_logic_vector(WORDWIDTH - 1 downto 0);
         M_DAT_I         : in std_logic_vector(WORDWIDTH - 1 downto 0);
-        M_ACK           : in std_logic
+        M_ACK           : in std_logic;
+
+        S0_Ready         : in std_logic;
+        S1_Ready         : in std_logic;
+
+        Kanal1_Interrupt : out std_logic;
+        Kanal2_Interrupt : out std_logic
     );
 end entity;
 

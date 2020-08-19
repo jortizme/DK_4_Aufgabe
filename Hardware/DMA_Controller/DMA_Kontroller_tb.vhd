@@ -279,25 +279,25 @@ architecture test of DMA_Kontroller_tb is
     
             S_STB           =>  S_STB,
             S_WE            =>  S_WE,
-            S_ADR           =>  S_ADR,
-            S_SEL           =>  S_SEL, 
+            S_ADR           =>  S_ADR, 
             S_DAT_O         =>  S_DAT_O,
             S_DAT_I         =>  S_DAT_I,
             S_ACK           =>  S_ACK,
             
-            S0_Ready        =>  S0_Ready,
-            S1_Ready        =>  S1_Ready,
-    
-            Kanal1_Interrupt => Interrupt0,
-            Kanal2_Interrupt => Interrupt1,
-    
             M_STB           =>  M_STB,
             M_WE            =>  M_WE,
             M_ADR           =>  M_ADR,
             M_SEL           =>  M_SEL,
             M_DAT_O         =>  M_DAT_O,
             M_DAT_I         =>  M_DAT_I,
-            M_ACK           =>  M_ACK
+            M_ACK           =>  M_ACK,
+
+            S0_Ready        =>  S0_Ready,
+            S1_Ready        =>  S1_Ready,
+    
+            Kanal1_Interrupt => Interrupt0,
+            Kanal2_Interrupt => Interrupt1
+    
         );
 
 end architecture;
