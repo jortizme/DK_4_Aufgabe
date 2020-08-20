@@ -1,0 +1,294 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/DMA_Controller
+Edma_kanal
+Z1 w1597928854
+Z2 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+R0
+Z5 8DMA_Kanal.vhd
+Z6 FDMA_Kanal.vhd
+l0
+L25
+Vbnk8Kf<5U7oZgRH6Ag@1>3
+!s100 z7Pb?PE>J<[FinkiT2KYN0
+Z7 OV;C;2019.2;69
+32
+Z8 !s110 1597931555
+!i10b 1
+Z9 !s108 1597931555.000000
+Z10 !s90 -reportprogress|300|DMA_Kanal.vhd|
+Z11 !s107 DMA_Kanal.vhd|
+!i113 1
+Z12 tExplicit 1 CvgOpt 0
+Artl
+R2
+R3
+R4
+Z13 DEx4 work 9 dma_kanal 0 22 bnk8Kf<5U7oZgRH6Ag@1>3
+l75
+L59
+VVFkH?OB8G_WUKoz<b1Wd>3
+!s100 diWZ^_k^UF9^Mo4mb1CL53
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+Edma_kanal_tb
+Z14 w1597776942
+R2
+R3
+R4
+R0
+Z15 8DMA_Kanal_tb.vhd
+Z16 FDMA_Kanal_tb.vhd
+l0
+L89
+VW2eHB[^CT=A>TgPklj:2Y1
+!s100 cGLUFC_K1@Q=K:6g:Nk190
+R7
+32
+Z17 !s110 1597931556
+!i10b 1
+R9
+Z18 !s90 -reportprogress|300|DMA_Kanal_tb.vhd|
+Z19 !s107 DMA_Kanal_tb.vhd|
+!i113 1
+R12
+Atestbench
+R13
+R2
+Z20 DEx4 work 12 dma_kanal_tb 0 22 W2eHB[^CT=A>TgPklj:2Y1
+R3
+R4
+Z21 DPx4 work 13 txt_util_pack 0 22 =Cca<5LT7cE=NGNTM7R381
+l233
+L94
+Z22 VdHReI729M@bzdAV081GeZ2
+Z23 !s100 053`oMUeKCY4IL9>3hNo02
+R7
+32
+R17
+!i10b 1
+R9
+R18
+R19
+!i113 1
+R12
+Edma_kontroller
+Z24 w1597931279
+R2
+R3
+R4
+R0
+Z25 8DMA_Kontroller.vhd
+Z26 FDMA_Kontroller.vhd
+l0
+L39
+VMFTg^IX<f6XGn4l4O3h211
+!s100 =mMP2YB_fa:zjIVO??fOZ0
+R7
+32
+Z27 !s110 1597931535
+!i10b 1
+Z28 !s108 1597931535.000000
+Z29 !s90 -reportprogress|300|-work|work|DMA_Kontroller.vhd|
+Z30 !s107 DMA_Kontroller.vhd|
+!i113 1
+Z31 o-work work
+R12
+Artl
+Z32 DEx4 work 10 wb_arbiter 0 22 01caiYM>Q8TQHVF7>YQ`b2
+DEx4 work 9 dma_kanal 0 22 bB4f<9z;Q;SY1<AZQaRVU3
+R2
+R3
+R4
+Z33 DEx4 work 14 dma_kontroller 0 22 MFTg^IX<f6XGn4l4O3h211
+l137
+L76
+V><:>1eG9g0^Qefcb3LzF53
+!s100 z7:=fS]]?3[:hkkPM=c=m1
+R7
+32
+R27
+!i10b 1
+R28
+R29
+R30
+!i113 1
+R31
+R12
+Edma_kontroller_tb
+Z34 w1597930372
+R0
+Z35 8DMA_Kontroller_tb.vhd
+Z36 FDMA_Kontroller_tb.vhd
+l0
+L8
+V>1SG^f98gRzVVGTXI`^QM0
+!s100 mO@a1bjD`H_ZljRzN0L_:1
+R7
+32
+R27
+!i10b 1
+R28
+Z37 !s90 -reportprogress|300|-work|work|DMA_Kontroller_tb.vhd|
+Z38 !s107 DMA_Kontroller_tb.vhd|
+!i113 1
+R31
+R12
+Atest
+R33
+DEx4 work 17 dma_kontroller_tb 0 22 >1SG^f98gRzVVGTXI`^QM0
+DPx4 work 13 txt_util_pack 0 22 ^CcBZicHNGWICQ5g`[ek>0
+Z39 DPx4 work 18 wishbone_test_pack 0 22 F?SgL_B3@ndVo9[E3YU8V3
+R2
+R3
+R4
+l133
+L17
+V<PbNhMA2C5LZeFZ3cfE3Q3
+!s100 FXHgYAnma?Q^fchm`eFd`0
+R7
+32
+R27
+!i10b 1
+R28
+R37
+R38
+!i113 1
+R31
+R12
+Ptxt_util_pack
+R3
+R4
+Z40 w1596563951
+R0
+Z41 8txt_util_pack.vhd
+Z42 Ftxt_util_pack.vhd
+l0
+L39
+V=Cca<5LT7cE=NGNTM7R381
+!s100 QLLHW8NB6C09<`3Q<[D:c1
+R7
+32
+b1
+R8
+!i10b 1
+R9
+Z43 !s90 -reportprogress|300|txt_util_pack.vhd|
+Z44 !s107 txt_util_pack.vhd|
+!i113 1
+R12
+Bbody
+R21
+R3
+R4
+l0
+L131
+V2J[I7X:HW^aR`<K_f>Uni2
+!s100 c3L<H^4jcQ;HN3a@m5_@K2
+R7
+32
+R8
+!i10b 1
+R9
+R43
+R44
+!i113 1
+R12
+Ewb_arbiter
+R14
+R2
+R3
+R4
+R0
+Z45 8wb_arbiter.vhd
+Z46 Fwb_arbiter.vhd
+l0
+L5
+V01caiYM>Q8TQHVF7>YQ`b2
+!s100 WaG]WnYmEO>^26<V;EbcJ3
+R7
+32
+R27
+!i10b 1
+R28
+Z47 !s90 -reportprogress|300|-work|work|wb_arbiter.vhd|
+Z48 !s107 wb_arbiter.vhd|
+!i113 1
+R31
+R12
+Artl
+R2
+R3
+R4
+R32
+l49
+L43
+VEdlz5I9ZI_oi[?;UYb2`_1
+!s100 8UnaKN>0QE7MB0=92a7<?3
+R7
+32
+R27
+!i10b 1
+R28
+R47
+R48
+!i113 1
+R31
+R12
+Pwishbone_test_pack
+R3
+R4
+R14
+R0
+Z49 8wishbone_test_pack.vhd
+Z50 Fwishbone_test_pack.vhd
+l0
+L4
+VF?SgL_B3@ndVo9[E3YU8V3
+!s100 fNDTG6eHl3Y@lmmeHhC;g2
+R7
+32
+b1
+R27
+!i10b 1
+R28
+Z51 !s90 -reportprogress|300|-work|work|wishbone_test_pack.vhd|
+Z52 !s107 wishbone_test_pack.vhd|
+!i113 1
+R31
+R12
+Bbody
+R39
+R3
+R4
+l0
+L49
+VCh2^m^LX6W@X5eHBGCzHj0
+!s100 TCeYk[?@c5D7?dSUWQPM81
+R7
+32
+R27
+!i10b 1
+R28
+R51
+R52
+!i113 1
+R31
+R12

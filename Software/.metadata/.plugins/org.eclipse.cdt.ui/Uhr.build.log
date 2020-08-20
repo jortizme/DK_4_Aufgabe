@@ -1,0 +1,29 @@
+12:24:19 **** Incremental Build of configuration Debug for project Uhr ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: Uhr.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/Uhr/lscript.ld -EL -o "Uhr.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/display.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/systick.o ./src/uart.o   
+'Finished building target: Uhr.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss Uhr.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S Uhr.elf > Uhr_diss.txt & mips-sde-elf-objcopy.exe -O ihex Uhr.elf Uhr.hex
+
+Uhr.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00002434  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000060  00004000  0000246f  00014000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          000000a4  00004060  000024cf  00014060  2**2
+                  ALLOC
+' '
+
+12:24:21 Build Finished. 0 errors, 0 warnings. (took 1s.869ms)
+

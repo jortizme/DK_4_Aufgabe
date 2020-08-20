@@ -19,3 +19,7 @@
 #define Timer_Handler    IP3_Handler
 #define Timer_us         250
 
+// Display configuration
+#define DISPLAY_BASE 0x00010000
+#define DISPLAY_WIDTH 80
+#define DISPLAY_HEIGHT 30

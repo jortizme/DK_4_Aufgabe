@@ -4,8 +4,12 @@
 		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
-			<item value="/home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Software"/>
+			<item value="C:\DK_Praktikum\Software\Uhr"/>
+			<item value="C:\DK_Praktikum\Software\TestTimer"/>
+			<item value="C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>

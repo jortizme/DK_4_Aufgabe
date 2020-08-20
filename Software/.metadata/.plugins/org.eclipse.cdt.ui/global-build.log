@@ -1,4 +1,795 @@
-12:29:22 **** Clean-only build of configuration Debug for project dk ****
-make clean 
-make: *** No rule to make target 'clean'.  Stop.
-"make clean" terminated with exit code 2. Build might be incomplete.
+10:59:20 **** Build of configuration Debug for project dk ****
+make all 
+'Building file: ../src/char_fifo.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/char_fifo.d" -MT"src/char_fifo.o" -o "src/char_fifo.o" "../src/char_fifo.c"
+'Finished building: ../src/char_fifo.c'
+' '
+'Building file: ../src/cpu.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/cpu.d" -MT"src/cpu.o" -o "src/cpu.o" "../src/cpu.c"
+'Finished building: ../src/cpu.c'
+' '
+'Building file: ../src/crt0.S'
+'Invoking: Cross GCC Assembler'
+mips-sde-elf-as -mips32r2 -EL -g -gstabs+ -o "src/crt0.o" "../src/crt0.S"
+'Finished building: ../src/crt0.S'
+' '
+'Building file: ../src/io.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/io.d" -MT"src/io.o" -o "src/io.o" "../src/io.c"
+'Finished building: ../src/io.c'
+' '
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/memcpy.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/memcpy.d" -MT"src/memcpy.o" -o "src/memcpy.o" "../src/memcpy.c"
+'Finished building: ../src/memcpy.c'
+' '
+'Building file: ../src/memset.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/memset.d" -MT"src/memset.o" -o "src/memset.o" "../src/memset.c"
+'Finished building: ../src/memset.c'
+' '
+'Building file: ../src/premain.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/premain.d" -MT"src/premain.o" -o "src/premain.o" "../src/premain.c"
+'Finished building: ../src/premain.c'
+' '
+'Building file: ../src/printf.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/printf.d" -MT"src/printf.o" -o "src/printf.o" "../src/printf.c"
+'Finished building: ../src/printf.c'
+' '
+'Building file: ../src/uart.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\Users\Laura Schimmel\Desktop\Filip\Studium\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/uart.d" -MT"src/uart.o" -o "src/uart.o" "../src/uart.c"
+'Finished building: ../src/uart.c'
+' '
+'Building target: dk.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/Users/Laura Schimmel/Desktop/Filip/Studium/DK_Praktikum/Software/dk/lscript.ld -EL -o "dk.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/uart.o   
+mips-sde-elf-gcc: error: Schimmel/Desktop/Filip/Studium/DK_Praktikum/Software/dk/lscript.ld: No such file or directory
+make: *** [dk.elf] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:22:31 **** Auto Build of configuration Debug for project dk ****
+make all 
+'Building file: ../src/char_fifo.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/char_fifo.d" -MT"src/char_fifo.o" -o "src/char_fifo.o" "../src/char_fifo.c"
+'Finished building: ../src/char_fifo.c'
+' '
+'Building file: ../src/cpu.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/cpu.d" -MT"src/cpu.o" -o "src/cpu.o" "../src/cpu.c"
+'Finished building: ../src/cpu.c'
+' '
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/uart.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/uart.d" -MT"src/uart.o" -o "src/uart.o" "../src/uart.c"
+'Finished building: ../src/uart.c'
+' '
+'Building target: dk.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/dk/lscript.ld -EL -o "dk.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/uart.o   
+'Finished building target: dk.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss dk.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S dk.elf > dk_diss.txt & mips-sde-elf-objcopy.exe -O ihex dk.elf dk.hex
+
+dk.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00001604  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .bss          00000074  00004000  00001627  00014000  2**2
+                  ALLOC
+' '
+14:29:37 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+14:29:39 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+15:21:45 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+15:23:16 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+15:24:53 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+15:28:11 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+10:02:20 **** Auto Build of configuration Debug for project dk ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: dk.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/dk/lscript.ld -EL -o "dk.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/uart.o   
+'Finished building target: dk.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss dk.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S dk.elf > dk_diss.txt & mips-sde-elf-objcopy.exe -O ihex dk.elf dk.hex
+
+dk.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000016c4  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .bss          00000074  00004000  000016e7  00014000  2**2
+                  ALLOC
+' '
+10:02:47 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+10:39:00 **** Incremental Build of configuration Debug for project dk ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: dk.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/dk/lscript.ld -EL -o "dk.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/uart.o   
+'Finished building target: dk.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss dk.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S dk.elf > dk_diss.txt & mips-sde-elf-objcopy.exe -O ihex dk.elf dk.hex
+
+dk.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000016c0  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .bss          00000074  00004000  000016df  00014000  2**2
+                  ALLOC
+' '
+10:53:08 **** Incremental Build of configuration Debug for project dk ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\dk\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: dk.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/dk/lscript.ld -EL -o "dk.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/uart.o   
+'Finished building target: dk.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss dk.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S dk.elf > dk_diss.txt & mips-sde-elf-objcopy.exe -O ihex dk.elf dk.hex
+
+dk.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000016c0  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .bss          00000074  00004000  000016df  00014000  2**2
+                  ALLOC
+' '
+10:57:49 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+10:58:21 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+10:59:28 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+11:01:15 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+10:10:54 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+10:47:59 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+10:50:44 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+10:51:46 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+11:02:00 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+11:02:50 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+11:07:16 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+08:45:31 **** Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/cpu.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/cpu.d" -MT"src/cpu.o" -o "src/cpu.o" "../src/cpu.c"
+'Finished building: ../src/cpu.c'
+' '
+'Building file: ../src/crt0.S'
+'Invoking: Cross GCC Assembler'
+mips-sde-elf-as -mips32r2 -EL -g -gstabs+ -o "src/crt0.o" "../src/crt0.S"
+'Finished building: ../src/crt0.S'
+' '
+'Building file: ../src/io.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/io.d" -MT"src/io.o" -o "src/io.o" "../src/io.c"
+'Finished building: ../src/io.c'
+' '
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/memcpy.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/memcpy.d" -MT"src/memcpy.o" -o "src/memcpy.o" "../src/memcpy.c"
+'Finished building: ../src/memcpy.c'
+' '
+'Building file: ../src/memset.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/memset.d" -MT"src/memset.o" -o "src/memset.o" "../src/memset.c"
+'Finished building: ../src/memset.c'
+' '
+'Building file: ../src/premain.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/premain.d" -MT"src/premain.o" -o "src/premain.o" "../src/premain.c"
+'Finished building: ../src/premain.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006f4  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+08:45:36 **** Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+09:23:07 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+09:23:18 **** Auto Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006f4  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+09:24:01 **** Incremental Build of configuration Debug for project dk ****
+make all 
+make: Nothing to be done for `all'.
+09:31:16 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+09:33:20 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006f4  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+09:38:05 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+09:40:25 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006f4  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+09:47:12 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006f8  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+09:52:44 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+09:55:26 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+10:15:06 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006f4  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+10:15:54 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006f8  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+10:16:36 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:10:16 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:10:55 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:12:03 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:12:38 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:14:40 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:16:31 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:21:23 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006f8  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+12:21:56 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:23:30 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+12:47:40 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000710  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+12:49:06 **** Auto Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000070c  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+13:08:57 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+13:09:25 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000710  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+13:10:10 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+13:13:25 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+13:15:04 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\TestTimer\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: TestTimer.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/TestTimer/lscript.ld -EL -o "TestTimer.elf"  ./src/cpu.o ./src/crt0.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o   
+'Finished building target: TestTimer.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss TestTimer.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S TestTimer.elf > TestTimer_diss.txt & mips-sde-elf-objcopy.exe -O ihex TestTimer.elf TestTimer.hex
+
+TestTimer.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000710  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+' '
+13:15:42 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+13:46:43 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+13:49:54 **** Build of configuration Debug for project Uhr ****
+make all 
+'Building file: ../src/char_fifo.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/char_fifo.d" -MT"src/char_fifo.o" -o "src/char_fifo.o" "../src/char_fifo.c"
+'Finished building: ../src/char_fifo.c'
+' '
+'Building file: ../src/cpu.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/cpu.d" -MT"src/cpu.o" -o "src/cpu.o" "../src/cpu.c"
+'Finished building: ../src/cpu.c'
+' '
+'Building file: ../src/crt0.S'
+'Invoking: Cross GCC Assembler'
+mips-sde-elf-as -mips32r2 -EL -g -gstabs+ -o "src/crt0.o" "../src/crt0.S"
+'Finished building: ../src/crt0.S'
+' '
+'Building file: ../src/display.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/display.d" -MT"src/display.o" -o "src/display.o" "../src/display.c"
+'Finished building: ../src/display.c'
+' '
+'Building file: ../src/io.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/io.d" -MT"src/io.o" -o "src/io.o" "../src/io.c"
+'Finished building: ../src/io.c'
+' '
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/memcpy.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/memcpy.d" -MT"src/memcpy.o" -o "src/memcpy.o" "../src/memcpy.c"
+'Finished building: ../src/memcpy.c'
+' '
+'Building file: ../src/memset.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/memset.d" -MT"src/memset.o" -o "src/memset.o" "../src/memset.c"
+'Finished building: ../src/memset.c'
+' '
+'Building file: ../src/premain.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/premain.d" -MT"src/premain.o" -o "src/premain.o" "../src/premain.c"
+'Finished building: ../src/premain.c'
+' '
+'Building file: ../src/printf.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/printf.d" -MT"src/printf.o" -o "src/printf.o" "../src/printf.c"
+'Finished building: ../src/printf.c'
+' '
+'Building file: ../src/systick.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/systick.d" -MT"src/systick.o" -o "src/systick.o" "../src/systick.c"
+'Finished building: ../src/systick.c'
+' '
+'Building file: ../src/uart.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/uart.d" -MT"src/uart.o" -o "src/uart.o" "../src/uart.c"
+'Finished building: ../src/uart.c'
+' '
+'Building target: Uhr.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/Uhr/lscript.ld -EL -o "Uhr.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/display.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/systick.o ./src/uart.o   
+'Finished building target: Uhr.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss Uhr.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S Uhr.elf > Uhr_diss.txt & mips-sde-elf-objcopy.exe -O ihex Uhr.elf Uhr.hex
+
+Uhr.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00002028  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000060  00004000  00002047  00014000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          000000a4  00004060  000020a7  00014060  2**2
+                  ALLOC
+' '
+14:03:45 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+14:11:16 **** Incremental Build of configuration Debug for project TestTimer ****
+make all 
+make: Nothing to be done for `all'.
+14:16:57 **** Incremental Build of configuration Debug for project Uhr ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: Uhr.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/Uhr/lscript.ld -EL -o "Uhr.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/display.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/systick.o ./src/uart.o   
+'Finished building target: Uhr.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss Uhr.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S Uhr.elf > Uhr_diss.txt & mips-sde-elf-objcopy.exe -O ihex Uhr.elf Uhr.hex
+
+Uhr.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000023f8  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000060  00004000  0000242f  00014000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          000000a4  00004060  0000248f  00014060  2**2
+                  ALLOC
+' '
+14:34:59 **** Incremental Build of configuration Debug for project Uhr ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: Uhr.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/Uhr/lscript.ld -EL -o "Uhr.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/display.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/systick.o ./src/uart.o   
+'Finished building target: Uhr.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss Uhr.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S Uhr.elf > Uhr_diss.txt & mips-sde-elf-objcopy.exe -O ihex Uhr.elf Uhr.hex
+
+Uhr.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000023f8  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000060  00004000  0000242f  00014000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          000000a4  00004060  0000248f  00014060  2**2
+                  ALLOC
+' '
+12:21:18 **** Incremental Build of configuration Debug for project Uhr ****
+make all 
+'Building file: ../src/display.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/display.d" -MT"src/display.o" -o "src/display.o" "../src/display.c"
+'Finished building: ../src/display.c'
+' '
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+../src/main.c: In function 'show_clock':
+../src/main.c:73:2: warning: implicit declaration of function 'display_set_cursor' [-Wimplicit-function-declaration]
+  display_set_cursor(0, 0);
+  ^
+../src/main.c:74:2: warning: implicit declaration of function 'display_puts' [-Wimplicit-function-declaration]
+  display_puts(buffer); // write time to LCD
+  ^
+../src/main.c: In function 'main':
+../src/main.c:113:2: warning: implicit declaration of function 'display_init' [-Wimplicit-function-declaration]
+  display_init(DISPLAY_BASE, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+  ^
+../src/main.c:114:2: warning: implicit declaration of function 'display_clear' [-Wimplicit-function-declaration]
+  display_clear();
+  ^
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/uart.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/uart.d" -MT"src/uart.o" -o "src/uart.o" "../src/uart.c"
+'Finished building: ../src/uart.c'
+' '
+'Building target: Uhr.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/Uhr/lscript.ld -EL -o "Uhr.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/display.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/systick.o ./src/uart.o   
+'Finished building target: Uhr.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss Uhr.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S Uhr.elf > Uhr_diss.txt & mips-sde-elf-objcopy.exe -O ihex Uhr.elf Uhr.hex
+
+Uhr.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00002434  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000060  00004000  0000246f  00014000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          000000a4  00004060  000024cf  00014060  2**2
+                  ALLOC
+' '
+12:24:19 **** Incremental Build of configuration Debug for project Uhr ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: Cross GCC Compiler'
+mips-sde-elf-gcc -I"C:\DK_Praktikum\Software\Uhr\inc" -O0 -g3 -Wall -c -fmessage-length=0 -mips1 -EL -fno-delayed-branch -mno-check-zero-division -ggdb -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: Uhr.elf'
+'Invoking: Cross GCC Linker'
+mips-sde-elf-gcc -nostartfiles -nodefaultlibs -nostdlib -static -Xlinker -TC:/DK_Praktikum/Software/Uhr/lscript.ld -EL -o "Uhr.elf"  ./src/char_fifo.o ./src/cpu.o ./src/crt0.o ./src/display.o ./src/io.o ./src/main.o ./src/memcpy.o ./src/memset.o ./src/premain.o ./src/printf.o ./src/systick.o ./src/uart.o   
+'Finished building target: Uhr.elf'
+' '
+make --no-print-directory post-build
+mips-sde-elf-objdump.exe -h -j.text -j.data -j.bss Uhr.elf & mips-sde-elf-objdump.exe -h -t -j.text -j.data -j.bss -S Uhr.elf > Uhr_diss.txt & mips-sde-elf-objcopy.exe -O ihex Uhr.elf Uhr.hex
+
+Uhr.elf:     file format elf32-tradlittlemips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00002434  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000060  00004000  0000246f  00014000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          000000a4  00004060  000024cf  00014060  2**2
+                  ALLOC
+' '

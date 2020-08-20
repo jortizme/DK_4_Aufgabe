@@ -1,0 +1,1238 @@
+m255
+K4
+z2
+!s11e vcom 2019.2 2019.04, Apr 17 2019
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware
+Ebeispielrechner_system
+Z1 w1597936573
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+R0
+Z4 8Beispielrechner_System.vhd
+Z5 FBeispielrechner_System.vhd
+l0
+L4
+VUAaZ9OKF8Ha4i^o0N2ZVP2
+!s100 zVJdQGT8WgXzYPA0;Uz]23
+Z6 OV;C;2019.2;69
+32
+Z7 !s110 1597936862
+!i10b 1
+Z8 !s108 1597936862.000000
+Z9 !s90 -reportprogress|300|Beispielrechner_System.vhd|
+Z10 !s107 Beispielrechner_System.vhd|
+!i113 1
+Z11 tExplicit 1 CvgOpt 0
+Aarch
+Z12 DEx4 work 7 display 0 22 1]Fb:V^cLjBciYoI?85SD3
+Z13 DEx4 work 5 timer 0 22 iN@@`MM^n21@1G:R8gI?_2
+Z14 DEx4 work 4 uart 0 22 WLHYY0FCLcO@0mkn5eUCL0
+Z15 DEx4 work 4 gpio 0 22 c`^^?lV_E9`?BKC<HADI<1
+Z16 DEx4 work 8 bsr2_ram 0 22 J94EJAMg1eSRTmdO3MQjX1
+Z17 DEx4 work 8 bsr2_rom 0 22 93XRa1UC`l?BS^15]WiVl3
+Z18 DEx4 work 10 wb_arbiter 0 22 DZz@JY?WbKdaF9F4>mW1S3
+Z19 DEx4 work 14 dma_kontroller 0 22 [:[Ql1W?jW;hCoSZ49NIE1
+Z20 DEx4 work 14 bsr2_processor 0 22 amR0B0LOc9T1LJGD<fY5L3
+Z21 DEx4 work 22 beispielrechner_system 0 22 UAaZ9OKF8Ha4i^o0N2ZVP2
+R3
+R2
+Z22 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+l112
+L39
+VM2n<dBg2zDkkaSWI9EQLm0
+!s100 JhEF=7NfbO:=6GO3z:]FA3
+R6
+32
+R7
+!i10b 1
+R8
+R9
+R10
+!i113 1
+R11
+Ebeispielrechner_system_v3_testbench
+Z23 w1588954066
+R0
+Z24 8Beispielrechner_System_V3_testbench.vhd
+Z25 FBeispielrechner_System_V3_testbench.vhd
+l0
+L1
+VG]4ZD_B6dR:[^XcidLFNc2
+!s100 OH6n<Udj0em6AdEe^P<B;1
+R6
+32
+R7
+!i10b 1
+R8
+Z26 !s90 -reportprogress|300|Beispielrechner_System_V3_testbench.vhd|
+Z27 !s107 Beispielrechner_System_V3_testbench.vhd|
+!i113 1
+R11
+Atest
+R21
+Z28 DEx4 work 35 beispielrechner_system_v3_testbench 0 22 G]4ZD_B6dR:[^XcidLFNc2
+Z29 DPx4 work 13 txt_util_pack 0 22 T:V_EGi>;kJf=5T3m9_XM3
+Z30 DPx4 work 11 test_serial 0 22 9M[>0Hz]iS]Ac^aD:c=Y[0
+R22
+R2
+R3
+l22
+L10
+Z31 VjHPjjkbPH24WAYiW`MCL62
+Z32 !s100 dBTcQze^Q2aocK35Bl9AP2
+R6
+32
+R7
+!i10b 1
+R8
+R26
+R27
+!i113 1
+R11
+Ebeispielrechner_system_v4_testbench
+Z33 w1591536477
+R0
+Z34 8Beispielrechner_System_V4_testbench.vhd
+Z35 FBeispielrechner_System_V4_testbench.vhd
+l0
+L1
+VD[cboX25VZ7VUKGVh5]gV2
+!s100 j[:9HkD[hHkaQYP7CDZCj2
+R6
+32
+Z36 !s110 1597936120
+!i10b 1
+Z37 !s108 1597936120.000000
+Z38 !s90 -reportprogress|300|Beispielrechner_System_V4_testbench.vhd|
+Z39 !s107 Beispielrechner_System_V4_testbench.vhd|
+!i113 1
+R11
+Atest
+R21
+DEx4 work 35 beispielrechner_system_v4_testbench 0 22 D[cboX25VZ7VUKGVh5]gV2
+R29
+R30
+R22
+R2
+R3
+l22
+L10
+VDf0bIJ_fRGBG]zOQ?g8S63
+!s100 ReNY<:R>;a9H8AI4mXTjT0
+R6
+32
+R36
+!i10b 1
+R37
+R38
+R39
+!i113 1
+R11
+Ebsr2_processor
+Z40 w1597321176
+R22
+R2
+R3
+R0
+Z41 8Prozessor/bsr2_processor.vhd
+Z42 FProzessor/bsr2_processor.vhd
+l0
+L21
+VamR0B0LOc9T1LJGD<fY5L3
+!s100 LU1cL_3MQR_?PAHE7>[@22
+R6
+32
+Z43 !s110 1597936860
+!i10b 1
+Z44 !s108 1597936860.000000
+Z45 !s90 -reportprogress|300|Prozessor/bsr2_processor.vhd|
+Z46 !s107 Prozessor/bsr2_processor.vhd|
+!i113 1
+R11
+Abehavioral
+Z47 DEx4 work 19 bsr2_processor_core 0 22 2WS>n3@<oo=c<KH8iK`1`1
+R18
+Z48 DEx4 work 25 serial_wishbone_interface 0 22 b:VLmV6zVEMdlBcMh=aLD3
+R22
+R2
+R3
+R20
+l101
+L62
+Vjc?4m^TSz`CSBa[0mjkmT1
+!s100 d]T[i7[DfVf>ZKenT:^M71
+R6
+32
+R43
+!i10b 1
+R44
+R45
+R46
+!i113 1
+R11
+Ebsr2_processor_core
+Z49 w1588089980
+R22
+R2
+R3
+R0
+Z50 8Prozessor/bsr2_processor_core.vhd
+Z51 FProzessor/bsr2_processor_core.vhd
+l0
+L19
+V2WS>n3@<oo=c<KH8iK`1`1
+!s100 8Y]f?]Bj?5XaHVabfIgeW0
+R6
+32
+R43
+!i10b 1
+R44
+Z52 !s90 -reportprogress|300|Prozessor/bsr2_processor_core.vhd|
+Z53 !s107 Prozessor/bsr2_processor_core.vhd|
+!i113 1
+R11
+Abehavioral
+Z54 DEx4 work 3 div 0 22 0ib@Wg_W@N[>5Wnia5IgE0
+Z55 DEx4 work 4 mult 0 22 m:6EhK8Lz2]B><FjDPFhg3
+R22
+R2
+R3
+R47
+l186
+L66
+VdYfDT;=MYS`9>ckUZ4mmn3
+!s100 YJ<<ja;?b<@3:6k]1`?V`1
+R6
+32
+R43
+!i10b 1
+R44
+R52
+R53
+!i113 1
+R11
+Ebsr2_ram
+Z56 w1587051894
+R22
+R2
+R3
+R0
+Z57 8Speicher/bsr2_ram.vhd
+Z58 FSpeicher/bsr2_ram.vhd
+l0
+L13
+VJ94EJAMg1eSRTmdO3MQjX1
+!s100 lK=<dDkYdPG_>0NDE31]k1
+R6
+32
+R43
+!i10b 1
+R44
+Z59 !s90 -reportprogress|300|Speicher/bsr2_ram.vhd|
+Z60 !s107 Speicher/bsr2_ram.vhd|
+!i113 1
+R11
+Abehavioral
+R22
+R2
+R3
+R16
+Z61 l4131
+L27
+V[nLiFV]97KMVKiYQcKi=J0
+!s100 >9>i6c^Ah7beiZoo3:EP;0
+R6
+32
+R43
+!i10b 1
+R44
+R59
+R60
+!i113 1
+R11
+Ebsr2_rom
+R56
+R22
+R2
+R3
+R0
+Z62 8Speicher/bsr2_rom.vhd
+Z63 FSpeicher/bsr2_rom.vhd
+l0
+L13
+V93XRa1UC`l?BS^15]WiVl3
+!s100 0HG<Mf0B;KkChl2nkjPL20
+R6
+32
+R43
+!i10b 1
+R44
+Z64 !s90 -reportprogress|300|Speicher/bsr2_rom.vhd|
+Z65 !s107 Speicher/bsr2_rom.vhd|
+!i113 1
+R11
+Abehavioral
+R22
+R2
+R3
+R17
+R61
+L27
+V:1mA5_nmM2EP[eZ4ZN>JA2
+!s100 7CTnh5@KAO1j8=agIoOh[1
+R6
+32
+R43
+!i10b 1
+R44
+R64
+R65
+!i113 1
+R11
+Echarset_v1_0
+R33
+R22
+R2
+R3
+R0
+Z66 8Display/charset_v1_0.vhd
+Z67 FDisplay/charset_v1_0.vhd
+l0
+L5
+VC<`kIAf9hSG0o2W2Xj3ZJ0
+!s100 O6U3R?XB1O9zbcXc@DMej2
+R6
+32
+Z68 !s110 1597936861
+!i10b 1
+Z69 !s108 1597936861.000000
+Z70 !s90 -reportprogress|300|Display/charset_v1_0.vhd|
+Z71 !s107 Display/charset_v1_0.vhd|
+!i113 1
+R11
+Arom
+R22
+R2
+R3
+Z72 DEx4 work 12 charset_v1_0 0 22 C<`kIAf9hSG0o2W2Xj3ZJ0
+l274
+L14
+V56RZ]<O;J0me<9?]Y8<kB3
+!s100 j_U;n8:QTI;b>=WbA@li73
+R6
+32
+R68
+!i10b 1
+R69
+R70
+R71
+!i113 1
+R11
+Edf_serial_in_v1_0
+Z73 w1587051942
+R2
+R3
+R0
+Z74 8Prozessor/DF_Serial_in_v1_0.vhd
+Z75 FProzessor/DF_Serial_in_v1_0.vhd
+l0
+L7
+Vo^`IblLLH9KS[^KCS<jJB2
+!s100 >a8:oXLI8cJ21E0oWUfzQ3
+R6
+32
+Z76 !s110 1597936859
+!i10b 1
+Z77 !s108 1597936859.000000
+Z78 !s90 -reportprogress|300|Prozessor/DF_Serial_in_v1_0.vhd|
+Z79 !s107 Prozessor/DF_Serial_in_v1_0.vhd|
+!i113 1
+R11
+Aarch
+Z80 DEx4 work 17 df_serial_in_v1_0 0 22 o^`IblLLH9KS[^KCS<jJB2
+R3
+R2
+R22
+l39
+L29
+Vh[Zm34?90jZS0IYFa5:WK1
+!s100 M[H0UNjQ@e@0U:DJTLRc[1
+R6
+32
+R76
+!i10b 1
+R77
+R78
+R79
+!i113 1
+R11
+Edf_serial_out_v1_0
+R73
+R2
+R3
+R0
+Z81 8Prozessor/DF_Serial_out_v1_0.vhd
+Z82 FProzessor/DF_Serial_out_v1_0.vhd
+l0
+L7
+V@?03<FZYhPldV7=zbgfCF2
+!s100 hIaUz9K1CXbjnFE`14YZV0
+R6
+32
+R76
+!i10b 1
+R77
+Z83 !s90 -reportprogress|300|Prozessor/DF_Serial_out_v1_0.vhd|
+Z84 !s107 Prozessor/DF_Serial_out_v1_0.vhd|
+!i113 1
+R11
+Aarch
+Z85 DEx4 work 18 df_serial_out_v1_0 0 22 @?03<FZYhPldV7=zbgfCF2
+R3
+R2
+R22
+l34
+L30
+V>R2[zbL:FoQ:<n995;m]R1
+!s100 >TIekJiQQ953FL1Hz3l^B1
+R6
+32
+R76
+!i10b 1
+R77
+R83
+R84
+!i113 1
+R11
+Edf_wishbone_interface
+R73
+R2
+R3
+R0
+Z86 8Prozessor/DF_Wishbone_Interface.vhd
+Z87 FProzessor/DF_Wishbone_Interface.vhd
+l0
+L18
+V:l]YRAJQQPJ9528Xb9`NB0
+!s100 4L<deH4RQQddZ4[7eF3n30
+R6
+32
+R76
+!i10b 1
+R77
+Z88 !s90 -reportprogress|300|Prozessor/DF_Wishbone_Interface.vhd|
+Z89 !s107 Prozessor/DF_Wishbone_Interface.vhd|
+!i113 1
+R11
+Aarch
+Z90 DEx4 work 21 df_wishbone_interface 0 22 :l]YRAJQQPJ9528Xb9`NB0
+R3
+R2
+R22
+l64
+L48
+V`bUlATZ88QcUJkHGNNOaX3
+!s100 Czo09h@^V>a=]3QCTOfjM0
+R6
+32
+R76
+!i10b 1
+R77
+R88
+R89
+!i113 1
+R11
+Edisplay
+R33
+R22
+R2
+R3
+R0
+Z91 8Display/Display.vhd
+Z92 FDisplay/Display.vhd
+l0
+L5
+V1]Fb:V^cLjBciYoI?85SD3
+!s100 b]_G9?^88PKbINzNXkSif2
+R6
+32
+R7
+!i10b 1
+R8
+Z93 !s90 -reportprogress|300|Display/Display.vhd|
+Z94 !s107 Display/Display.vhd|
+!i113 1
+R11
+Artl
+Z95 DEx4 work 17 ds_video_out_v1_0 0 22 ]62<MX:P0l[5R7ZNYV@zc2
+Z96 DEx4 work 22 wb_ds_textdisplay_v1_0 0 22 g5KCFNGK77E4Zm5hjUMRL0
+R22
+R2
+R3
+R12
+l58
+L37
+V=D48gdR>f<2BTOKik8PVF3
+!s100 OlozID^IX=lG6C8R^IhI_3
+R6
+32
+R7
+!i10b 1
+R8
+R93
+R94
+!i113 1
+R11
+Ediv
+R73
+R2
+R3
+R0
+Z97 8Prozessor/div.vhd
+Z98 FProzessor/div.vhd
+l0
+L4
+V0ib@Wg_W@N[>5Wnia5IgE0
+!s100 SEcZS;4n59;Ri[j;7;dQ>0
+R6
+32
+R76
+!i10b 1
+R77
+Z99 !s90 -reportprogress|300|Prozessor/div.vhd|
+Z100 !s107 Prozessor/div.vhd|
+!i113 1
+R11
+Aarch
+R54
+R3
+R2
+R22
+l40
+L23
+VAE0LFWg6nSSkB?gWd?9<[0
+!s100 hhZiSV1>=II4@5S`nkf830
+R6
+32
+R76
+!i10b 1
+R77
+R99
+R100
+!i113 1
+R11
+Edma_kanal
+Z101 w1597928854
+R22
+R2
+R3
+R0
+Z102 8DMA_Controller/DMA_Kanal.vhd
+Z103 FDMA_Controller/DMA_Kanal.vhd
+l0
+L25
+Vbnk8Kf<5U7oZgRH6Ag@1>3
+!s100 z7Pb?PE>J<[FinkiT2KYN0
+R6
+32
+R68
+!i10b 1
+R69
+Z104 !s90 -reportprogress|300|DMA_Controller/DMA_Kanal.vhd|
+Z105 !s107 DMA_Controller/DMA_Kanal.vhd|
+!i113 1
+R11
+Artl
+R22
+R2
+R3
+Z106 DEx4 work 9 dma_kanal 0 22 bnk8Kf<5U7oZgRH6Ag@1>3
+l75
+L59
+VVFkH?OB8G_WUKoz<b1Wd>3
+!s100 diWZ^_k^UF9^Mo4mb1CL53
+R6
+32
+R68
+!i10b 1
+R69
+R104
+R105
+!i113 1
+R11
+Edma_kontroller
+Z107 w1597933474
+R22
+R2
+R3
+R0
+Z108 8DMA_Controller/DMA_Kontroller.vhd
+Z109 FDMA_Controller/DMA_Kontroller.vhd
+l0
+L39
+V[:[Ql1W?jW;hCoSZ49NIE1
+!s100 =mMP2YB_fa:zjIVO??fOZ0
+R6
+32
+R68
+!i10b 1
+R69
+Z110 !s90 -reportprogress|300|DMA_Controller/DMA_Kontroller.vhd|
+Z111 !s107 DMA_Controller/DMA_Kontroller.vhd|
+!i113 1
+R11
+Artl
+R18
+R106
+R22
+R2
+R3
+R19
+l137
+L76
+VPmIm]We:4]`1iZlV1;1J83
+!s100 z7:=fS]]?3[:hkkPM=c=m1
+R6
+32
+R68
+!i10b 1
+R69
+R110
+R111
+!i113 1
+R11
+Eds_video_out_v1_0
+R33
+R22
+R2
+R3
+R0
+Z112 8Display/ds_video_out_v1_0.vhd
+Z113 FDisplay/ds_video_out_v1_0.vhd
+l0
+L5
+V]62<MX:P0l[5R7ZNYV@zc2
+!s100 K[eUIh4[3cV7=DGo8kZL;1
+R6
+32
+R68
+!i10b 1
+R69
+Z114 !s90 -reportprogress|300|Display/ds_video_out_v1_0.vhd|
+Z115 !s107 Display/ds_video_out_v1_0.vhd|
+!i113 1
+R11
+Aarch
+R95
+R22
+R2
+R3
+Z116 DPx4 work 21 pixelmarker_pack_v1_1 0 22 CGV;P1;3LGgQVeKPZHZ6D2
+l62
+L43
+VCOTO6P1Q;Oh]QGflEm;;h0
+!s100 FiB=l30R7T090cNiS=7GC0
+R6
+32
+R68
+!i10b 1
+R69
+R114
+R115
+!i113 1
+R11
+Egpio
+Z117 w1588839486
+R22
+R2
+R3
+R0
+Z118 8GPIO/GPIO.vhd
+Z119 FGPIO/GPIO.vhd
+l0
+L15
+Vc`^^?lV_E9`?BKC<HADI<1
+!s100 9JmOMIWjL9MLCaIRnnR@k1
+R6
+32
+R43
+!i10b 1
+R44
+Z120 !s90 -reportprogress|300|GPIO/GPIO.vhd|
+Z121 !s107 GPIO/GPIO.vhd|
+!i113 1
+R11
+Artl
+R22
+R2
+R3
+R15
+l39
+L32
+VM[^bm3fhe[^IG`[O^c5921
+!s100 D8VYbe1T@Q0f=6<VL`J560
+R6
+32
+R43
+!i10b 1
+R44
+R120
+R121
+!i113 1
+R11
+Emult
+R73
+R2
+R3
+R0
+Z122 8Prozessor/mult.vhd
+Z123 FProzessor/mult.vhd
+l0
+L4
+Vm:6EhK8Lz2]B><FjDPFhg3
+!s100 4V>Tn3oEHn@fdL:[zmWi83
+R6
+32
+R43
+!i10b 1
+R77
+Z124 !s90 -reportprogress|300|Prozessor/mult.vhd|
+Z125 !s107 Prozessor/mult.vhd|
+!i113 1
+R11
+Aarch
+R55
+R3
+R2
+R22
+l42
+L23
+VU]X]c6Q>iL55inf[]Akgn2
+!s100 R=X=YHFkaMaT@ePdf<IFP1
+R6
+32
+R43
+!i10b 1
+R77
+R124
+R125
+!i113 1
+R11
+Ppixelmarker_pack_v1_1
+R22
+R2
+R3
+R33
+R0
+Z126 8Display/pixelmarker_pack_v1_1.vhd
+Z127 FDisplay/pixelmarker_pack_v1_1.vhd
+l0
+L25
+VCGV;P1;3LGgQVeKPZHZ6D2
+!s100 DFaiJ?K3J;X@`m]eE1UE<0
+R6
+32
+b1
+R68
+!i10b 1
+R69
+Z128 !s90 -reportprogress|300|Display/pixelmarker_pack_v1_1.vhd|
+Z129 !s107 Display/pixelmarker_pack_v1_1.vhd|
+!i113 1
+R11
+Bbody
+R116
+R22
+R2
+R3
+l0
+L37
+Vik<XCUVD15E8EaRI[^1MP2
+!s100 fj_OoF2jHIXK<LhNZ_<b02
+R6
+32
+R68
+!i10b 1
+R69
+R128
+R129
+!i113 1
+R11
+Esdpram_v1_2
+R33
+R22
+R2
+R3
+R0
+Z130 8Display/sdpram_v1_2.vhd
+Z131 FDisplay/sdpram_v1_2.vhd
+l0
+L10
+V0:LVEL=hOJbdG_I][9O<o1
+!s100 mgl^d[UGimYH<PRz^H]QW0
+R6
+32
+R68
+!i10b 1
+R69
+Z132 !s90 -reportprogress|300|Display/sdpram_v1_2.vhd|
+Z133 !s107 Display/sdpram_v1_2.vhd|
+!i113 1
+R11
+Artl
+Z134 DEx4 work 11 sdpram_v1_2 0 22 0:LVEL=hOJbdG_I][9O<o1
+R22
+R2
+R3
+l48
+L37
+VkH3DG7LI>nXlF67<__Oha0
+!s100 ^@m4VIYAcKcU=mAWnd2Ng3
+R6
+32
+R68
+!i10b 1
+R69
+R132
+R133
+!i113 1
+R11
+Eserial_wishbone_interface
+R73
+R2
+R3
+R0
+Z135 8Prozessor/Serial_Wishbone_Interface.vhd
+Z136 FProzessor/Serial_Wishbone_Interface.vhd
+l0
+L38
+Vb:VLmV6zVEMdlBcMh=aLD3
+!s100 8:RBeXL=P0=WnQ^>]N_bj0
+R6
+32
+R76
+!i10b 1
+R77
+Z137 !s90 -reportprogress|300|Prozessor/Serial_Wishbone_Interface.vhd|
+Z138 !s107 Prozessor/Serial_Wishbone_Interface.vhd|
+!i113 1
+R11
+Aarch
+R85
+R90
+R80
+R48
+R3
+R2
+R22
+l109
+L65
+VXUdJVQL8WaCDF[1@Sh3oO3
+!s100 jKBcTB]2gb;H8HnZ1>IjV2
+R6
+32
+R76
+!i10b 1
+R77
+R137
+R138
+!i113 1
+R11
+Pserial_wishbone_interface_pack
+R2
+R3
+R73
+R0
+R135
+R136
+l0
+L9
+V<JER_:;];j5@>dB_HIe]91
+!s100 <ZC6R5o:4PNMo2U5K8f=Z3
+R6
+32
+R76
+!i10b 1
+R77
+R137
+R138
+!i113 1
+R11
+Eserieller_empfaenger
+Z139 w1588674760
+R22
+R2
+R3
+R0
+Z140 8UART/Serieller_Empfaenger.vhd
+Z141 FUART/Serieller_Empfaenger.vhd
+l0
+L23
+V1RCIaVOe2[4:1``moOG@C2
+!s100 acbB87^ci0PR=6dX4TfBA1
+R6
+32
+R43
+!i10b 1
+R44
+Z142 !s90 -reportprogress|300|UART/Serieller_Empfaenger.vhd|
+Z143 !s107 UART/Serieller_Empfaenger.vhd|
+!i113 1
+R11
+Artl
+R22
+R2
+R3
+Z144 DEx4 work 20 serieller_empfaenger 0 22 1RCIaVOe2[4:1``moOG@C2
+l57
+L43
+VQ7Xj0oCQB@oEhY9^]EG>n2
+!s100 f@R[A]=ocb3=Z19WTUB[M1
+R6
+32
+R43
+!i10b 1
+R44
+R142
+R143
+!i113 1
+R11
+Eserieller_sender
+Z145 w1589195445
+R22
+R2
+R3
+R0
+Z146 8UART/Serieller_Sender.vhd
+Z147 FUART/Serieller_Sender.vhd
+l0
+L25
+Vg>1Z9W>mEV9UOIYKI<XRR3
+!s100 C0mZOJJ=zSh==bZN9;<J43
+R6
+32
+R43
+!i10b 1
+R44
+Z148 !s90 -reportprogress|300|UART/Serieller_Sender.vhd|
+Z149 !s107 UART/Serieller_Sender.vhd|
+!i113 1
+R11
+Artl
+R22
+R2
+R3
+Z150 DEx4 work 16 serieller_sender 0 22 g>1Z9W>mEV9UOIYKI<XRR3
+l65
+L48
+VUCz_dFG]JdO=_?he8V`@62
+!s100 [lJ4jjjMnbo8^A]55VT?f3
+R6
+32
+R43
+!i10b 1
+R44
+R148
+R149
+!i113 1
+R11
+Etest
+R56
+R30
+R2
+R3
+R0
+Z151 8test_serial.vhd
+Z152 Ftest_serial.vhd
+l0
+L131
+V=DX066^OflXiDX[U3?GFd0
+!s100 6:DQdf:LSDN_`6090:fTD3
+R6
+32
+R7
+!i10b 1
+R8
+Z153 !s90 -reportprogress|300|test_serial.vhd|
+Z154 !s107 test_serial.vhd|
+!i113 1
+R11
+Atest
+R30
+R2
+R3
+DEx4 work 4 test 0 22 =DX066^OflXiDX[U3?GFd0
+l139
+L133
+VFN54W<KS`KT<5`:0^b@SX3
+!s100 :De0M^ILgU4V5W2>VS0U=3
+R6
+32
+R7
+!i10b 1
+R8
+R153
+R154
+!i113 1
+R11
+Ptest_serial
+R2
+R3
+R56
+R0
+R151
+R152
+l0
+L9
+V9M[>0Hz]iS]Ac^aD:c=Y[0
+!s100 RA8M9I@H2GA`giD0hD:[W1
+R6
+32
+b1
+R7
+!i10b 1
+R8
+R153
+R154
+!i113 1
+R11
+Bbody
+R30
+R2
+R3
+l0
+L41
+VW@8X`Qb5;G@P3O^_=EK:Z3
+!s100 hbb_UleWFV5XISDVHNXHT2
+R6
+32
+R7
+!i10b 1
+R8
+R153
+R154
+!i113 1
+R11
+Etimer
+Z155 w1596563951
+R22
+R2
+R3
+R0
+Z156 8Timer/Timer.vhd
+Z157 FTimer/Timer.vhd
+l0
+L24
+ViN@@`MM^n21@1G:R8gI?_2
+!s100 UeA=zkO`RO:OVh:_?7LR11
+R6
+32
+R68
+!i10b 1
+R69
+Z158 !s90 -reportprogress|300|Timer/Timer.vhd|
+Z159 !s107 Timer/Timer.vhd|
+!i113 1
+R11
+Artl
+R22
+R2
+R3
+R13
+l58
+L38
+VAJ@2_oe_ON:XN7?oG99R53
+!s100 [KlK`W7mF5PRnLzFea1GA0
+R6
+32
+R68
+!i10b 1
+R69
+R158
+R159
+!i113 1
+R11
+Ptxt_util_pack
+R2
+R3
+Z160 w1588857352
+R0
+Z161 8txt_util_pack.vhd
+Z162 Ftxt_util_pack.vhd
+l0
+L39
+VT:V_EGi>;kJf=5T3m9_XM3
+!s100 ?c8JzM<]K=j9XeEP=^4WU1
+R6
+32
+b1
+R7
+!i10b 1
+R8
+Z163 !s90 -reportprogress|300|txt_util_pack.vhd|
+Z164 !s107 txt_util_pack.vhd|
+!i113 1
+R11
+Bbody
+R29
+R2
+R3
+l0
+L119
+VSJIBUWd_2c9Dgoz`=KL`O0
+!s100 CZfKio996zSDMZSl:R_751
+R6
+32
+R7
+!i10b 1
+R8
+R163
+R164
+!i113 1
+R11
+Euart
+R107
+R2
+R3
+R0
+Z165 8UART/UART.vhd
+Z166 FUART/UART.vhd
+l0
+L36
+VWLHYY0FCLcO@0mkn5eUCL0
+!s100 8DXeFAe@^j3E5I26MLOG;3
+R6
+32
+R68
+!i10b 1
+R69
+Z167 !s90 -reportprogress|300|UART/UART.vhd|
+Z168 !s107 UART/UART.vhd|
+!i113 1
+R11
+Abehavioral
+R150
+R144
+R14
+R3
+R2
+R22
+l92
+L59
+V=ZjmghFaM=aa<>]hcCYz>2
+!s100 I;UWQUD9bKn4aKRjF8^ID1
+R6
+32
+R68
+!i10b 1
+R69
+R167
+R168
+!i113 1
+R11
+Ewb_arbiter
+Z169 w1597776942
+R22
+R2
+R3
+R0
+Z170 8DMA_Controller/wb_arbiter.vhd
+Z171 FDMA_Controller/wb_arbiter.vhd
+l0
+L5
+VDZz@JY?WbKdaF9F4>mW1S3
+!s100 WaG]WnYmEO>^26<V;EbcJ3
+R6
+32
+R68
+!i10b 1
+R69
+Z172 !s90 -reportprogress|300|DMA_Controller/wb_arbiter.vhd|
+Z173 !s107 DMA_Controller/wb_arbiter.vhd|
+!i113 1
+R11
+Artl
+R22
+R2
+R3
+R18
+l49
+L43
+VOmbIS6`8fKoFh02NQGM^[3
+!s100 8UnaKN>0QE7MB0=92a7<?3
+R6
+32
+R68
+!i10b 1
+R69
+R172
+R173
+!i113 1
+R11
+Ewb_ds_textdisplay_v1_0
+R33
+R2
+R3
+R0
+Z174 8Display/wb_ds_textdisplay_v1_0.vhd
+Z175 FDisplay/wb_ds_textdisplay_v1_0.vhd
+l0
+L38
+Vg5KCFNGK77E4Zm5hjUMRL0
+!s100 KGKCiLiPU6z=lWCA3^1BS3
+R6
+32
+R7
+!i10b 1
+R69
+Z176 !s90 -reportprogress|300|Display/wb_ds_textdisplay_v1_0.vhd|
+Z177 !s107 Display/wb_ds_textdisplay_v1_0.vhd|
+!i113 1
+R11
+Aa
+R72
+R134
+R96
+DPx4 ieee 9 math_real 0 22 gNk<PdFJ<XNPcfef`f?Z81
+DPx4 work 27 wb_ds_textdisplay_v1_0_pack 0 22 :=da?_n>Kf^5LSz<Vna921
+R22
+R2
+R3
+R116
+l131
+L78
+VkgaB3D5<dK2ogValn;@La1
+!s100 E>PVdcRAPcfQ0^X117]`B2
+R6
+32
+R7
+!i10b 1
+R69
+R176
+R177
+!i113 1
+R11
+Pwb_ds_textdisplay_v1_0_pack
+R33
+R0
+R174
+R175
+l0
+L28
+V:=da?_n>Kf^5LSz<Vna921
+!s100 Z26:kP3k9Dz8FiJ9FRPCf2
+R6
+32
+R7
+!i10b 1
+R69
+R176
+R177
+!i113 1
+R11

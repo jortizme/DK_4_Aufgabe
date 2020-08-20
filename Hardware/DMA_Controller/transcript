@@ -1,0 +1,223 @@
+do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/DMA_Controller/test_DMA_Kontroller.do
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:15 on Aug 20,2020
+# vcom -reportprogress 300 -work work DMA_Kanal.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity DMA_Kanal
+# -- Compiling architecture rtl of DMA_Kanal
+# End time: 15:52:15 on Aug 20,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:15 on Aug 20,2020
+# vcom -reportprogress 300 -work work wb_arbiter.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity wb_arbiter
+# -- Compiling architecture rtl of wb_arbiter
+# End time: 15:52:15 on Aug 20,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:15 on Aug 20,2020
+# vcom -reportprogress 300 -work work DMA_Kontroller.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity DMA_Kontroller
+# -- Compiling architecture rtl of DMA_Kontroller
+# -- Loading entity DMA_Kanal
+# -- Loading entity wb_arbiter
+# End time: 15:52:15 on Aug 20,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:15 on Aug 20,2020
+# vcom -reportprogress 300 -work work wishbone_test_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package wishbone_test_pack
+# -- Compiling package body wishbone_test_pack
+# -- Loading package wishbone_test_pack
+# End time: 15:52:15 on Aug 20,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:15 on Aug 20,2020
+# vcom -reportprogress 300 -work work txt_util_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package txt_util_pack
+# -- Compiling package body txt_util_pack
+# -- Loading package txt_util_pack
+# End time: 15:52:15 on Aug 20,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:15 on Aug 20,2020
+# vcom -reportprogress 300 -work work DMA_Kontroller_tb.vhd 
+# -- Loading package STANDARD
+# -- Compiling entity DMA_Kontroller_tb
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package wishbone_test_pack
+# -- Loading package txt_util_pack
+# -- Compiling architecture test of DMA_Kontroller_tb
+# -- Loading entity DMA_Kontroller
+# End time: 15:52:15 on Aug 20,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -t ns -voptargs="+acc" work.DMA_Kontroller_tb 
+# Start time: 15:52:15 on Aug 20,2020
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.wishbone_test_pack(body)
+# Loading work.txt_util_pack(body)
+# ** Warning: (vsim-3479) Time unit 'ps' is less than the simulator resolution (1ns).
+#    Time: 0 ns  Iteration: 0  Root: /
+# ** Warning: (vsim-3479) Time unit 'fs' is less than the simulator resolution (1ns).
+#    Time: 0 ns  Iteration: 0  Root: /
+# Loading work.dma_kontroller_tb(test)
+# Loading work.dma_kontroller(rtl)
+# Loading work.dma_kanal(rtl)
+# Loading work.wb_arbiter(rtl)
+# WARNING: No extended dataflow license exists
+# ** Note: Test 0 durchgefuehrt
+#    Time: 4120 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 1 durchgefuehrt
+#    Time: 6480 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 2 durchgefuehrt
+#    Time: 10320 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 3 durchgefuehrt
+#    Time: 14440 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 4 durchgefuehrt
+#    Time: 18640 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 5 durchgefuehrt
+#    Time: 24040 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 6 durchgefuehrt
+#    Time: 27440 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 7 durchgefuehrt
+#    Time: 32200 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 8 durchgefuehrt
+#    Time: 37840 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 9 durchgefuehrt
+#    Time: 43240 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 10 durchgefuehrt
+#    Time: 46480 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 11 durchgefuehrt
+#    Time: 51880 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 12 durchgefuehrt
+#    Time: 57160 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 13 durchgefuehrt
+#    Time: 61680 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 14 durchgefuehrt
+#    Time: 65880 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 15 durchgefuehrt
+#    Time: 69040 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# ** Note: Test 16 durchgefuehrt
+#    Time: 73720 ns  Iteration: 1  Instance: /dma_kontroller_tb
+# 0 ns
+# 105 us
+do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/DMA_Controller/test_DMA_Kanal.do
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:35 on Aug 20,2020
+# vcom -reportprogress 300 DMA_Kanal.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity DMA_Kanal
+# -- Compiling architecture rtl of DMA_Kanal
+# End time: 15:52:35 on Aug 20,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:35 on Aug 20,2020
+# vcom -reportprogress 300 txt_util_pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package txt_util_pack
+# -- Compiling package body txt_util_pack
+# -- Loading package txt_util_pack
+# End time: 15:52:35 on Aug 20,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
+# Start time: 15:52:35 on Aug 20,2020
+# vcom -reportprogress 300 DMA_Kanal_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity DMA_Kanal_tb
+# -- Loading package txt_util_pack
+# -- Compiling architecture testbench of DMA_Kanal_tb
+# -- Loading entity DMA_Kanal
+# End time: 15:52:36 on Aug 20,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# End time: 15:52:38 on Aug 20,2020, Elapsed time: 0:00:23
+# Errors: 0, Warnings: 3
+# vsim -t ns -voptargs="+acc" work.DMA_Kanal_tb 
+# Start time: 15:52:38 on Aug 20,2020
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.txt_util_pack(body)
+# ** Warning: (vsim-3479) Time unit 'ps' is less than the simulator resolution (1ns).
+#    Time: 0 ns  Iteration: 0  Root: /
+# ** Warning: (vsim-3479) Time unit 'fs' is less than the simulator resolution (1ns).
+#    Time: 0 ns  Iteration: 0  Root: /
+# Loading ieee.numeric_std(body)
+# Loading work.dma_kanal_tb(testbench)
+# Loading work.dma_kanal(rtl)
+# WARNING: No extended dataflow license exists
+# ** Note: Test 0 durchgefuehrt
+#    Time: 4320 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 1 durchgefuehrt
+#    Time: 11640 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 2 durchgefuehrt
+#    Time: 24160 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 3 durchgefuehrt
+#    Time: 34 us  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 4 durchgefuehrt
+#    Time: 58720 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 5 durchgefuehrt
+#    Time: 74680 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 6 durchgefuehrt
+#    Time: 81040 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 7 durchgefuehrt
+#    Time: 111960 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 8 durchgefuehrt
+#    Time: 131520 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 9 durchgefuehrt
+#    Time: 135440 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 10 durchgefuehrt
+#    Time: 143360 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 11 durchgefuehrt
+#    Time: 162920 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 12 durchgefuehrt
+#    Time: 168560 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 13 durchgefuehrt
+#    Time: 182320 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 14 durchgefuehrt
+#    Time: 191080 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 15 durchgefuehrt
+#    Time: 193720 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Test 16 durchgefuehrt
+#    Time: 223080 ns  Iteration: 1  Instance: /dma_kanal_tb
+# ** Note: Error-Test 0 durchgefuehrt
+#    Time: 223280 ns  Iteration: 0  Instance: /dma_kanal_tb
+# ** Note: Error-Test 1 durchgefuehrt
+#    Time: 223460 ns  Iteration: 0  Instance: /dma_kanal_tb
+# ** Note: Error-Test 2 durchgefuehrt
+#    Time: 223640 ns  Iteration: 0  Instance: /dma_kanal_tb
+# ** Note: Error-Test 3 durchgefuehrt
+#    Time: 223820 ns  Iteration: 0  Instance: /dma_kanal_tb
+# 0 ns
+# 315 us
+# End time: 15:52:59 on Aug 20,2020, Elapsed time: 0:00:21
+# Errors: 1, Warnings: 3
