@@ -4,7 +4,33 @@
 -- Modul Digitale Komponenten
 -- Hochschule Osnabrueck
 -- Joaquin Ortiz, Filip Mijac
--------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+-- Offsets:
+-- 0x00 Source Address Kanal_1 Register         (SAR0)      (Write Only)
+-- 0x04 Destination Address Kanal_1 Register    (DESTR0)    (Write Only)
+-- 0x08 Transfer Antahl Kana_1 Register         (TRAAR0)    (RW)
+-- 0x0C Control Register Kanal_1                (CR0)       (RW)
+-- 0x10 Source Address Kanal_2 Register         (SAR1)      (Write Only)
+-- 0x14 Destination Address Kanal_2 Register    (DESTR1)    (Write Only)
+-- 0x18 Transfer Antahl Kana_2 Register         (TRAAR1)    (RW)
+-- 0x1C Control Register Kanal_2                (CR1)       (RW)
+-- 0x20 Status Register                         (SR)        (Read Only)
+---------------------------------------------------------------------------------------------------
+-- Control Register (CR0 - CR1):
+--  1 .. 0 : Betriebsmodus
+--  2      : Byte_Transfer
+--  3      : Freigabe Interrupt
+--  4      : Externes-Ereignis-Enable
+--  5      : Kanal-Enable               (Write-Only)
+--  6      : Interrupt-Quittierung      (Write-Only)
+
+---------------------------------------------------------------------------------------------------
+-- Status Register (SR):
+--  0      : Kanal_1 aktiv
+--  1      : Kanal_2 aktiv
+--  16     : Interrupt Kanal_1  
+--  17     : Interrupt Kanal_2
+---------------------------------------------------------------------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -151,10 +177,10 @@ begin
                     when x"04" => EnDEST0 <= '1';
                     when x"08" => EnTRAA0 <= '1';
                     when x"0C" => EnCR0 <= '1';
-                                    if RS0 = '0' and Status(0) = '0' and S_DAT_I(5) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    if Kanal_0_IR = '0' and Status(0) = '0' and S_DAT_I(5) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         M0_Valid <= '1';
                                     end if;
-                                    if RS0 = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    if Kanal_0_IR = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         Quittung_0 <= '1';
                                     end if;
 
@@ -162,10 +188,10 @@ begin
                     when x"14" => EnDEST1 <= '1';
                     when x"18" => EnTRAA1 <= '1';
                     when x"1C" => EnCR1 <= '1';
-                                    if RS1 = '0' and Status(1) = '0' and S_DAT_I(5) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    if Kanal_1_IR = '0' and Status(1) = '0' and S_DAT_I(5) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         M1_Valid <= '1';
                                     end if;
-                                    if RS1 = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    if Kanal_1_IR = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
                                         Quittung_1 <= '1';
                                     end if;
                     when others => null;
