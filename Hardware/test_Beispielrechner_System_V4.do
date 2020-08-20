@@ -1,8 +1,8 @@
 # Benoetigte Dateien uebersetzen
-vcom Prozessor/df_serial_in_v1_0.vhd
-vcom Prozessor/df_serial_out_v1_0.vhd
-vcom Prozessor/df_wishbone_interface.vhd
-vcom Prozessor/serial_wishbone_interface.vhd
+vcom Prozessor/DF_Serial_in_v1_0.vhd
+vcom Prozessor/DF_Serial_out_v1_0.vhd
+vcom Prozessor/DF_Wishbone_Interface.vhd
+vcom Prozessor/Serial_Wishbone_Interface.vhd
 vcom Prozessor/div.vhd
 vcom Prozessor/mult.vhd
 vcom Prozessor/wb_arbiter.vhd
@@ -19,6 +19,18 @@ vcom UART/UART.vhd
 
 vcom Timer/Timer.vhd
 
+vcom DMA_Controller/DMA_Kanal.vhd
+vcom DMA_Controller/wb_arbiter.vhd
+vcom DMA_Controller/DMA_Kontroller.vhd
+
+vcom Display/charset_v1_0.vhd
+vcom Display/pixelmarker_pack_v1_1.vhd
+vcom Display/ds_video_out_v1_0.vhd
+vcom Display/sdpram_v1_2.vhd
+vcom Display/wb_ds_textdisplay_v1_0.vhd
+vcom Display/Display.vhd
+
+vcom wb_arbiter.vhd
 
 vcom Beispielrechner_System.vhd
 vcom test_serial.vhd
@@ -56,14 +68,14 @@ if {1} {
 
 if {1} {
 	add wave -divider "Wishbone Bus"
-	add wave              /Beispielrechner_System_V4_testbench/uut/SYS_STB
-	add wave              /Beispielrechner_System_V4_testbench/uut/SYS_WE
-	add wave              /Beispielrechner_System_V4_testbench/uut/SYS_WRO
-	add wave              /Beispielrechner_System_V4_testbench/uut/SYS_SEL
-	add wave -hexadecimal /Beispielrechner_System_V4_testbench/uut/SYS_ADR
-	add wave -hexadecimal /Beispielrechner_System_V4_testbench/uut/SYS_DAT_O
-	add wave              /Beispielrechner_System_V4_testbench/uut/SYS_ACK
-	add wave -hexadecimal /Beispielrechner_System_V4_testbench/uut/SYS_DAT_I
+	add wave              /Beispielrechner_System_V4_testbench/uut/S_SYS_STB
+	add wave              /Beispielrechner_System_V4_testbench/uut/S_SYS_WE
+	add wave              /Beispielrechner_System_V4_testbench/uut/S_SYS_WRO
+	add wave              /Beispielrechner_System_V4_testbench/uut/S_SYS_SEL
+	add wave -hexadecimal /Beispielrechner_System_V4_testbench/uut/S_SYS_ADR
+	add wave -hexadecimal /Beispielrechner_System_V4_testbench/uut/S_SYS_DAT_O
+	add wave              /Beispielrechner_System_V4_testbench/uut/S_SYS_ACK
+	add wave -hexadecimal /Beispielrechner_System_V4_testbench/uut/S_SYS_DAT_I
 }
 
 if {0} {
@@ -74,7 +86,8 @@ if {0} {
 	add wave /Beispielrechner_System_V4_testbench/uut/UART_Inst/DAT_I
 	add wave /Beispielrechner_System_V4_testbench/uut/UART_Inst/DAT_O
 	add wave /Beispielrechner_System_V4_testbench/uut/UART_Inst/ACK_O
-	add wave /Beispielrechner_System_V4_testbench/uut/UART_Inst/Interrupt
+	add wave /Beispielrechner_System_V4_testbench/uut/UART_Inst/TX_Interrupt
+	add wave /Beispielrechner_System_V4_testbench/uut/UART_Inst/RX_Interrupt
 }
 
 if {1} {

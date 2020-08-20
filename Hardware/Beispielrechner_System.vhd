@@ -203,7 +203,7 @@ begin
 	-- DMA_Kontroller
 	------------------------------------------------------------
 
-	DUT: entity work.DMA_Kontroller
+	DMA_Inst: entity work.DMA_Kontroller
 	generic map(
 		BUSWIDTH  => 32,
 		WORDWIDTH => 32
@@ -271,8 +271,8 @@ begin
         M_WE_O    => S_SYS_WE,
 		M_WRO_O   => S_SYS_WRO,
         M_ADR_O   => S_SYS_ADR,
-        M_SEL_O   => S_SYS_ADR,
-        M_ACK_I   => S_SYS_ADR,
+        M_SEL_O   => S_SYS_SEL,
+        M_ACK_I   => S_SYS_ACK,
         M_DAT_O   => S_SYS_DAT_O,
         M_DAT_I   => S_SYS_DAT_I
     );
