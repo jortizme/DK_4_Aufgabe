@@ -55,10 +55,10 @@ architecture test of DMA_Kontroller_tb is
             r(4) := '1';
         end if;
         if KanalEnable then
-            r(5) := '1';
+            r(8) := '1';
         end if;
         if QuitiertInt then 
-            r(6) := '1';
+            r(9) := '1';
         end if;
 
         return r;

@@ -21,8 +21,8 @@
 --  2      : Byte_Transfer
 --  3      : Freigabe Interrupt
 --  4      : Externes-Ereignis-Enable
---  5      : Kanal-Enable               (Write-Only)
---  6      : Interrupt-Quittierung      (Write-Only)
+--  8      : Kanal-Enable               (Write-Only)
+--  9      : Interrupt-Quittierung      (Write-Only)
 
 ---------------------------------------------------------------------------------------------------
 -- Status Register (SR):
@@ -45,6 +45,7 @@ entity DMA_Kontroller is
         Takt            : in std_logic;
         Reset           : in std_logic;
 
+        --Slave interface signals
         S_STB           : in std_logic;
         S_WE            : in std_logic;
         S_ADR           : in std_logic_vector(7 downto 0);
@@ -52,6 +53,7 @@ entity DMA_Kontroller is
         S_DAT_I         : in std_logic_vector(WORDWIDTH - 1 downto 0);
         S_ACK           : out std_logic;
         
+        --Master interface signals
         M_STB           : out std_logic;
         M_WE            : out std_logic;
         M_ADR           : out std_logic_vector(WORDWIDTH - 1 downto 0);
@@ -60,9 +62,11 @@ entity DMA_Kontroller is
         M_DAT_I         : in std_logic_vector(WORDWIDTH - 1 downto 0);
         M_ACK           : in std_logic;
 
+        --Extern interrupts from peripherals
         S0_Ready         : in std_logic;
         S1_Ready         : in std_logic;
 
+        --Interrupts to CPU
         Kanal1_Interrupt : out std_logic;
         Kanal2_Interrupt : out std_logic
     );
@@ -71,6 +75,7 @@ end entity;
 
 architecture rtl of DMA_Kontroller is
 
+    --Signale von Kanal_1
     signal M0_STB           : std_logic;
     signal M0_WE            : std_logic;
     signal M0_ADR           : std_logic_vector(BUSWIDTH - 1 downto 0);
@@ -88,6 +93,7 @@ architecture rtl of DMA_Kontroller is
     signal FreigabeIR_0      : std_logic;
     signal Kanal_Aktiv_0     : std_logic;
 
+    --Signale von Kanal_2
     signal M1_STB           : std_logic;
     signal M1_WE            : std_logic;
     signal M1_ADR           : std_logic_vector(BUSWIDTH - 1 downto 0);
@@ -108,6 +114,8 @@ architecture rtl of DMA_Kontroller is
     signal Status    : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0'); 
     signal CR0      : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
     signal CR1    : std_logic_vector(BUSWIDTH - 1 downto 0) := (others=>'0');
+
+    --Signale zum Starten der Kanäle und zur Quittierung der entsprechenden Interrupts
     signal M0_Valid : std_logic := '0';
     signal M1_Valid : std_logic := '0';
     signal Quittung_0 : std_logic := '0';
@@ -116,6 +124,7 @@ architecture rtl of DMA_Kontroller is
     signal Interrupt0_i  : std_logic := '0';
     signal Interrupt1_i  : std_logic := '0';
 
+    --Enable Signale zum Laden der Register
     signal EnSAR0   : std_logic;
     signal EnDEST0   : std_logic;
     signal EnTRAA0   : std_logic;
@@ -129,6 +138,7 @@ begin
 
     S_ACK <= S_STB;
 
+    -- Kontrollregister mit Steuersignalen verbinden
     BetriebMod_0    <= CR0(1 downto 0);  
     ByteTrans_0     <= CR0(2);
     FreigabeIR_0    <= CR0(3);  
@@ -139,15 +149,17 @@ begin
     FreigabeIR_1    <= CR1(3);  
     ExEreigEn_1     <= CR1(4); 
 
+    -- Statusregister mit Statussignalen verbinden
+    Status(0) <= Kanal_Aktiv_0;
+    Status(1) <= Kanal_Aktiv_1;
+    Status(16) <= Kanal_0_IR;
+    Status(17) <= Kanal_1_IR;
+
     Interrupt0_i <= FreigabeIR_0 and Kanal_0_IR;
     Interrupt1_i <= FreigabeIR_1 and Kanal_1_IR;
 
-    Status(0) <= Kanal_Aktiv_0;
-    Status(1) <= Kanal_Aktiv_1;
-    Status(2) <= Kanal_0_IR;
-    Status(3) <= Kanal_1_IR;
-
-    process(Interrupt0_i, Interrupt1_i)
+    --Interne Signale an den Port zuweisen
+    IR:process(Interrupt0_i, Interrupt1_i)
     begin
         Kanal1_Interrupt <= Interrupt0_i;
         Kanal2_Interrupt <= Interrupt1_i;
@@ -177,10 +189,12 @@ begin
                     when x"04" => EnDEST0 <= '1';
                     when x"08" => EnTRAA0 <= '1';
                     when x"0C" => EnCR0 <= '1';
-                                    if Kanal_0_IR = '0' and Status(0) = '0' and S_DAT_I(5) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der Interrupt quittiert wurde
+                                    if Kanal_0_IR = '0' and Status(0) = '0' and S_DAT_I(8) = '1' then 
                                         M0_Valid <= '1';
                                     end if;
-                                    if Kanal_0_IR = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der Interrupt nicht quittiert wurde
+                                    if Kanal_0_IR = '1' and Status(0) = '0' and S_DAT_I(9) = '1' then 
                                         Quittung_0 <= '1';
                                     end if;
 
@@ -188,10 +202,12 @@ begin
                     when x"14" => EnDEST1 <= '1';
                     when x"18" => EnTRAA1 <= '1';
                     when x"1C" => EnCR1 <= '1';
-                                    if Kanal_1_IR = '0' and Status(1) = '0' and S_DAT_I(5) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der Interrupt quittiert wurde
+                                    if Kanal_1_IR = '0' and Status(1) = '0' and S_DAT_I(8) = '1' then 
                                         M1_Valid <= '1';
                                     end if;
-                                    if Kanal_1_IR = '1' and Status(0) = '0' and S_DAT_I(6) = '1' then --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der INterrupt quittiert wurde
+                                    --Sende das Signal nur wenn der Kanal nicht aktiv ist, und der Interrupt nicht quittiert wurde
+                                    if Kanal_1_IR = '1' and Status(0) = '0' and S_DAT_I(9) = '1' then 
                                         Quittung_1 <= '1';
                                     end if;
                     when others => null;
@@ -204,33 +220,30 @@ begin
 	begin
 		S_DAT_O <= (others=>'0');
 		
-		if    S_ADR = x"08" then S_DAT_O(TRA0_ANZ_STD'range) <= std_logic_vector(TRA0_ANZ_STD);
-		elsif S_ADR = x"0C" then S_DAT_O(CR0'range)    <= std_logic_vector(CR0);
+		if    S_ADR = x"08" then S_DAT_O(TRA0_ANZ_STD'range)     <= std_logic_vector(TRA0_ANZ_STD);
+		elsif S_ADR = x"0C" then S_DAT_O(CR0'range)             <= std_logic_vector(CR0);
         elsif S_ADR = x"18" then S_DAT_O(TRA1_ANZ_STD'range)      <= std_logic_vector(TRA1_ANZ_STD);
-        elsif S_ADR = x"1C" then S_DAT_O(CR1'range)      <= std_logic_vector(CR1);
-        elsif S_ADR = x"20" then S_DAT_O(Status'range)      <= std_logic_vector(Status);
+        elsif S_ADR = x"1C" then S_DAT_O(CR1'range)              <= std_logic_vector(CR1);
+        elsif S_ADR = x"20" then S_DAT_O(Status'range)          <= std_logic_vector(Status);
 		end if;		
 	end process;
 
+    --Control Register von Kanal_1
     Kontrol_Register0: process(Takt)
     begin
         if rising_edge(Takt) then
-
             if Reset = '1' then
                 CR0 <= x"00000000";
-
             elsif EnCR0 = '1' then
                 CR0  <= S_DAT_I;
             end if;
-
         end if;
     end process;
 
--- ACHTUNG: Diese RS-Flip-FLop reagiert auf die beiden Flanken
+    --Dieser RS-Flip-FLop reagiert auf beide Flanken
     RSFlipFlop0: process(Takt)
     variable tmp : std_logic := '0';
     begin
-
         if(Quittung_0 = '0' and TRA0_Fertig = '0') then
             tmp := tmp;
         elsif (Quittung_0 = '1' and TRA0_Fertig = '1') then
@@ -240,14 +253,13 @@ begin
         else
             tmp := '0';
         end if;
-
         Kanal_0_IR <= tmp;
     end process;
 
+    --Control Register von Kanal_2
     Kontrol_Register1: process(Takt)
     begin
         if rising_edge(Takt) then
-
             if Reset = '1' then
 				CR1 <= x"00000000";
             elsif EnCR1 = '1' then
@@ -256,11 +268,10 @@ begin
         end if;
     end process;
 
--- ACHTUNG: Diese RS-Flip-FLop reagiert auf die beiden Flanken
+    --Dieser RS-Flip-FLop reagiert auf beide Flanken
     RSFlipFlop1: process(Takt)
     variable tmp : std_logic := '0';
     begin
-
         if(Quittung_1 = '0' and TRA1_Fertig = '0') then
             tmp := tmp;
         elsif (Quittung_1 = '1' and TRA1_Fertig = '1') then
@@ -270,7 +281,6 @@ begin
         else
             tmp := '0';
         end if;
-
         Kanal_1_IR <= tmp;
     end process;
 
