@@ -103,7 +103,9 @@ architecture arch of Beispielrechner_System is
 	signal DMA_ACK			  : std_logic;
 	signal DMA_DAT_O 		  : std_logic_vector(31 downto 0);
 	signal IR_Kanal_1         : std_logic;
-	signal IR_Kanal_2         : std_logic;		
+	signal IR_Kanal_2         : std_logic;	
+	signal S0_Ready			  : std_logic;
+	signal S1_Ready			  : std_logic;	
 	
 	
 	
@@ -153,44 +155,49 @@ begin
 	------------------------------------------------------------
 	-- Prozessor
 	------------------------------------------------------------
-	CPU_Inst: entity work.bsr2_processor
-	generic map (
-		Reset_Vector   => x"00000000",
-		AdEL_Vector    => x"00000010",
-		AdES_Vector    => x"00000010",
-		Sys_Vector     => x"00000010",
-		RI_Vector      => x"00000010",
-		IP0_Vector     => x"00000010",
-		IP2_Vector     => x"00000020",
-		IP3_Vector     => x"00000030",
-		IP4_Vector     => x"00000040",
-		SYS_FREQUENCY  => SYS_FREQUENCY,
-		SDI_BAUDRATE   => SDI_BAUDRATE,
-		DELAY_SLOT     => DELAY_SLOT
-	) port map (
 
-	    CLK_I  => CLK,
-		RST_O  => RST,
+		IP2 <= IR_Kanal_1 or IR_Kanal_2;
 
-		-- Wishbone Master Interface-CPU
-		STB_O        => M_SYS_STB_CPU,
-		WE_O         => M_SYS_WE_CPU ,
-		WRO_O        => M_SYS_WRO_CPU,
-		ADR_O        => M_SYS_ADR_CPU,
-		SEL_O        => M_SYS_SEL_CPU,
-		ACK_I        => M_SYS_ACK_CPU,
-		DAT_O        => M_SYS_DAT_O_CPU,
-		DAT_I        => M_SYS_DAT_I_CPU,
+		CPU_Inst: entity work.bsr2_processor
+		generic map (
+			Reset_Vector   => x"00000000",
+			AdEL_Vector    => x"00000010",
+			AdES_Vector    => x"00000010",
+			Sys_Vector     => x"00000010",
+			RI_Vector      => x"00000010",
+			IP0_Vector     => x"00000010",
+			IP2_Vector     => x"00000020",
+			IP3_Vector     => x"00000030",
+			IP4_Vector     => x"00000040",
+			SYS_FREQUENCY  => SYS_FREQUENCY,
+			SDI_BAUDRATE   => SDI_BAUDRATE,
+			DELAY_SLOT     => DELAY_SLOT
+		) port map (
 
-		-- Interrupt Requests
-		IP2          => IP2,
-		IP3          => IP3,
-		IP4          => IP4,
+			CLK_I  => CLK,
+			RST_O  => RST,
 
-		-- Serial Debug Interface
-		SDI_TXD      => SDI_TXD,
-		SDI_RXD      => SDI_RXD
-	);
+			-- Wishbone Master Interface-CPU
+			STB_O        => M_SYS_STB_CPU,
+			WE_O         => M_SYS_WE_CPU ,
+			WRO_O        => M_SYS_WRO_CPU,
+			ADR_O        => M_SYS_ADR_CPU,
+			SEL_O        => M_SYS_SEL_CPU,
+			ACK_I        => M_SYS_ACK_CPU,
+			DAT_O        => M_SYS_DAT_O_CPU,
+			DAT_I        => M_SYS_DAT_I_CPU,
+
+			-- Interrupt Requests
+			IP2          => IP2,
+			IP3          => IP3,
+			IP4          => IP4,
+
+			-- Serial Debug Interface
+			SDI_TXD      => SDI_TXD,
+			SDI_RXD      => SDI_RXD
+		);
+
+
 
 	------------------------------------------------------------
 	-- DMA_Kontroller
@@ -222,11 +229,11 @@ begin
 		M_DAT_I         =>  M_SYS_DAT_I_DMA,
 		M_ACK           =>  M_SYS_ACK_DMA,
 
-		S0_Ready        =>  IR_Kanal_1,
-		S1_Ready        =>  IR_Kanal_2,
+		S0_Ready        =>  S0_Ready,
+		S1_Ready        =>  S1_Ready,
 
-		Kanal1_Interrupt => IP2,
-		Kanal2_Interrupt => IP4
+		Kanal1_Interrupt => IR_Kanal_1,
+		Kanal2_Interrupt => IR_Kanal_2
 	);
 
 	------------------------------------------------------------
@@ -339,8 +346,8 @@ begin
 		DAT_I     => S_SYS_DAT_O,
 		DAT_O     => UART_DAT_O,
 		ACK_O     => UART_ACK,
-		TX_Interrupt => IR_Kanal_1,
-		RX_Interrupt => IR_Kanal_2,
+		TX_Interrupt => S1_Ready,
+		RX_Interrupt => S0_Ready,
 		RxD       => RXD,
 		TxD       => TXD
 	);
