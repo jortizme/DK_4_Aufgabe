@@ -76,8 +76,8 @@ architecture behavioral of UART is
 	signal Stoppbits  		   : std_logic_vector(1 downto 0);	
 	signal Rx_IrEn             : std_logic;
 	signal Tx_IrEn             : std_logic;
-	signal Rx_Interrupt_i      : std_logic;
-	signal Tx_Interrupt_i      : std_logic;
+	signal Rx_Interrupt_i      : std_logic := '0';
+	signal Tx_Interrupt_i      : std_logic := '0';
 
 	signal Sender_Ready	       : std_logic;
 

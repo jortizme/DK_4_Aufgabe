@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <systick.h>
 #include <display.h>
-// TODO: (Aufgabe 4) Header-Datei fuer Display-Ansteuerung inkludieren
 
 volatile uint32_t us; // us-Zaehler
 
@@ -45,15 +44,13 @@ void Timer_Init(void) {
 		// Timer-Interrupt im Coprozessor freigeben
 		_mtc0(CP0_STATUS, _mfc0(CP0_STATUS) | TIMER_INTR);
 		return;
-	// TODO: Code der Funktion einfuegen
 }
 
 void Timer_Handler(void) {
-	in32(TIMER_BASE+TIMER_STATUS); // Interrupt rücksetzen
+	in32(TIMER_BASE+TIMER_STATUS); // Interrupt rï¿½cksetzen
 	us = us + Timer_us;
 	// Vergangene Zeit aufsummieren
 	return;
-	// TODO: Code der Funktion einfuegen
 }
 
 void check_buttons(long p) {
@@ -62,7 +59,6 @@ void check_buttons(long p) {
 	if (gpio_Pins & 0x01) { inc_sec = 1; }
 	if (gpio_Pins & 0x02) { inc_min = 1; }
 	if (gpio_Pins & 0x04) { inc_hr = 1; }
-	// TODO: Code der Funktion einfuegen
 }
 
 #define BUFFER_SIZE 40
@@ -73,8 +69,6 @@ void show_clock(long p) {
 	printf("%s", buffer); // write time to serial port
 	display_set_cursor(0, 0);
 	display_puts(buffer); // write time to LCD
-	// TODO: Code der Funktion einfuegen
-
 }
 
 void increment_clock(long arg) {
@@ -95,7 +89,6 @@ void increment_clock(long arg) {
 	if (inc_hr ==1) { hr = (hr ==23 ? 0 : hr +1); changed = 1; }
 	inc_sec = 0; inc_min = 0; inc_hr = 0;
 	if (changed) { systick_install_function(&show_clock_entry); }
-	// TODO: Code der Funktion einfuegen
 }
 
 void check_inbyte(long p) {
@@ -106,11 +99,9 @@ void check_inbyte(long p) {
 	else if (ch == 'm') { inc_min = 1; }
 	else if (ch == 'h') { inc_hr = 1; }
 	}
-	// TODO: Code der Funktion einfuegen
 }
 
 int main() {
-	// TODO: (Aufgabe 4) Display initialisieren und loeschen
 	display_init(DISPLAY_BASE, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	display_clear();
 	// Hardware Initialisierung
@@ -129,5 +120,4 @@ int main() {
 	// (Parameter: vergangene Zeit seit letztem Aufruf)
 	systick_call(us_l);
 	}
-	// TODO: Code der Funktion einfuegen
 }

@@ -8,7 +8,6 @@ int main()
 {
 	UART_Init(UART_BASE, 115200, 8, PARITY_NONE, STOPPBITS_10);
 
-	// TODO: Richtungsregister der GPIO-Komponente konfigurieren
 	out32(GPIO_BASE+GPIO_DIR,0xF0);
 	uint32_t input;
 	uint32_t output;

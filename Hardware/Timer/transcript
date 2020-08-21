@@ -1,8 +1,6 @@
-pwd
-# /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/Timer
 do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/Timer/test_Timer.do
 # Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
-# Start time: 09:58:48 on Jun 11,2020
+# Start time: 16:09:59 on Aug 21,2020
 # vcom -reportprogress 300 -work work Timer.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -10,10 +8,10 @@ do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/
 # -- Loading package NUMERIC_STD
 # -- Compiling entity Timer
 # -- Compiling architecture rtl of Timer
-# End time: 09:58:49 on Jun 11,2020, Elapsed time: 0:00:01
+# End time: 16:09:59 on Aug 21,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
-# Start time: 09:58:49 on Jun 11,2020
+# Start time: 16:09:59 on Aug 21,2020
 # vcom -reportprogress 300 -work work wishbone_test_pack.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -21,10 +19,10 @@ do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/
 # -- Compiling package wishbone_test_pack
 # -- Compiling package body wishbone_test_pack
 # -- Loading package wishbone_test_pack
-# End time: 09:58:49 on Jun 11,2020, Elapsed time: 0:00:00
+# End time: 16:10:00 on Aug 21,2020, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
-# Start time: 09:58:49 on Jun 11,2020
+# Start time: 16:10:00 on Aug 21,2020
 # vcom -reportprogress 300 -work work txt_util_pack.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -32,10 +30,10 @@ do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/
 # -- Compiling package txt_util_pack
 # -- Compiling package body txt_util_pack
 # -- Loading package txt_util_pack
-# End time: 09:58:49 on Jun 11,2020, Elapsed time: 0:00:00
+# End time: 16:10:00 on Aug 21,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2019.2 Compiler 2019.04 Apr 17 2019
-# Start time: 09:58:49 on Jun 11,2020
+# Start time: 16:10:00 on Aug 21,2020
 # vcom -reportprogress 300 -work work Timer_tb.vhd 
 # -- Loading package STANDARD
 # -- Compiling entity Timer_tb
@@ -43,21 +41,17 @@ do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
 # -- Loading package wishbone_test_pack
-# -- Loading package txt_util_pack
 # -- Compiling architecture bench of Timer_tb
 # -- Loading entity Timer
-# End time: 09:58:49 on Jun 11,2020, Elapsed time: 0:00:00
+# End time: 16:10:00 on Aug 21,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -voptargs="+acc" Timer_tb 
-# Start time: 09:58:49 on Jun 11,2020
+# Start time: 16:10:00 on Aug 21,2020
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
 # Loading work.wishbone_test_pack(body)
-# Loading work.txt_util_pack(body)
-# ** Warning: (vsim-3479) Time unit 'fs' is less than the simulator resolution (1ps).
-#    Time: 0 ps  Iteration: 0  Root: /
 # Loading work.timer_tb(bench)
 # Loading work.timer(rtl)
 # WARNING: No extended dataflow license exists
@@ -71,5 +65,3 @@ do /home/jortizme/Documents/HS/Digitale_Komponenten/Praktikum/Uebung_3/Hardware/
 #    Time: 1300 ns  Iteration: 1  Instance: /timer_tb
 # 0 ps
 # 1575 ns
-# End time: 10:40:13 on Jun 11,2020, Elapsed time: 0:41:24
-# Errors: 14, Warnings: 2

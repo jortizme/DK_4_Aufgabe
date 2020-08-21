@@ -156,7 +156,7 @@ begin
 	-- Prozessor
 	------------------------------------------------------------
 
-		IP2 <= IR_Kanal_1 or IR_Kanal_2;
+		IP3 <= IR_Kanal_1 or IR_Kanal_2;
 
 		CPU_Inst: entity work.bsr2_processor
 		generic map (
@@ -364,7 +364,7 @@ begin
 		  DAT_I      => S_SYS_DAT_O,
 		  ACK_O      => TIMER_ACK,
 		  DAT_O      => TIMER_DAT_O,
-		  Timer_IRQ  => IP3
+		  Timer_IRQ  => IP2
 		);
 	
 
